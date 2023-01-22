@@ -1,0 +1,1403 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial 6.1: Static string &#8212; ComModHOS</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w6_t1.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 6.1: Static string" href="w6_t1_sol.html" />
+    <link rel="prev" title="Week 6" href="w6_t0.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/TU_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ComModHOS</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to ComModHOS
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course content
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="w0_t0.html">
+   Week 0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w1_t0.html">
+   Week 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w2_t0.html">
+   Week 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w3_t0.html">
+   Week 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w4_t0.html">
+   Week 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w5_t0.html">
+   Week 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w6_t0.html">
+   Week 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w7_t0.html">
+   Week 7
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/w6_t1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/w6_t1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-newton-raphson">
+   Step 2: Newton-Raphson:
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-2-1-guess-the-initial-deformation">
+     Step 2.1: Guess the initial deformation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-2-2-iteration-until-convergence">
+     Step 2.2: iteration until convergence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise">
+   Exercise
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 6.1: Static string</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-newton-raphson">
+   Step 2: Newton-Raphson:
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-2-1-guess-the-initial-deformation">
+     Step 2.1: Guess the initial deformation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#step-2-2-iteration-until-convergence">
+     Step 2.2: iteration until convergence
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercise">
+   Exercise
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-6-1-static-string">
+<h1>Tutorial 6.1: Static string<a class="headerlink" href="#tutorial-6-1-static-string" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial we will learn how to define the static equilibrium position of a string. Here, we will use the FEM to solve a geometrically nonlinear structure subject to gravity loading in a static configuration. The equation of motion of an axially deformed string can be obtained by coupling a string and a rod EOMs, giving the following system of PDEs:</p>
+<div class="math notranslate nohighlight">
+\[ m\ddot{u} -EAu'' = q \]</div>
+<div class="math notranslate nohighlight">
+\[ m \ddot{v} -T v'' = p \]</div>
+<p>As usual, we first define the parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#pip install scipy;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#pip install ipympl;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="mi">60</span>      <span class="c1"># [m] string length</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mf">0.75</span><span class="o">*</span><span class="n">L</span>  <span class="c1"># [m] distance between supports</span>
+<span class="n">EA</span> <span class="o">=</span> <span class="mf">1e6</span>    <span class="c1"># [Pa] stiffness</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>       <span class="c1"># [kg] mass</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>    <span class="c1"># [m/s^2] gravity constant</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We now define a parameter that will be used as a flag to determine if the string can handle tension only or if it can also handle compression. By default we set it to 1 (tension only). If you want to add the possibility to handle compressions, set it to 0.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">TENSION_ONLY</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="step-1-discretize-the-domain">
+<h2>Step 1: discretize the domain<a class="headerlink" href="#step-1-discretize-the-domain" title="Permalink to this headline">#</a></h2>
+<p>We will use the FEM to solve this problem. Then, we start by discretizing the domain in such a way that the maximum element length <span class="math notranslate nohighlight">\(l_{max}\)</span> is 1 m.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lmax</span> <span class="o">=</span> <span class="mi">1</span>                    <span class="c1"># [m] maximum length of each string(wire) element</span>
+<span class="n">nElem</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="n">lmax</span><span class="p">))</span><span class="c1"># [-] number of elements   </span>
+<span class="n">lElem</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">nElem</span>             <span class="c1"># [m] actual tensionless element size</span>
+<span class="n">nNode</span> <span class="o">=</span> <span class="n">nElem</span> <span class="o">+</span> <span class="mi">1</span>           <span class="c1"># [-] number of nodes </span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We create the nodal coordinates vector and an array with the properties of the element: node connectivity and material properties.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NodeCoord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nNode</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">Element</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nElem</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">iElem</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">iElem</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">]</span> <span class="o">=</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">lElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NodeLeft</span><span class="p">,</span> <span class="n">NodeRight</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">EA</span><span class="p">,</span> <span class="n">lElem</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot the undeformed (horizontal) position of the string, together with the position of the supports</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the undeformed wire</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    
+<span class="c1"># plot the supports</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w6_t1_11_0.png" src="../_images/w6_t1_11_0.png" />
+</div>
+</div>
+<p>Note that the distance between supports is smaller than the string length. Therefore, the final string position will take a catenary shape between these two points.</p>
+</section>
+<section id="step-2-newton-raphson">
+<h2>Step 2: Newton-Raphson:<a class="headerlink" href="#step-2-newton-raphson" title="Permalink to this headline">#</a></h2>
+<section id="step-2-1-guess-the-initial-deformation">
+<h3>Step 2.1: Guess the initial deformation<a class="headerlink" href="#step-2-1-guess-the-initial-deformation" title="Permalink to this headline">#</a></h3>
+<p>We know that the problem is nonlinear, so we will use the Newton-Raphson method to find the equilibrium position. In order to find this solution, we will need an initial guess. It can be any shape that satisfies the boundary conditions, the solver will take less iterations (less time) if we find an initial guess close to the final shape.</p>
+<p>We start by defining the free and fixed DOFs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nDof</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">nNode</span>                          <span class="c1"># number of DOFs</span>
+<span class="n">FreeDof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nDof</span><span class="p">)</span>            <span class="c1"># free DOFs </span>
+<span class="n">FixedDof</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>                <span class="c1"># fixed DOFs</span>
+<span class="n">FreeDof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">FreeDof</span><span class="p">,</span> <span class="n">FixedDof</span><span class="p">)</span>  <span class="c1"># remove the fixed DOFs from the free DOFs array</span>
+
+<span class="c1"># free &amp; fixed array indices</span>
+<span class="n">fx</span> <span class="o">=</span> <span class="n">FreeDof</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">fy</span> <span class="o">=</span> <span class="n">FreeDof</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the initial configuration, let us assume a parabola of the type:</p>
+<div class="math notranslate nohighlight">
+\[ x(s) = D(s/L) \]</div>
+<div class="math notranslate nohighlight">
+\[ y(s) = -4 SAG ((x/D) - (x/D)^2) \]</div>
+<p>Where <span class="math notranslate nohighlight">\(s\)</span> is the coordinate along the undeformed position of the wire and <span class="math notranslate nohighlight">\(SAG\)</span> the maximum vertical distance of the string.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">SAG</span> <span class="o">=</span> <span class="mi">20</span>                            <span class="c1"># Let us assume a big sag - this will assure that all elements</span>
+                                    <span class="c1"># are under tension, which may be necesary for the convergence</span>
+                                    <span class="c1"># of the solver</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">D</span><span class="o">*</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">L</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">SAG</span><span class="o">*</span><span class="p">((</span><span class="n">x</span><span class="o">/</span><span class="n">D</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">D</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+<span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nDof</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">])</span>
+<span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">nDof</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">])</span>
+<span class="c1"># The displacement of the node corresponds to the actual position minus the initial position</span>
+<span class="c1"># Remember that we use a Global Coordinate System (GCS) here.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Plot the initial guess.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the initial guess</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+    <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;-ok&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    
+<span class="c1"># plot the supports</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w6_t1_18_0.png" src="../_images/w6_t1_18_0.png" />
+</div>
+</div>
+</section>
+<section id="step-2-2-iteration-until-convergence">
+<h3>Step 2.2: iteration until convergence<a class="headerlink" href="#step-2-2-iteration-until-convergence" title="Permalink to this headline">#</a></h3>
+<p>We want to solve a nonlinear system with the following residual:</p>
+<div class="math notranslate nohighlight">
+\[ \bf{R}(\bf{u}) = \bf{F}_{ext} -\bf{K}(\bf{u})\bf{u} \]</div>
+<p>In the external force <span class="math notranslate nohighlight">\( \bf{F}_{ext} \)</span> we will only have the contribution of the gravity load, which does not depend on the position of the string. Then, we can take it out of the iteration loop and assemble it at the beginning.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Pext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+    <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+    <span class="n">l0</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">Pelem</span> <span class="o">=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">l0</span><span class="o">*</span><span class="n">m</span><span class="o">/</span><span class="mi">2</span>           <span class="c1"># Half weight to each node</span>
+    <span class="n">Pext</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Pelem</span>
+    <span class="n">Pext</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Pelem</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Next, we iterate until the residual is smaller than a certain tolerance. In this case, we enforce the relative residual with respect to the external load to be smaller than <span class="math notranslate nohighlight">\(\epsilon = 1e-3\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ \text{CONV} = \frac{||\bf{R}(\bf{u}^i)||_2}{||\bf{F}_{ext}||_2} \leq \epsilon \]</div>
+<p>We also enforce that the maximum number of iteration is 100 (to avoid infite loop if something goes wrong). At each iteration <span class="math notranslate nohighlight">\(i\)</span> we perform the following steps:</p>
+<ol class="simple">
+<li><p>Compute and assemble the elemental matrix <span class="math notranslate nohighlight">\(\bf{K} (\bf{u}^i)\)</span> and elemental vector <span class="math notranslate nohighlight">\(\bf{F} (\bf{u}^i)\)</span></p></li>
+<li><p>Copmute the residual <span class="math notranslate nohighlight">\(\bf{R} (\bf{u}^i)\)</span></p></li>
+<li><p>Check convergence</p></li>
+<li><p>If not converged, compute increment <span class="math notranslate nohighlight">\( \bf{\delta u}^i =\bf{K} (\bf{u}^i)^{-1} \bf{R} (\bf{u}^i)\)</span>. Here, we also enforce that the increment must not be greater than the element length (for convergence purposes).</p></li>
+<li><p>Update displacements <span class="math notranslate nohighlight">\(\bf{u}^{i+1} = {u}^i +\bf{\delta u}^i \)</span></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">module_imports.StringForcesAndStiffness</span> <span class="kn">import</span> <span class="n">StringForcesAndStiffness</span>
+<span class="c1"># Convergence parameters</span>
+<span class="n">CONV</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">PLOT</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">kIter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">nMaxIter</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">TENSION</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nElem</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="n">CONV</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">kIter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iteration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">kIter</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; ...</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Check stability - define a number of maximum iterations. If solution</span>
+    <span class="c1"># hasn&#39;t converged, check what is going wrong (if something).</span>
+    <span class="k">if</span> <span class="n">kIter</span> <span class="o">&gt;</span> <span class="n">nMaxIter</span><span class="p">:</span>
+        <span class="k">break</span>
+    
+    <span class="c1"># Assemble vector with internal forces and stiffnes matrix</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="o">*</span><span class="n">nDof</span><span class="p">))</span> 
+    <span class="n">Fi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+        <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+        <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+        <span class="n">l0</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="n">EA</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">NodePos</span> <span class="o">=</span> <span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                    <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]])</span>
+        <span class="n">Fi_elem</span><span class="p">,</span> <span class="n">K_elem</span><span class="p">,</span> <span class="n">Tension</span><span class="p">,</span> <span class="n">WARN</span> <span class="o">=</span> <span class="n">StringForcesAndStiffness</span><span class="p">(</span><span class="n">NodePos</span><span class="p">,</span> <span class="n">EA</span><span class="p">,</span> <span class="n">l0</span><span class="p">,</span> <span class="n">TENSION_ONLY</span><span class="p">)</span>
+        <span class="n">TENSION</span><span class="p">[</span><span class="n">iElem</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tension</span>
+
+
+        <span class="k">if</span> <span class="n">WARN</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING: Element &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">iElem</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; is under compression.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">Fi</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">:</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Fi_elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Fi</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">:</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Fi_elem</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Assemble the matrices at the correct place</span>
+        <span class="c1"># Get the degrees of freedom that correspond to each node</span>
+        <span class="n">Dofs_Left</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeLeft</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">Dofs_Right</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeRight</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dofs_Left</span> <span class="p">,</span> <span class="n">Dofs_Right</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+                <span class="n">ij</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">nDof</span>
+                <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">K_elem</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+
+    <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nDof</span><span class="p">,</span> <span class="n">nDof</span><span class="p">))</span>
+
+    <span class="c1"># Calculate residual forces</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">Pext</span> <span class="o">-</span> <span class="n">Fi</span>
+
+    <span class="c1"># Check for convergence</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Pext</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+        <span class="n">CONV</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># Calculate increment of displacements</span>
+    <span class="n">du</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+    <span class="n">du</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">])</span>
+
+    <span class="c1"># Apply archlength to help with convergence</span>
+    <span class="n">Scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span> <span class="n">lElem</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">du</span><span class="p">))))</span>
+    <span class="n">du</span> <span class="o">=</span> <span class="n">du</span><span class="o">*</span><span class="n">Scale</span>   <span class="c1"># Enforce that each node does not displace</span>
+                    <span class="c1"># more (at each iteration) than the length</span>
+                    <span class="c1"># of the elements</span>
+
+    <span class="c1"># Update displacement of nodes</span>
+    <span class="n">u</span> <span class="o">+=</span> <span class="n">du</span>
+
+    <span class="c1"># plot the updated configuration</span>
+    <span class="k">if</span> <span class="n">PLOT</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+            <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+            <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                        <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;-ok&#39;</span><span class="p">)</span>
+            
+        <span class="c1"># plot the supports</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [m]&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [m]&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Iteration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">kIter</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">CONV</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Converged solution at iteration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">kIter</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+            <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+            <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                        <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;-ok&#39;</span><span class="p">)</span>
+            
+    <span class="c1"># plot the supports</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Converged solution at iteration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">kIter</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solution did not converge&quot;</span><span class="p">)</span>
+        
+
+    
+    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Iteration: 1 ...
+
+WARNING: Element 16 is under compression.
+
+WARNING: Element 17 is under compression.
+
+WARNING: Element 18 is under compression.
+
+WARNING: Element 19 is under compression.
+
+WARNING: Element 20 is under compression.
+
+WARNING: Element 21 is under compression.
+
+WARNING: Element 22 is under compression.
+
+WARNING: Element 23 is under compression.
+
+WARNING: Element 24 is under compression.
+
+WARNING: Element 25 is under compression.
+
+WARNING: Element 26 is under compression.
+
+WARNING: Element 27 is under compression.
+
+WARNING: Element 28 is under compression.
+
+WARNING: Element 29 is under compression.
+
+WARNING: Element 30 is under compression.
+
+WARNING: Element 31 is under compression.
+
+WARNING: Element 32 is under compression.
+
+WARNING: Element 33 is under compression.
+
+WARNING: Element 34 is under compression.
+
+WARNING: Element 35 is under compression.
+
+WARNING: Element 36 is under compression.
+
+WARNING: Element 37 is under compression.
+
+WARNING: Element 38 is under compression.
+
+WARNING: Element 39 is under compression.
+
+WARNING: Element 40 is under compression.
+
+WARNING: Element 41 is under compression.
+
+WARNING: Element 42 is under compression.
+
+WARNING: Element 43 is under compression.
+
+WARNING: Element 44 is under compression.
+
+WARNING: Element 45 is under compression.
+
+Iteration: 2 ...
+
+WARNING: Element 16 is under compression.
+
+WARNING: Element 17 is under compression.
+
+WARNING: Element 18 is under compression.
+
+WARNING: Element 19 is under compression.
+
+WARNING: Element 20 is under compression.
+
+WARNING: Element 21 is under compression.
+
+WARNING: Element 22 is under compression.
+
+WARNING: Element 23 is under compression.
+
+WARNING: Element 24 is under compression.
+
+WARNING: Element 25 is under compression.
+
+WARNING: Element 26 is under compression.
+
+WARNING: Element 27 is under compression.
+
+WARNING: Element 28 is under compression.
+
+WARNING: Element 33 is under compression.
+
+WARNING: Element 34 is under compression.
+
+WARNING: Element 35 is under compression.
+
+WARNING: Element 36 is under compression.
+
+WARNING: Element 37 is under compression.
+
+WARNING: Element 38 is under compression.
+
+WARNING: Element 39 is under compression.
+
+WARNING: Element 40 is under compression.
+
+WARNING: Element 41 is under compression.
+
+WARNING: Element 42 is under compression.
+
+WARNING: Element 43 is under compression.
+
+WARNING: Element 44 is under compression.
+
+WARNING: Element 45 is under compression.
+
+Iteration: 3 ...
+
+WARNING: Element 16 is under compression.
+
+WARNING: Element 17 is under compression.
+
+WARNING: Element 18 is under compression.
+
+WARNING: Element 19 is under compression.
+
+WARNING: Element 20 is under compression.
+
+WARNING: Element 21 is under compression.
+
+WARNING: Element 22 is under compression.
+
+WARNING: Element 23 is under compression.
+
+WARNING: Element 24 is under compression.
+
+WARNING: Element 25 is under compression.
+
+WARNING: Element 28 is under compression.
+
+WARNING: Element 33 is under compression.
+
+WARNING: Element 34 is under compression.
+
+WARNING: Element 35 is under compression.
+
+WARNING: Element 36 is under compression.
+
+WARNING: Element 37 is under compression.
+
+WARNING: Element 38 is under compression.
+
+WARNING: Element 39 is under compression.
+
+WARNING: Element 40 is under compression.
+
+WARNING: Element 41 is under compression.
+
+WARNING: Element 42 is under compression.
+
+WARNING: Element 43 is under compression.
+
+WARNING: Element 44 is under compression.
+
+WARNING: Element 45 is under compression.
+
+Iteration: 4 ...
+
+WARNING: Element 21 is under compression.
+
+WARNING: Element 25 is under compression.
+
+WARNING: Element 28 is under compression.
+
+WARNING: Element 33 is under compression.
+
+WARNING: Element 34 is under compression.
+
+WARNING: Element 35 is under compression.
+
+WARNING: Element 36 is under compression.
+
+WARNING: Element 37 is under compression.
+
+WARNING: Element 38 is under compression.
+
+WARNING: Element 39 is under compression.
+
+WARNING: Element 40 is under compression.
+
+WARNING: Element 41 is under compression.
+
+WARNING: Element 42 is under compression.
+
+WARNING: Element 43 is under compression.
+
+WARNING: Element 44 is under compression.
+
+WARNING: Element 45 is under compression.
+
+Iteration: 5 ...
+
+WARNING: Element 21 is under compression.
+
+WARNING: Element 28 is under compression.
+
+WARNING: Element 34 is under compression.
+
+WARNING: Element 37 is under compression.
+
+WARNING: Element 39 is under compression.
+
+WARNING: Element 40 is under compression.
+
+WARNING: Element 41 is under compression.
+
+WARNING: Element 42 is under compression.
+
+WARNING: Element 43 is under compression.
+
+WARNING: Element 44 is under compression.
+
+WARNING: Element 45 is under compression.
+
+Iteration: 6 ...
+
+WARNING: Element 37 is under compression.
+
+WARNING: Element 42 is under compression.
+
+WARNING: Element 43 is under compression.
+
+WARNING: Element 44 is under compression.
+
+WARNING: Element 45 is under compression.
+
+Iteration: 7 ...
+
+Iteration: 8 ...
+
+Iteration: 9 ...
+
+Iteration: 10 ...
+
+Iteration: 11 ...
+
+Iteration: 12 ...
+
+Iteration: 13 ...
+
+Iteration: 14 ...
+
+Iteration: 15 ...
+
+Iteration: 16 ...
+
+Iteration: 17 ...
+
+Iteration: 18 ...
+
+Iteration: 19 ...
+
+Iteration: 20 ...
+
+Iteration: 21 ...
+
+Iteration: 22 ...
+
+Iteration: 23 ...
+
+Iteration: 24 ...
+
+Iteration: 25 ...
+
+Iteration: 26 ...
+
+Iteration: 27 ...
+
+Iteration: 28 ...
+
+Iteration: 29 ...
+
+Iteration: 30 ...
+
+Iteration: 31 ...
+
+Iteration: 32 ...
+
+Iteration: 33 ...
+
+Converged solution at iteration: 33
+</pre></div>
+</div>
+<img alt="../_images/w6_t1_22_1.png" src="../_images/w6_t1_22_1.png" />
+</div>
+</div>
+<p>We can also check what the tension looks like.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the tension</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="mi">1</span><span class="p">:]]))</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">TENSION</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tension&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [m]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;y [m]&#39;)
+</pre></div>
+</div>
+<img alt="../_images/w6_t1_24_1.png" src="../_images/w6_t1_24_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">#</a></h2>
+<p>Determine the mooring configuration of a floating wind turbine attached to two cables of different length:</p>
+<div class="math notranslate nohighlight">
+\[L_{\mbox{left}}=100\]</div>
+<div class="math notranslate nohighlight">
+\[L_{\mbox{right}}=150\]</div>
+<p>The anchors are positioned at <span class="math notranslate nohighlight">\([-50,-60]\)</span> and <span class="math notranslate nohighlight">\([60,-60]\)</span>. The floating wind turbine is at <span class="math notranslate nohighlight">\([0,0]\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Right side</span>
+
+<span class="c1"># Step 1: discretize the domain</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="mi">150</span>     <span class="c1"># [m] string length</span>
+<span class="n">D</span> <span class="o">=</span> <span class="mi">60</span>      <span class="c1"># [m] distance between supports</span>
+<span class="n">H</span> <span class="o">=</span> <span class="mi">60</span>      <span class="c1"># [m] water depth</span>
+<span class="n">EA</span> <span class="o">=</span> <span class="mf">1e6</span>    <span class="c1"># [Pa] stiffness</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>       <span class="c1"># [kg] mass</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span>    <span class="c1"># [m/s^2] gravity constant</span>
+
+<span class="n">lmax</span> <span class="o">=</span> <span class="mi">5</span>                    <span class="c1"># [m] maximum length of each string(wire) element</span>
+<span class="n">nElem</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="n">lmax</span><span class="p">))</span><span class="c1"># [-] number of elements   </span>
+<span class="n">lElem</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">nElem</span>             <span class="c1"># [m] actual tensionless element size</span>
+<span class="n">nNode</span> <span class="o">=</span> <span class="n">nElem</span> <span class="o">+</span> <span class="mi">1</span>           <span class="c1"># [-] number of nodes </span>
+
+<span class="n">NodeCoord</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nNode</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">Element</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nElem</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">iElem</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">iElem</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">]</span> <span class="o">=</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">lElem</span><span class="p">,</span> <span class="o">-</span><span class="n">H</span><span class="o">/</span><span class="n">L</span><span class="o">*</span><span class="n">lElem</span><span class="p">]</span>
+    <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NodeLeft</span><span class="p">,</span> <span class="n">NodeRight</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">EA</span><span class="p">,</span> <span class="n">lElem</span><span class="p">]</span>
+    
+<span class="c1"># plot the undeformed wire</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    
+<span class="c1"># plot the supports</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">H</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w6_t1_26_0.png" src="../_images/w6_t1_26_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 2: compute initial configuration</span>
+
+<span class="n">nDof</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">nNode</span>                          <span class="c1"># number of DOFs</span>
+<span class="n">FreeDof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nDof</span><span class="p">)</span>            <span class="c1"># free DOFs </span>
+<span class="n">FixedDof</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>                <span class="c1"># fixed DOFs</span>
+<span class="n">FreeDof</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">FreeDof</span><span class="p">,</span> <span class="n">FixedDof</span><span class="p">)</span>  <span class="c1"># remove the fixed DOFs from the free DOFs array</span>
+
+<span class="c1"># free &amp; fixed array indices</span>
+<span class="n">fx</span> <span class="o">=</span> <span class="n">FreeDof</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">fy</span> <span class="o">=</span> <span class="n">FreeDof</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+
+<span class="n">SAG</span> <span class="o">=</span> <span class="mi">202</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">])</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">D</span><span class="o">*</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">L</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="n">H</span><span class="o">*</span><span class="p">(</span><span class="n">s</span><span class="o">/</span><span class="n">L</span><span class="p">)</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">SAG</span><span class="o">*</span><span class="p">((</span><span class="n">x</span><span class="o">/</span><span class="n">D</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="n">D</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+<span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nDof</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">])</span>
+<span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">nDof</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">])</span>
+<span class="c1"># The displacement of the node corresponds to the actual position minus the initial position</span>
+<span class="c1"># Remember that we use a Global Coordinate System (GCS) here.</span>
+
+<span class="c1"># plot the initial guess</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+    <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;-ok&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;g&#39;</span><span class="p">)</span>
+    
+<span class="c1"># plot the supports</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">H</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w6_t1_27_0.png" src="../_images/w6_t1_27_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 3: Assemble system and solve</span>
+
+<span class="n">Pext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+    <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+    <span class="n">l0</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">Pelem</span> <span class="o">=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">l0</span><span class="o">*</span><span class="n">m</span><span class="o">/</span><span class="mi">2</span>           <span class="c1"># Half weight to each node</span>
+    <span class="n">Pext</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Pelem</span>
+    <span class="n">Pext</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Pelem</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">StringForcesAndStiffness</span> <span class="kn">import</span> <span class="n">StringForcesAndStiffness</span>
+<span class="c1"># Convergence parameters</span>
+<span class="n">CONV</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">PLOT</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">kIter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">nMaxIter</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">TENSION</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nElem</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="n">CONV</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="n">kIter</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="c1">#     print(&quot;Iteration: &quot;+str(kIter)+&quot; ...\n&quot;)</span>
+    <span class="c1"># Check stability - define a number of maximum iterations. If solution</span>
+    <span class="c1"># hasn&#39;t converged, check what is going wrong (if something).</span>
+    <span class="k">if</span> <span class="n">kIter</span> <span class="o">&gt;</span> <span class="n">nMaxIter</span><span class="p">:</span>
+        <span class="k">break</span>
+    
+    <span class="c1"># Assemble vector with internal forces and stiffnes matrix</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="o">*</span><span class="n">nDof</span><span class="p">))</span> 
+    <span class="n">Fi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+        <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+        <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+        <span class="n">l0</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="n">EA</span> <span class="o">=</span> <span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+        <span class="n">NodePos</span> <span class="o">=</span> <span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                    <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]])</span>
+        <span class="n">Fi_elem</span><span class="p">,</span> <span class="n">K_elem</span><span class="p">,</span> <span class="n">Tension</span><span class="p">,</span> <span class="n">WARN</span> <span class="o">=</span> <span class="n">StringForcesAndStiffness</span><span class="p">(</span><span class="n">NodePos</span><span class="p">,</span> <span class="n">EA</span><span class="p">,</span> <span class="n">l0</span><span class="p">,</span> <span class="n">TENSION_ONLY</span><span class="p">)</span>
+        <span class="n">TENSION</span><span class="p">[</span><span class="n">iElem</span><span class="p">]</span> <span class="o">=</span> <span class="n">Tension</span>
+
+
+<span class="c1">#         if WARN:</span>
+<span class="c1">#             print(&quot;WARNING: Element &quot;+str(iElem+1)+&quot; is under compression.\n&quot;)</span>
+        
+        <span class="n">Fi</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">:</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Fi_elem</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Fi</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">:</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Fi_elem</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Assemble the matrices at the correct place</span>
+        <span class="c1"># Get the degrees of freedom that correspond to each node</span>
+        <span class="n">Dofs_Left</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeLeft</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">Dofs_Right</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeRight</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dofs_Left</span> <span class="p">,</span> <span class="n">Dofs_Right</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+                <span class="n">ij</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">nDof</span>
+                <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">K_elem</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+
+    <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nDof</span><span class="p">,</span> <span class="n">nDof</span><span class="p">))</span>
+
+    <span class="c1"># Calculate residual forces</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">Pext</span> <span class="o">-</span> <span class="n">Fi</span>
+
+    <span class="c1"># Check for convergence</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">R</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">])</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Pext</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">:</span>
+        <span class="n">CONV</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># Calculate increment of displacements</span>
+    <span class="n">du</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">))</span>
+    <span class="n">du</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">],</span> <span class="n">R</span><span class="p">[</span><span class="n">FreeDof</span><span class="p">])</span>
+
+    <span class="c1"># Apply archlength to help with convergence</span>
+    <span class="n">Scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">]),</span> <span class="n">lElem</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">du</span><span class="p">))))</span>
+    <span class="n">du</span> <span class="o">=</span> <span class="n">du</span><span class="o">*</span><span class="n">Scale</span>   <span class="c1"># Enforce that each node does not displace</span>
+                    <span class="c1"># more (at each iteration) than the length</span>
+                    <span class="c1"># of the elements</span>
+
+    <span class="c1"># Update displacement of nodes</span>
+    <span class="n">u</span> <span class="o">+=</span> <span class="n">du</span>
+
+    <span class="c1"># plot the updated configuration</span>
+    <span class="k">if</span> <span class="n">PLOT</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+            <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+            <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                        <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;-ok&#39;</span><span class="p">)</span>
+            
+        <span class="c1"># plot the supports</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">H</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [m]&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [m]&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Iteration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">kIter</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">pause</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">CONV</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Converged solution at iteration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">kIter</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+            <span class="n">NodeLeft</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="n">NodeRight</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">Element</span><span class="p">[</span><span class="n">iElem</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+            <span class="n">DofsLeft</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeLeft</span> 
+            <span class="n">DofsRight</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">NodeRight</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span><span class="p">]],</span> 
+                        <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsLeft</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">DofsRight</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]],</span> <span class="s1">&#39;-ok&#39;</span><span class="p">)</span>
+            
+    <span class="c1"># plot the supports</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">D</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">H</span><span class="p">],</span> <span class="s1">&#39;vr&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;x [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;y [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Converged solution at iteration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">kIter</span><span class="p">))</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Solution did not converge&quot;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_201876</span>\<span class="mf">2436921300.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">StringForcesAndStiffness</span> <span class="kn">import</span> <span class="n">StringForcesAndStiffness</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="c1"># Convergence parameters</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">CONV</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">PLOT</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">kIter</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;StringForcesAndStiffness&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Fi</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.22017979e+02,  1.01007195e+03,  2.06447766e-08, -4.90500000e+01,
+        2.05274659e-08, -4.90500000e+01,  2.03321804e-08, -4.90500000e+01,
+        2.03983177e-08, -4.90500000e+01,  2.01712140e-08, -4.90500000e+01,
+        1.98728998e-08, -4.90500000e+01,  2.03853290e-08, -4.90500000e+01,
+        1.97000958e-08, -4.90500000e+01,  2.01349479e-08, -4.90500000e+01,
+        2.06428297e-08, -4.90500000e+01,  2.08396074e-08, -4.90500000e+01,
+        2.24354153e-08, -4.90500000e+01,  2.39902249e-08, -4.90500000e+01,
+        2.18312834e-08, -4.90500000e+01,  1.58428293e-08, -4.90500000e+01,
+       -4.24777227e-08, -4.90499999e+01, -3.35963023e-07, -4.90499995e+01,
+       -3.59182106e-06, -4.90499963e+01, -5.07602051e-06, -4.90499984e+01,
+       -1.86226848e-05, -4.90499991e+01, -1.25290230e-05, -4.90500127e+01,
+       -5.18344610e-04, -4.90503174e+01,  5.48597874e-04, -4.90496898e+01,
+       -3.05560585e-05, -4.90500376e+01,  3.72491688e-05, -4.90499545e+01,
+       -6.69565080e-06, -4.90500148e+01,  8.76934689e-06, -4.90499823e+01,
+        3.34435796e-07, -4.90499993e+01,  1.75807486e-07, -4.90499996e+01,
+        1.22017980e+02,  4.12378048e+02])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="w6_t0.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Week 6</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="w6_t1_sol.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 6.1: Static string</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By TU Delft Offshore Engineering<br/>
+  
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

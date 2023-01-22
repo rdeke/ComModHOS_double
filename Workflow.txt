@@ -1,0 +1,208 @@
+General workflow for Jypyterbook development ComModHOS
+[23/mm/dd] finalized deadline
+
+Install jupyterbook
+[0105]		- Reinstall of python needed -- version issues with pyqt5
+[01/13]		- Follow tutorials
+
+Build initial book
+[0122]		- Set up structure
+[0122]		- Add initial logo's and documentation templates
+
+Build course content --> Push deadlines
+[0122]		- Building and checking tutorials & structure
+[X]		- Books round 1
+[X]		- Books round 2
+[X]		- Theory
+[X]		- Extra
+
+# -------
+Important commands (xx is version number):
+Making/Building
+	- jupyter-book create ComModHOS_vxx_local 
+	- jupyter-book build ComModHOS_vxx_local 
+		OR use build --all to overwrite cache
+	- git clone https://github.com/TUDelft-CITG/ComModHOS.git
+Pushing
+	- cp -r mylocalbook/* myonlinebook/
+	- cd myonlinebook
+	- git add ./*
+	- git commit -m "COMMENT"
+	- git push
+	- ghp-import -n -p -f _build/html
+# -------
+
+
+# -------------------------------------------------------------------------------------------------------------------
+Book content round 1 --> Make existing books better
+
+General concepts: keep sympy, explain irrefular waces more, add FEM BC removal explanation, non-lin stability issues
+
+Tutorial 1
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+
+Tutorial 2_1
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- Check lambda function use
+[X]		- Use single dictionary
+[X]		- \bold issues solution
+
+Tutorial 2_2
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- Use single dictionary
+[X]		- \bold issues solution
+
+Tutorial 2_3
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+
+Tutorial 3_1
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+Tutorial 3_2
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+Tutorial 4_1
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+Tutorial 4_2
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+Tutorial 4_3
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+Tutorial 5_1
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+Tutorial 6_1
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+Tutorial 6_2
+[X]		- Clean up install commands
+[X]		- Check plot titles and lay-out+
+[X]		- Write model answer
+[X]		- Correct title and book structure
+[X]		- \bold issues solution
+[X]		- nMode changes
+
+
+# -------------------------------------------------------------------------------------------------------------------
+Book content round 2 --> Add/change books with new content
+
+Tutorial 1
+[X]		- 
+
+Tutorial 2_1
+[X]		- Add Maple example of symbolic calculations, add speed comparisons --> Metrikine course
+
+Tutorial 2_2
+[X]		- 2DOF situation sketch/physical drawing as illutstration
+
+Tutorial 2_3
+[X]		- Explanation on irregular wave use + potential/pressure conversions
+
+Tutorial 3_1
+[X]		- Add IPython explanation (package, options, docu link)
+[X]		- Add realistic damping factor
+[X]		- Radau/other option theory addition
+
+Tutorial 3_2
+[X]		- Clean up install commands
+[X]		- (see comments 3_1)
+
+Tutorial 4_1
+[X]		- Link FD contents (execution speed and analytical accuracy)
+
+Tutorial 4_2
+[X]		- Link FD contents (execution speed and analytical accuracy)
+
+Tutorial 4_3
+[X]		- Add example image
+
+Tutorial 4_4 (new)
+[X]		- Soil mechanics example
+
+Tutorial 5_1
+[X]		- Add time/accuracy improvements for modal aspect, link to 4_3
+
+Tutorial 6_1
+[X]		- Link anchor line to theoretical formulations
+[X]		- Look into SAG instabilty
+[X]		- Add calculation flow chart
+
+Tutorial 6_2
+[X]		- Add dynamic calculation flow chart
+[X]		- Add more realistic damping
+[X]		- Give solver time indication
+
+
+
+
+# -------------------------------------------------------------------------------------------------------------------
+Theory conversion --> Make .md of the theory files from videos/existing slides
+
+File creation
+[X]		- Week 0		Introduction & course information (intro.md), MUDE recap file + exercise
+[X]		- Week 1		ODE solvers
+[X]		- Week 2		Lagrangian mechanics, systems of ODE
+[X]		- Week 3		FD
+[X]		- Week 4		FEM
+[X]		- Week 5		FEM modal analysis
+[X]		- Week 6		Non-linear FE
+[X]		- Week 7		CFD and meshing
+
+# -------------------------------------------------------------------------------------------------------------------
+Extra's and playing around --> Adding content for illustration and comparisons
+
+[X]		- Julia FEM comparison
+[X]		- Maple symbolic comparison
+[X]		- CFD/FSI example
+[X]		- Example project application

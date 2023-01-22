@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial 1: ODE solvers &#8212; ComModHOS</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w1_t1_sol.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Week 2" href="w2_t0.html" />
+    <link rel="prev" title="Tutorial 1: ODE solvers" href="w1_t1.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/TU_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ComModHOS</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to ComModHOS
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course content
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="w0_t0.html">
+   Week 0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w1_t0.html">
+   Week 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w2_t0.html">
+   Week 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w3_t0.html">
+   Week 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w4_t0.html">
+   Week 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w5_t0.html">
+   Week 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w6_t0.html">
+   Week 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w7_t0.html">
+   Week 7
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/w1_t1_sol.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/w1_t1_sol.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1-definition-of-inputs">
+   Part 1: definition of inputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-2-the-ode-solver">
+   Part 2: the ODE solver
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-ode-function">
+   Part 3: ODE function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-4-initial-state">
+   Part 4: initial state
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-5-solve">
+   Part 5: Solve
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 1: ODE solvers</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1-definition-of-inputs">
+   Part 1: definition of inputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-2-the-ode-solver">
+   Part 2: the ODE solver
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-ode-function">
+   Part 3: ODE function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-4-initial-state">
+   Part 4: initial state
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-5-solve">
+   Part 5: Solve
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-1-ode-solvers">
+<h1>Tutorial 1: ODE solvers<a class="headerlink" href="#tutorial-1-ode-solvers" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial you will learn to solve an MCK (mass-damper-spring) using a Python ODE solver. The MCK has 1 DOF and consequently the state veector contains 2 entries; displacement and velocity.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \boldsymbol{q} = \begin{bmatrix} u \\ \dot{u} \end{bmatrix}\end{split}\]</div>
+<p>The Equation of Motion (EoM) is given by: $<span class="math notranslate nohighlight">\( m\ddot{u} = -ku -c\dot{u} \)</span>$</p>
+<section id="part-1-definition-of-inputs">
+<h2>Part 1: definition of inputs<a class="headerlink" href="#part-1-definition-of-inputs" title="Permalink to this headline">#</a></h2>
+<p>We start by defining the numerical values of all parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">scipy</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy in c:\users\rubde\anaconda3\lib\site-packages (1.9.1)
+Requirement already satisfied: numpy&lt;1.25.0,&gt;=1.18.5 in c:\users\rubde\anaconda3\lib\site-packages (from scipy) (1.21.5)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ipympl</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: ipympl in c:\users\rubde\anaconda3\lib\site-packages (0.9.2)
+Requirement already satisfied: ipython-genutils in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (0.2.0)
+Requirement already satisfied: matplotlib&lt;4,&gt;=3.4.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (3.5.2)
+Requirement already satisfied: numpy in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (1.21.5)
+Requirement already satisfied: ipywidgets&lt;9,&gt;=7.6.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (7.6.5)
+Requirement already satisfied: traitlets&lt;6 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (5.1.1)
+Requirement already satisfied: ipython&lt;9 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (7.31.1)
+Requirement already satisfied: pillow in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (9.2.0)
+Requirement already satisfied: pickleshare in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.7.5)
+Requirement already satisfied: decorator in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (5.1.1)
+Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (3.0.20)
+Requirement already satisfied: backcall in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.2.0)
+Requirement already satisfied: matplotlib-inline in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.1.6)
+Requirement already satisfied: pygments in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (2.11.2)
+Requirement already satisfied: colorama in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.4.5)
+Requirement already satisfied: setuptools&gt;=18.5 in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (63.4.1)
+Requirement already satisfied: jedi&gt;=0.16 in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.18.1)
+Requirement already satisfied: nbformat&gt;=4.2.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (5.5.0)
+Requirement already satisfied: widgetsnbextension~=3.5.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (3.5.2)
+Requirement already satisfied: jupyterlab-widgets&gt;=1.0.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.0.0)
+Requirement already satisfied: ipykernel&gt;=4.5.1 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.15.2)
+Requirement already satisfied: pyparsing&gt;=2.2.1 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (3.0.9)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (1.4.2)
+Requirement already satisfied: fonttools&gt;=4.22.0 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (4.25.0)
+Requirement already satisfied: cycler&gt;=0.10 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (0.11.0)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (21.3)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (2.8.2)
+Requirement already satisfied: nest-asyncio in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.5.5)
+Requirement already satisfied: debugpy&gt;=1.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.5.1)
+Requirement already satisfied: tornado&gt;=6.1 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.1)
+Requirement already satisfied: psutil in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (5.9.0)
+Requirement already satisfied: pyzmq&gt;=17 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (23.2.0)
+Requirement already satisfied: jupyter-client&gt;=6.1.12 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (7.3.4)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.0 in c:\users\rubde\anaconda3\lib\site-packages (from jedi&gt;=0.16-&gt;ipython&lt;9-&gt;ipympl) (0.8.3)
+Requirement already satisfied: jupyter_core in c:\users\rubde\anaconda3\lib\site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (4.11.1)
+Requirement already satisfied: jsonschema&gt;=2.6 in c:\users\rubde\anaconda3\lib\site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (3.2.0)
+Requirement already satisfied: fastjsonschema in c:\users\rubde\anaconda3\lib\site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.16.2)
+Requirement already satisfied: wcwidth in c:\users\rubde\anaconda3\lib\site-packages (from prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0-&gt;ipython&lt;9-&gt;ipympl) (0.2.5)
+Requirement already satisfied: six&gt;=1.5 in c:\users\rubde\anaconda3\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (1.16.0)
+Requirement already satisfied: notebook&gt;=4.4.1 in c:\users\rubde\anaconda3\lib\site-packages (from widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.4.12)
+Requirement already satisfied: attrs&gt;=17.4.0 in c:\users\rubde\anaconda3\lib\site-packages (from jsonschema&gt;=2.6-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (21.4.0)
+Requirement already satisfied: pyrsistent&gt;=0.14.0 in c:\users\rubde\anaconda3\lib\site-packages (from jsonschema&gt;=2.6-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.18.0)
+Requirement already satisfied: entrypoints in c:\users\rubde\anaconda3\lib\site-packages (from jupyter-client&gt;=6.1.12-&gt;ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.4)
+Requirement already satisfied: pywin32&gt;=1.0 in c:\users\rubde\anaconda3\lib\site-packages (from jupyter_core-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (302)
+Requirement already satisfied: terminado&gt;=0.8.3 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.13.1)
+Requirement already satisfied: jinja2 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.11.3)
+Requirement already satisfied: argon2-cffi in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (21.3.0)
+Requirement already satisfied: nbconvert&gt;=5 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.4.4)
+Requirement already satisfied: Send2Trash&gt;=1.8.0 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.8.0)
+Requirement already satisfied: prometheus-client in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.14.1)
+Requirement already satisfied: beautifulsoup4 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (4.11.1)
+Requirement already satisfied: jupyterlab-pygments in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.1.2)
+Requirement already satisfied: bleach in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (4.1.0)
+Requirement already satisfied: testpath in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.6.0)
+Requirement already satisfied: mistune&lt;2,&gt;=0.8.1 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.8.4)
+Requirement already satisfied: pandocfilters&gt;=1.4.1 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.5.0)
+Requirement already satisfied: defusedxml in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.7.1)
+Requirement already satisfied: nbclient&lt;0.6.0,&gt;=0.5.0 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.5.13)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in c:\users\rubde\anaconda3\lib\site-packages (from jinja2-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.0.1)
+Requirement already satisfied: pywinpty&gt;=1.1.0 in c:\users\rubde\anaconda3\lib\site-packages (from terminado&gt;=0.8.3-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.0.2)
+Requirement already satisfied: argon2-cffi-bindings in c:\users\rubde\anaconda3\lib\site-packages (from argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (21.2.0)
+Requirement already satisfied: cffi&gt;=1.0.1 in c:\users\rubde\anaconda3\lib\site-packages (from argon2-cffi-bindings-&gt;argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.15.1)
+Requirement already satisfied: soupsieve&gt;1.2 in c:\users\rubde\anaconda3\lib\site-packages (from beautifulsoup4-&gt;nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.3.1)
+Requirement already satisfied: webencodings in c:\users\rubde\anaconda3\lib\site-packages (from bleach-&gt;nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.5.1)
+Requirement already satisfied: pycparser in c:\users\rubde\anaconda3\lib\site-packages (from cffi&gt;=1.0.1-&gt;argon2-cffi-bindings-&gt;argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.21)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">k</span> <span class="o">=</span>         <span class="mi">1</span>   <span class="c1"># [N/n] </span>
+<span class="n">c</span> <span class="o">=</span>         <span class="mf">0.1</span> <span class="c1"># [Ns/m]</span>
+<span class="n">m</span> <span class="o">=</span>         <span class="mi">1</span>   <span class="c1"># [kg]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We want to solve the problem in the interval <span class="math notranslate nohighlight">\( t \in [0,10] \)</span>, and get the solution with a resolution of <span class="math notranslate nohighlight">\( \Delta t = 0.01\)</span>. Then, the vector of evaluation points will be defined as:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Time interval</span>
+<span class="n">t_0</span> <span class="o">=</span>       <span class="mi">0</span>       <span class="c1"># initial time [s]</span>
+<span class="n">t_f</span> <span class="o">=</span>       <span class="mi">10</span>      <span class="c1"># final time [s]</span>
+<span class="n">dt</span> <span class="o">=</span>        <span class="mf">0.01</span>    <span class="c1"># time step size [s]</span>
+
+<span class="n">steps</span> <span class="o">=</span>     <span class="nb">int</span><span class="p">(</span><span class="n">t_f</span><span class="o">/</span><span class="n">dt</span><span class="p">)</span>  <span class="c1"># integer number of steps [-]</span>
+<span class="n">tspan</span> <span class="o">=</span>     <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t_0</span><span class="p">,</span><span class="n">t_f</span><span class="p">,</span><span class="n">steps</span><span class="p">)</span>   <span class="c1"># vector of evaluation points [s]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The initial conditions for this example will be: <span class="math notranslate nohighlight">\( u(0) = 1.0 \)</span> and <span class="math notranslate nohighlight">\( \dot{u}(0) = 0.0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial conditions</span>
+<span class="n">init_disp</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">init_velo</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-2-the-ode-solver">
+<h2>Part 2: the ODE solver<a class="headerlink" href="#part-2-the-ode-solver" title="Permalink to this headline">#</a></h2>
+<p>We will use solve_ivp (available via the SciPy package) to solve our MCK system. solve_ivp implements the 5th order Runge-Kutta scheme mentioned in the lectures. Checking help for solve_ivp shows how to call it:</p>
+<p><code class="docutils literal notranslate"><span class="pre">scipy.integrate.solve_ivp(fun,</span> <span class="pre">t_span,</span> <span class="pre">y0,</span> <span class="pre">t_eval,</span> <span class="pre">**options)</span></code></p>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><p>T: Evaluation points</p></li>
+<li><p>q: containts the state <span class="math notranslate nohighlight">\(\boldsymbol{q}\)</span> at each time in the vector T</p></li>
+</ul>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fun</span></code>: our ode function as explained during the lecture. It will compute the time derivatives of <span class="math notranslate nohighlight">\(q: \dot{q}=\mathcal{F} (q)\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_span</span></code>: list of the first and last time step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y0</span></code>: our initial state / conditions, <span class="math notranslate nohighlight">\(q(0)\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_eval</span></code>: times at which the solution should be stored. In our case this is the variable <code class="docutils literal notranslate"><span class="pre">tspan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">**options</span></code>: Options for the solvers. Here you can set things like error tolerances, maximum time step, event functions, etc. Check the SciPy docs for details. You will need to use this during the first assignment.</p></li>
+</ul>
+<p>Let’s ignore the options for now and use the <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> as our solver.</p>
+</section>
+<section id="part-3-ode-function">
+<h2>Part 3: ODE function<a class="headerlink" href="#part-3-ode-function" title="Permalink to this headline">#</a></h2>
+<p>Now we need to create our <code class="docutils literal notranslate"><span class="pre">fun</span></code>. In the help documentation of <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> we can check for a short description on what the function does. It is stated that the function f(t,q) determines the differential equations. The function is called as:</p>
+<p><span class="math notranslate nohighlight">\( \dot{\boldsymbol{q}} = \)</span><code class="docutils literal notranslate"><span class="pre">fun</span></code><span class="math notranslate nohighlight">\((t,\boldsymbol{q}) \)</span></p>
+<p>Here, the variable <span class="math notranslate nohighlight">\(\dot{\boldsymbol{q}}\)</span> is the time derivative of our current state, <span class="math notranslate nohighlight">\(t\)</span> is the current time and <span class="math notranslate nohighlight">\(\boldsymbol{q}\)</span> is our current state. As the solver requires this interface, we have to create our <code class="docutils literal notranslate"><span class="pre">fun</span></code> accordingly or we will get answers that have no physical meaning!</p>
+<p>Now we are faced with the problem that we need to have access to our parameters inside our <code class="docutils literal notranslate"><span class="pre">fun</span></code>. But our <code class="docutils literal notranslate"><span class="pre">fun</span></code> can only have the arguments <span class="math notranslate nohighlight">\((t,\boldsymbol{q})\)</span>. To overcome this problem we will use an anonymous function (AF) to pass along the parameters to our <code class="docutils literal notranslate"><span class="pre">fun</span></code>. In Python an anonymous function is also known as a Lambda function.</p>
+<p><code class="docutils literal notranslate"><span class="pre">AF</span> <span class="pre">=</span> <span class="pre">lambda</span> <span class="pre">-,-,-</span> <span class="pre">:</span> <span class="pre">fun(-,-,-)</span></code></p>
+<p>where you have to replace the dashed marks. Now we can use this AF in our call to the solver:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[T,q]</span> <span class="pre">=</span> <span class="pre">solve_ivp(AF,tspan,q_0)</span></code></p>
+<p>You can also directly declare the AF in the call to the solver if you prefer:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[T,q]</span> <span class="pre">=</span> <span class="pre">solve_ivp(lambda</span> <span class="pre">-,-,-</span> <span class="pre">:</span> <span class="pre">fun(-,-,-),tspan,q_0)</span></code></p>
+<hr class="docutils" />
+<p><strong>Problem</strong>: Create a <code class="docutils literal notranslate"><span class="pre">fun</span></code> function that can receive the time, the state variable and the parameters as arguments. Implement the ODE function, <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>, for the 1DOF MCK system such that <span class="math notranslate nohighlight">\(\dot{q}=\mathcal{F} (q)\)</span>.</p>
+<p><em>Hint</em>: Use the EoM and the fact that <span class="math notranslate nohighlight">\(\boldsymbol{q}(1) = u\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{q}(2) = \dot{u}\)</span>.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem of part 3 here</span>
+<span class="k">def</span> <span class="nf">q_dot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
+    <span class="c1"># A function that given a time &quot;t&quot; and a vector &quot;q&quot; returns the derivative of &quot;q&quot; --&gt; q_dot</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>       <span class="c1"># First entry of vector q is the displacement</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>       <span class="c1"># Second entry of vector q is the velocity</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">u</span> <span class="o">-</span> <span class="n">c</span><span class="o">*</span><span class="n">v</span><span class="p">)</span><span class="o">/</span><span class="n">m</span> <span class="c1"># From the equation of motion we can compute the acceleration</span>
+    <span class="c1"># q = [u, v] =&gt;  dq = [v, a]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">v</span><span class="p">,</span> <span class="n">a</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-4-initial-state">
+<h2>Part 4: initial state<a class="headerlink" href="#part-4-initial-state" title="Permalink to this headline">#</a></h2>
+<p>Next we need to create <code class="docutils literal notranslate"><span class="pre">q_0</span></code>. Note that the solver does not know / care what each entry in <code class="docutils literal notranslate"><span class="pre">q</span></code> represents. All the solver does is integrate things! You assign meaning to the entries in the state <code class="docutils literal notranslate"><span class="pre">q</span></code> when you define the initial conditions in <code class="docutils literal notranslate"><span class="pre">q_0</span></code>. This means that if you want the first entry in your state to be the displacement, <code class="docutils literal notranslate"><span class="pre">q_0[0]</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">init_disp</span></code>. If you want the velocities to be the first entry, <code class="docutils literal notranslate"><span class="pre">q_0[0]</span></code> should be equal to the <code class="docutils literal notranslate"><span class="pre">init_velo</span></code>. It is up to you to decide this.</p>
+<p>!! IMPORTANT !!
+The <code class="docutils literal notranslate"><span class="pre">q</span></code> you receive in your <code class="docutils literal notranslate"><span class="pre">fun</span></code> will have the same meaning as your <code class="docutils literal notranslate"><span class="pre">q_0</span></code>. This means if you assigned <code class="docutils literal notranslate"><span class="pre">q_0[0]</span></code> to be the <code class="docutils literal notranslate"><span class="pre">init_disp</span></code>, <code class="docutils literal notranslate"><span class="pre">q_n[0]</span></code> will be the current displacement. So make sure your usage of <code class="docutils literal notranslate"><span class="pre">q_n</span></code> inside the <code class="docutils literal notranslate"><span class="pre">fun</span></code> is consistent with your definition of <code class="docutils literal notranslate"><span class="pre">q_0</span></code> as otherwise you will get bogus results</p>
+<hr class="docutils" />
+<p><strong>Problem</strong>: Create your <code class="docutils literal notranslate"><span class="pre">q_0</span></code></p>
+<p><em>Hint</em>: Straight forward! Just make sure that the indices are consistent with what you wrote in <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem of part 4 here</span>
+<span class="n">q0</span> <span class="o">=</span> <span class="p">[</span><span class="n">init_disp</span><span class="p">,</span> <span class="n">init_velo</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-5-solve">
+<h2>Part 5: Solve<a class="headerlink" href="#part-5-solve" title="Permalink to this headline">#</a></h2>
+<p>Once everything works the solver will return T and q. Each row in q corresponds to your state at that time-step. you can then plot your results with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">q_dot</span><span class="p">,</span><span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">t_0</span><span class="p">,</span> <span class="n">t_f</span><span class="p">],</span> <span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">)</span>
+
+<span class="c1"># Plotting the solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time [s]&#39;)
+</pre></div>
+</div>
+<img alt="../_images/w1_t1_sol_15_1.png" src="../_images/w1_t1_sol_15_1.png" />
+</div>
+</div>
+<p>Let’s write the Forward Euler solver:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Foward Euler solver</span>
+<span class="k">def</span> <span class="nf">FE_solver</span><span class="p">(</span><span class="n">qdot</span><span class="p">,</span> <span class="n">tspan</span><span class="p">,</span> <span class="n">q0</span><span class="p">):</span>
+    
+    <span class="c1"># Initialize the solution vector at the times we want to evaluate.</span>
+    <span class="c1"># Remember, the vector q has two entries per time, so the solution is a matrix of size (nsteps x 2)</span>
+    <span class="n">nsteps</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tspan</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nsteps</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+    
+    <span class="c1"># Fill initial step</span>
+    <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">q0</span>
+    
+    <span class="c1"># Loop over time entries</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tspan</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+        <span class="n">dq</span> <span class="o">=</span> <span class="n">qdot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="c1"># Evaluate the derivative using the function provided as argument</span>
+        <span class="c1"># update the solution vector at step &quot;i&quot;</span>
+        <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="p">(</span><span class="n">dq</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span>  <span class="c1"># q_{i+1} = q_i + qdot_i*dt</span>
+        
+    <span class="k">return</span> <span class="n">q</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem</span>
+<span class="n">FE_sol</span> <span class="o">=</span> <span class="n">FE_solver</span><span class="p">(</span><span class="n">q_dot</span><span class="p">,</span> <span class="n">tspan</span><span class="p">,</span><span class="n">q0</span><span class="p">)</span>
+
+<span class="c1"># Plotting the solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time [s]&#39;)
+</pre></div>
+</div>
+<img alt="../_images/w1_t1_sol_18_1.png" src="../_images/w1_t1_sol_18_1.png" />
+</div>
+</div>
+<p>The Forward Euler method is less accurate than the <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> solver and it accumulates as time evolves. Let’s plot the error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting the error</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="nb">abs</span><span class="p">(</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="nb">abs</span><span class="p">(</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time [s]&#39;)
+</pre></div>
+</div>
+<img alt="../_images/w1_t1_sol_20_1.png" src="../_images/w1_t1_sol_20_1.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="w1_t1.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 1: ODE solvers</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="w2_t0.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Week 2</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By TU Delft Offshore Engineering<br/>
+  
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

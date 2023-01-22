@@ -1,0 +1,1015 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial 4: FEM for a rod &#8212; ComModHOS</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w4_t1_sol.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial 5: FEM for an Euler-Bernoulli beam" href="w4_t2.html" />
+    <link rel="prev" title="Tutorial 4: FEM for a rod" href="w4_t1.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/TU_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ComModHOS</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to ComModHOS
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course content
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="w0_t0.html">
+   Week 0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w1_t0.html">
+   Week 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w2_t0.html">
+   Week 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w3_t0.html">
+   Week 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w4_t0.html">
+   Week 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w5_t0.html">
+   Week 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w6_t0.html">
+   Week 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w7_t0.html">
+   Week 7
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/w4_t1_sol.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/w4_t1_sol.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-define-the-shape-functions">
+   Step 2: define the shape functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-computation-of-the-elemental-matrices">
+   Step 3: computation of the elemental matrices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#symbolic-computation-of-the-integral">
+     Symbolic computation of the integral:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerical-computation-of-the-integral">
+     Numerical computation of the integral:
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-global-assembly">
+   Step 4: global assembly
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-solving-the-ode">
+   Step 5: solving the ODE
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 4: FEM for a rod</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-define-the-shape-functions">
+   Step 2: define the shape functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-computation-of-the-elemental-matrices">
+   Step 3: computation of the elemental matrices
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#symbolic-computation-of-the-integral">
+     Symbolic computation of the integral:
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#numerical-computation-of-the-integral">
+     Numerical computation of the integral:
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-global-assembly">
+   Step 4: global assembly
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-solving-the-ode">
+   Step 5: solving the ODE
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-4-fem-for-a-rod">
+<h1>Tutorial 4: FEM for a rod<a class="headerlink" href="#tutorial-4-fem-for-a-rod" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial we will learn how to define the FEM to solve a rod subject to axial loading. The equation of motion of a rod is given by the following PDE:</p>
+<div class="math notranslate nohighlight">
+\[ \rho A \frac{\partial^2 u(x,t)}{\partial t^2} - EA \frac{\partial^2u(x,t)}{\partial x^2} = q(x) \]</div>
+<p>We consider that the rod has the following properties:</p>
+<ul class="simple">
+<li><p>Length of <span class="math notranslate nohighlight">\(L = 3\)</span> <span class="math notranslate nohighlight">\(m\)</span></p></li>
+<li><p>Fixed at <span class="math notranslate nohighlight">\(x=0\)</span>, that means <span class="math notranslate nohighlight">\(u(0,t) = 0 \forall t \)</span></p></li>
+<li><p>The rod is at rest initially, <span class="math notranslate nohighlight">\(u(x,0) = 0\)</span> and <span class="math notranslate nohighlight">\(\dot{u}(x,0) = 0\)</span></p></li>
+<li><p>A dynamic point load <span class="math notranslate nohighlight">\(P=10e3 sin(2\pi t)\)</span> <span class="math notranslate nohighlight">\(N\)</span> is applied at <span class="math notranslate nohighlight">\(x=L\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho = 8.0e3\)</span> <span class="math notranslate nohighlight">\(kg/m^3\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(A = 0.01\)</span> <span class="math notranslate nohighlight">\(m^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(E = 2.1e9\)</span> <span class="math notranslate nohighlight">\(Pa\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">u0_dt2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">def</span> <span class="nf">P</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">10e3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">8.0e3</span>
+<span class="n">rho2</span> <span class="o">=</span> <span class="mf">8.0e4</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mf">1e-2</span>
+<span class="n">E</span> <span class="o">=</span> <span class="mf">2.1e9</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="step-1-discretize-the-domain">
+<h2>Step 1: discretize the domain<a class="headerlink" href="#step-1-discretize-the-domain" title="Permalink to this headline">#</a></h2>
+<p>We consider a discretization made out of <span class="math notranslate nohighlight">\(n_e = 5\)</span> elements equally spaced.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ne</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">nn</span> <span class="o">=</span> <span class="n">ne</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">xn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">nn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot the discretization</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nodes</span> <span class="o">=</span> <span class="p">(</span><span class="n">xn</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">nn</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nodes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s2">&quot;o-&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w4_t1_sol_5_0.png" src="../_images/w4_t1_sol_5_0.png" />
+</div>
+</div>
+<p>We will need the information of the element-nodes connectivity, that is the nodes attached to each element.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elem_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">elem_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">ie</span><span class="p">,</span> <span class="n">ie</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This will give us a table with the index of the nodes attached to each element:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dicts</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">dicts</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">{:&lt;18}</span><span class="s2"> </span><span class="si">{:&lt;16}</span><span class="s2"> </span><span class="si">{:&lt;16}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span><span class="s1">&#39;Node-1&#39;</span><span class="p">,</span><span class="s1">&#39;Node-2&#39;</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">dicts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:&lt;18}</span><span class="s2"> </span><span class="si">{:&lt;16}</span><span class="s2"> </span><span class="si">{:&lt;16}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Element            Node-1           Node-2          
+0                  0                1               
+1                  1                2               
+2                  2                3               
+3                  3                4               
+4                  4                5               
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-define-the-shape-functions">
+<h2>Step 2: define the shape functions<a class="headerlink" href="#step-2-define-the-shape-functions" title="Permalink to this headline">#</a></h2>
+<p>Here we assume that the displacement can be well captured by a piece-wise lienar function, so we make the modeling choice of selecting linear shape functions.</p>
+<p>For each element, the shape functions associated to node 1 and 2 are to be defined by:</p>
+<div class="math notranslate nohighlight">
+\[ N_1^k = \frac{x_2-x}{h}, \quad N_1^{'k} = \frac{-1}{h} \]</div>
+<div class="math notranslate nohighlight">
+\[ N_2^k = \frac{x-x_1}{h}, \quad N_2^{'k} = \frac{1}{h} \]</div>
+<p>where <span class="math notranslate nohighlight">\(h=x_2-x_1\)</span>. Since all the nodes are equally distributed: <span class="math notranslate nohighlight">\(h=\frac{L}{N}\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">ne</span>
+<span class="n">N</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dN</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="n">N</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">h</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">h</span><span class="p">])</span>
+    <span class="n">dN</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">h</span> <span class="o">+</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="n">h</span> <span class="o">+</span> <span class="mf">0.0</span><span class="o">*</span><span class="n">x</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 1]
+[1, 2]
+[2, 3]
+[3, 4]
+[4, 5]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see how these functions look like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">color</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">rainbow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">ne</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">c</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="c1"># Manage color scheme</span>
+    <span class="n">prev</span><span class="o">=</span><span class="n">c</span>
+    <span class="n">c</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="n">prev</span><span class="p">,</span><span class="n">c</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xe</span><span class="p">,</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">xe</span><span class="p">),</span><span class="n">c</span><span class="o">=</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Shape functions&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">color</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">rainbow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">ne</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+<span class="n">c</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="c1"># Manage color scheme</span>
+    <span class="n">prev</span><span class="o">=</span><span class="n">c</span>
+    <span class="n">c</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">=</span><span class="p">[</span><span class="n">prev</span><span class="p">,</span><span class="n">c</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xe</span><span class="p">,</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">xe</span><span class="p">),</span><span class="n">c</span><span class="o">=</span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Shape function derivatives&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w4_t1_sol_13_0.png" src="../_images/w4_t1_sol_13_0.png" />
+<img alt="../_images/w4_t1_sol_13_1.png" src="../_images/w4_t1_sol_13_1.png" />
+</div>
+</div>
+<p>Note that here we are storing four functions at each element. This is not affordable for large systems. To be more efficient, FEM codes typically use an isoparametric element where the functions and derivatives are defined, and apply the corresponding transformations when performing the integrals. This approach is not covered in this tutorial.</p>
+</section>
+<section id="step-3-computation-of-the-elemental-matrices">
+<h2>Step 3: computation of the elemental matrices<a class="headerlink" href="#step-3-computation-of-the-elemental-matrices" title="Permalink to this headline">#</a></h2>
+<p>In the theory we have seen that the mass and stiffness matrices for the rod problem can be computed as:</p>
+<div class="math notranslate nohighlight">
+\[ M_{a,b}^k = \int_{x_a}^{x_b} \rho A N_a^k(x)N_b^{k}(x)dx \]</div>
+<div class="math notranslate nohighlight">
+\[ K_{a,b}^k = \int_{x_a}^{x_b} E A N_a^{'k}(x)N_b^{'k}(x)dx \]</div>
+<p>Here we can use the two approaches to compute these matrices: symbolically or numerically.</p>
+<section id="symbolic-computation-of-the-integral">
+<h3>Symbolic computation of the integral:<a class="headerlink" href="#symbolic-computation-of-the-integral" title="Permalink to this headline">#</a></h3>
+<p>Here we make use of the capabilities of Python to perform symbolic operations. In that case we perform a symbolic integral with respect to the variable <span class="math notranslate nohighlight">\(x\)</span>, and we evaluate the integral between the element nodes. In Python symbolic operations can be done using the SymPy package.</p>
+<p>For more information see: <a class="reference external" href="https://docs.sympy.org/latest/index.html">https://docs.sympy.org/latest/index.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">smp</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">M_k_sym</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span> <span class="c1"># Loop over elements, get nodes attached to elements</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="n">M_k_sym</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span> <span class="c1"># Construct local matrix, fill it below</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+            <span class="n">eqn</span> <span class="o">=</span> <span class="n">rho</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">j</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">M_k_sym</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">eqn</span><span class="p">,(</span><span class="n">x</span><span class="p">,</span> <span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We know that the elemental mass matrix should be:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} {M}^k = \frac{\rho A h}{6} \begin{bmatrix} 2 &amp; 1 \\ 1 &amp; 2 \end{bmatrix} = \begin{bmatrix} 16 &amp; 8 \\ 8 &amp; 16 \end{bmatrix} \end{split}\]</div>
+<p>and we see that the computed matrices give the desired result:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">M_k_sym</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[16.  8.]
+ [ 8. 16.]]
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><strong>Problem:</strong> Do the same operations for the stiffnes matrix and check that you get the same result as the one given in the theory lessons.</p>
+<hr class="docutils" />
+<p>The elemental stiffness matrix should be:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} {K}^k = \frac{EA}{h} \begin{bmatrix} 1 &amp; -1 \\ 1 &amp; -1 \end{bmatrix} = 3.5e7 \begin{bmatrix} 1 &amp; -1 \\ -1 &amp; 1 \end{bmatrix} \end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Implement the symbolic computation of the integrals for the stiffness matrix here</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">K_k_sym</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="n">K_k_sym</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+            <span class="n">eqn</span> <span class="o">=</span> <span class="n">E</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">j</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">K_k_sym</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">smp</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">eqn</span><span class="p">,(</span><span class="n">x</span><span class="p">,</span> <span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">K_k_sym</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 35000000. -35000000.]
+ [-35000000.  35000000.]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="numerical-computation-of-the-integral">
+<h3>Numerical computation of the integral:<a class="headerlink" href="#numerical-computation-of-the-integral" title="Permalink to this headline">#</a></h3>
+<p>The symbolic computation of an integral is very computationally expensive, and not advisable for large matrices. An alternative is to perform a numerical integration using quadrature formulas.</p>
+<p>Here we will use a quadrature rule that approximates the integral as</p>
+<div class="math notranslate nohighlight">
+\[ \int f(x) dx \approx \sum_{q=1}^{n_q} f(x_q)w_q \]</div>
+<p>where <span class="math notranslate nohighlight">\(n_q\)</span> is the number of quadrature points and <span class="math notranslate nohighlight">\(w_q\)</span> is the quadrature point weight. The number of quadrature points will determine the accuracy of the integral. For instance, in a Gauss quadrature rule, a quadrature with <span class="math notranslate nohighlight">\(n_q\)</span> points can integrate exactly functions of order <span class="math notranslate nohighlight">\(2n_q -1\)</span>. In our case, the mass matrix will be second order, since we have the product of two linear shape functions. Therefore, we need at least two quadratue points. This will be internally handled by Python when we call the function <code class="docutils literal notranslate"><span class="pre">quad</span></code> from the SciPy integration package.</p>
+<p>NOTE: the function <code class="docutils literal notranslate"><span class="pre">quad</span></code> from SciPy returns a tuple: (integrand value, estimated absolute error), hence the <code class="docutils literal notranslate"><span class="pre">[0]</span></code> is added at the end of the last line as we are only interested in the value.</p>
+<p>For more information see: <a class="reference external" href="https://docs.scipy.org/doc/scipy/tutorial/integrate.html">https://docs.scipy.org/doc/scipy/tutorial/integrate.html</a> and <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/index.html">https://docs.scipy.org/doc/scipy/reference/index.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">x</span>   <span class="c1"># need to remove the symbolic x-variable when switching to scipy (only once)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.integrate</span> <span class="k">as</span> <span class="nn">scp</span>
+<span class="n">M_k_num</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="n">M_k_num</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+            <span class="k">def</span> <span class="nf">eqn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">rho</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">j</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">M_k_num</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="n">M_k_num</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+            <span class="k">def</span> <span class="nf">eqn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">rho2</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">j</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">M_k_num</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">M_k_num</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">M_k_num</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e3</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Again, we display the matrix value to ensure that it is well computed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">M_k_num</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rounding errors for numerical integration: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">M_k_num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">M_k_sym</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span> <span class="c1">#= machine precision just</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[16.  8.]
+ [ 8. 16.]]
+Rounding errors for numerical integration: 1.7763568394002505e-15
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that, since it is a numerical operation, we get rounding errors This is why the values are not exact integers as obtained with the symbolic computation.</p>
+<p>We do the same operation for the stiffness matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K_k_num</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="n">K_k_num</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+            <span class="k">def</span> <span class="nf">eqn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">E</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">j</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">K_k_num</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
+    <span class="n">K_k_num</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)):</span>
+            <span class="k">def</span> <span class="nf">eqn</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">E</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">j</span><span class="p">](</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">E</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">dN</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">N</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">j</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">K_k_num</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">K_k_num</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 35000000. -35000000.]
+ [-35000000.  35000000.]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-4-global-assembly">
+<h2>Step 4: global assembly<a class="headerlink" href="#step-4-global-assembly" title="Permalink to this headline">#</a></h2>
+<p>To construct the global matrices we add all the elemental contributions to the corresponding nodes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nn</span><span class="o">*</span><span class="n">nn</span><span class="p">)</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nn</span><span class="o">*</span><span class="n">nn</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ne</span><span class="p">):</span> <span class="c1"># Loop over elements</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">elem_nodes</span><span class="p">[</span><span class="n">ie</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="c1"># Loop over nodes</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">ij</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">*</span><span class="n">nn</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">M_k_num</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+            <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">K_k_num</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span>
+
+<span class="c1"># Reshape the global matrix from a 1-dimensional array to a 2-dimensional array</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nn</span><span class="p">,</span> <span class="n">nn</span><span class="p">))</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nn</span><span class="p">,</span> <span class="n">nn</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have the global mass and stiffness matrices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[  16.    8.    0.    0.    0.    0.]
+ [   8.   32.    8.    0.    0.    0.]
+ [   0.    8.  176.   80.    0.    0.]
+ [   0.    0.   80.  320.   80.    0.]
+ [   0.    0.    0.   80.  320.   80.]
+ [   0.    0.    0.    0.   80. 1160.]]
+[[ 35000000.         -35000000.                 0.
+          0.                 0.                 0.        ]
+ [-35000000.          70000000.         -35000000.
+          0.                 0.                 0.        ]
+ [        0.         -35000000.          59500000.
+  -24500000.                 0.                 0.        ]
+ [        0.                 0.         -45499999.99999999
+   69999999.99999999 -24499999.99999999         0.        ]
+ [        0.                 0.                 0.
+  -45499999.99999999  70000000.         -24500000.00000001]
+ [        0.                 0.                 0.
+          0.         -45500000.00000001  45500000.00000001]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the right-hand-side, we will have a vector that accounts for the external forces. In that case, we have a point load at the last node, so we define the global vector directly as</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Q</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nn</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="n">P</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We just need to apply the boundary conditions and we’ll be set to solve.</p>
+<p>To apply the boundary conditions, we will remove the rows associated to the fixed DOFs and add the contribution to the right-hand-side. First, we identify the free and fixed DOFs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fixed_dofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">free_dofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nn</span><span class="p">)</span>
+<span class="n">free_dofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">free_dofs</span><span class="p">,</span> <span class="n">fixed_dofs</span><span class="p">)</span>    <span class="c1"># remove the fixed DOFs from the free DOFs array</span>
+
+<span class="c1"># free &amp; fixed array indices</span>
+<span class="n">fx</span> <span class="o">=</span> <span class="n">free_dofs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">fy</span> <span class="o">=</span> <span class="n">free_dofs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">bx</span> <span class="o">=</span> <span class="n">fixed_dofs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">by</span> <span class="o">=</span> <span class="n">fixed_dofs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can re-order the matrices and vectors in blocks, such that it’s easy to operate with the blocks corresponding with the fixed DOFs. We’ll use the notation <span class="math notranslate nohighlight">\(_I\)</span> to designate an interior DOF and <span class="math notranslate nohighlight">\(_B\)</span> to designate a boundary node.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{bmatrix} \bold{M}_{II} &amp; \bold{M}_{IB} \\ \bold{M}_{BI} &amp;\bold{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{K}_{II} &amp; \bold{K}_{IB} \\ \bold{K}_{BI} &amp;\bold{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{Q}_{I}  \\ \bold{Q}_{B}  \end{bmatrix} \end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Mii</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Mib</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+<span class="n">Mbi</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Mbb</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+
+<span class="n">Kii</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Kib</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+<span class="n">Kbi</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Kbb</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now operating with the different blocks, we can get a system of ODEs for the free DOFs, which is given by:</p>
+<div class="math notranslate nohighlight">
+\[ \bold{M}_{II}\bold{\ddot{u}}_I + \bold{K}_{II} \bold{u}_I = \bold{Q}_I - \bold{M}_{IB}\bold{\ddot{u}}_B - \bold{K}_{IB} \bold{u}_B \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u0</span><span class="p">])</span>
+<span class="n">ub_dt2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u0_dt2</span><span class="p">])</span>
+<span class="n">RHS</span> <span class="o">=</span> <span class="o">-</span><span class="n">Mib</span><span class="o">*</span><span class="n">ub_dt2</span><span class="o">-</span><span class="n">Kib</span><span class="o">*</span><span class="n">ub</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-solving-the-ode">
+<h2>Step 5: solving the ODE<a class="headerlink" href="#step-5-solving-the-ode" title="Permalink to this headline">#</a></h2>
+<p>At this point we have all the information to solve the ODE for each DOF. We can use what we learned in the previous modules.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct a matrix to reshape Q </span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">nn</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">nn</span><span class="p">]</span>
+
+<span class="c1"># Set Dimensions and initial conditions of state vector</span>
+<span class="n">nfdofs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">free_dofs</span><span class="p">)</span>
+<span class="n">udofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nfdofs</span><span class="p">)</span>
+<span class="n">vdofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nfdofs</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nfdofs</span><span class="p">)</span>
+<span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">nfdofs</span><span class="p">))</span>
+
+<span class="c1"># Time span (output purposes)</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">tspan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+
+<span class="c1"># Solve</span>
+<span class="k">def</span> <span class="nf">odefun</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">vdofs</span><span class="p">],</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">Mii</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Q</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="o">+</span> <span class="n">RHS</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Kii</span><span class="p">,</span> <span class="n">q</span><span class="p">[</span><span class="n">udofs</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">sol</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">odefun</span><span class="p">,</span> <span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">tspan</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tspan</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">)</span>  
+
+<span class="c1"># Plot results -- shown here for 1 node</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w4_t1_sol_43_0.png" src="../_images/w4_t1_sol_43_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="w4_t1.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 4: FEM for a rod</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="w4_t2.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 5: FEM for an Euler-Bernoulli beam</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By TU Delft Offshore Engineering<br/>
+  
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
