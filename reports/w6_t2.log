@@ -1,0 +1,69 @@
+Traceback (most recent call last):
+  File "C:\Users\rubde\anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 51, in single_nb_execution
+    executenb(
+  File "C:\Users\rubde\anaconda3\lib\site-packages\nbclient\client.py", line 1204, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\rubde\anaconda3\lib\site-packages\nbclient\util.py", line 84, in wrapped
+    return just_run(coro(*args, **kwargs))
+  File "C:\Users\rubde\anaconda3\lib\site-packages\nbclient\util.py", line 62, in just_run
+    return loop.run_until_complete(coro)
+  File "C:\Users\rubde\anaconda3\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\rubde\anaconda3\lib\site-packages\nbclient\client.py", line 663, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\rubde\anaconda3\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\rubde\anaconda3\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+from StringDynamicForces import StringDynamicForces
+def ACCELERATIONS(t, U, NodeCoord, Element, FreeDof, C, M, Pext, TENSION_ONLY):
+    nDof = len(U)
+    u = U[:nDof//2]
+    v = U[nDof//2:]
+
+    # free & fixed array indices
+    fx = FreeDof[:, np.newaxis]
+    fy = FreeDof[np.newaxis, :]
+
+    # Calculate internal forces
+    FintDyn = np.zeros((nDof))
+    for iElem in np.arange(0, len(Element)):
+        NodeLeft = int(Element[iElem, 0])
+        NodeRight = int(Element[iElem, 1])
+        DofsLeft = 2*NodeLeft 
+        DofsRight = 2*NodeRight
+        l0 = Element[iElem, 4]
+        EA = Element[iElem, 3]
+        NodePos = ([NodeCoord[NodeLeft][0] + u[DofsLeft], NodeCoord[NodeRight][0] + u[DofsRight]], 
+            [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]])
+        NodeVel = ([v[DofsLeft], v[DofsRight]], 
+                    [v[DofsLeft + 1], v[DofsRight + 1]])
+        Fint = StringDynamicForces(NodePos, NodeVel, EA, C, l0)
+        FintDyn[DofsLeft:DofsLeft + 2] += Fint[0]
+        FintDyn[DofsRight:DofsRight + 2] += Fint[1]
+
+    # Calculate the new acceleration
+    a = np.zeros((nDof//2))
+    a[FreeDof] = np.linalg.solve(M[fx, fy], (Pext[FreeDof]-FintDyn[FreeDof]))
+    
+    # Store the derivative of phase
+    dU = np.append(v, a)
+    #print("Time = "+str(t)+" s")
+    return dU
+
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+[1;32m~\AppData\Local\Temp\ipykernel_204796\553739229.py[0m in [0;36m<module>[1;34m[0m
+[1;32m----> 1[1;33m [1;32mfrom[0m [0mStringDynamicForces[0m [1;32mimport[0m [0mStringDynamicForces[0m[1;33m[0m[1;33m[0m[0m
+[0m[0;32m      2[0m [1;32mdef[0m [0mACCELERATIONS[0m[1;33m([0m[0mt[0m[1;33m,[0m [0mU[0m[1;33m,[0m [0mNodeCoord[0m[1;33m,[0m [0mElement[0m[1;33m,[0m [0mFreeDof[0m[1;33m,[0m [0mC[0m[1;33m,[0m [0mM[0m[1;33m,[0m [0mPext[0m[1;33m,[0m [0mTENSION_ONLY[0m[1;33m)[0m[1;33m:[0m[1;33m[0m[1;33m[0m[0m
+[0;32m      3[0m     [0mnDof[0m [1;33m=[0m [0mlen[0m[1;33m([0m[0mU[0m[1;33m)[0m[1;33m[0m[1;33m[0m[0m
+[0;32m      4[0m     [0mu[0m [1;33m=[0m [0mU[0m[1;33m[[0m[1;33m:[0m[0mnDof[0m[1;33m//[0m[1;36m2[0m[1;33m][0m[1;33m[0m[1;33m[0m[0m
+[0;32m      5[0m     [0mv[0m [1;33m=[0m [0mU[0m[1;33m[[0m[0mnDof[0m[1;33m//[0m[1;36m2[0m[1;33m:[0m[1;33m][0m[1;33m[0m[1;33m[0m[0m
+
+[1;31mModuleNotFoundError[0m: No module named 'StringDynamicForces'
+ModuleNotFoundError: No module named 'StringDynamicForces'
+

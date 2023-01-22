@@ -1,0 +1,1174 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial 5.1: Modal superposition of a jacket wind turbine &#8212; ComModHOS</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w5_t1_sol.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Week 6" href="w6_t0.html" />
+    <link rel="prev" title="Tutorial 7: Modal superposition of a jacket wind turbine" href="w5_t1.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../_static/TU_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ComModHOS</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to ComModHOS
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course content
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="w0_t0.html">
+   Week 0
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w1_t0.html">
+   Week 1
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w2_t0.html">
+   Week 2
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w3_t0.html">
+   Week 3
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w4_t0.html">
+   Week 4
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w5_t0.html">
+   Week 5
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w6_t0.html">
+   Week 6
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="w7_t0.html">
+   Week 7
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  References
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="zbibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/w5_t1_sol.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/content/w5_t1_sol.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-0-input-parameters">
+   Step 0: input parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-define-the-shape-functions">
+   Step 2: define the shape functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-computation-of-the-elemental-matrices">
+   Step 3: computation of the elemental matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-global-assembly">
+   Step 4: global assembly
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-modal-analysis">
+   Step 5: modal analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-6-calculate-modal-quantities">
+   Step 6: calculate modal quantities
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 5.1: Modal superposition of a jacket wind turbine</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-0-input-parameters">
+   Step 0: input parameters
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-define-the-shape-functions">
+   Step 2: define the shape functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-computation-of-the-elemental-matrices">
+   Step 3: computation of the elemental matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-global-assembly">
+   Step 4: global assembly
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-modal-analysis">
+   Step 5: modal analysis
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-6-calculate-modal-quantities">
+   Step 6: calculate modal quantities
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-5-1-modal-superposition-of-a-jacket-wind-turbine">
+<h1>Tutorial 5.1: Modal superposition of a jacket wind turbine<a class="headerlink" href="#tutorial-5-1-modal-superposition-of-a-jacket-wind-turbine" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial we will use the model defined in tutorial 6 to apply the modal superposition technique in a simplified jacket wind turbine. We assume that the structure can be modelled as a space frame with structural elements that are subject to axial displacement and bending. Therefore, the equations of motion at a given element are given by:</p>
+<div class="math notranslate nohighlight">
+\[ \rho A \frac{\partial^2 u (x,t)}{\partial t^2} - E A \frac{\partial^2 u(x,t)}{\partial x^2} = q_u(x) \]</div>
+<div class="math notranslate nohighlight">
+\[ \rho A \frac{\partial^2 v (x,t)}{\partial t^2} + E I \frac{\partial^4 v(x,t)}{\partial x^4} = q_v(x) \]</div>
+<p>In the following figure we have a sketch of the simplified geometry that will be used in this example.</p>
+<p><img alt="figure" src="content/tutorial8_figure.png" /></p>
+<section id="step-0-input-parameters">
+<h2>Step 0: input parameters<a class="headerlink" href="#step-0-input-parameters" title="Permalink to this headline">#</a></h2>
+<p>Let’s start by setting some parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">scipy</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy in c:\users\rubde\anaconda3\lib\site-packages (1.9.1)
+Requirement already satisfied: numpy&lt;1.25.0,&gt;=1.18.5 in c:\users\rubde\anaconda3\lib\site-packages (from scipy) (1.21.5)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ipympl</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: ipympl in c:\users\rubde\anaconda3\lib\site-packages (0.9.2)
+Requirement already satisfied: ipywidgets&lt;9,&gt;=7.6.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (7.6.5)
+Requirement already satisfied: numpy in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (1.21.5)
+Requirement already satisfied: pillow in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (9.2.0)
+Requirement already satisfied: traitlets&lt;6 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (5.1.1)
+Requirement already satisfied: ipython&lt;9 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (7.31.1)
+Requirement already satisfied: ipython-genutils in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (0.2.0)
+Requirement already satisfied: matplotlib&lt;4,&gt;=3.4.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipympl) (3.5.2)
+Requirement already satisfied: setuptools&gt;=18.5 in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (63.4.1)
+Requirement already satisfied: backcall in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.2.0)
+Requirement already satisfied: matplotlib-inline in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.1.6)
+Requirement already satisfied: jedi&gt;=0.16 in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.18.1)
+Requirement already satisfied: pygments in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (2.11.2)
+Requirement already satisfied: decorator in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (5.1.1)
+Requirement already satisfied: prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (3.0.20)
+Requirement already satisfied: pickleshare in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.7.5)
+Requirement already satisfied: colorama in c:\users\rubde\anaconda3\lib\site-packages (from ipython&lt;9-&gt;ipympl) (0.4.5)
+Requirement already satisfied: ipykernel&gt;=4.5.1 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.15.2)
+Requirement already satisfied: jupyterlab-widgets&gt;=1.0.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.0.0)
+Requirement already satisfied: nbformat&gt;=4.2.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (5.5.0)
+Requirement already satisfied: widgetsnbextension~=3.5.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (3.5.2)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (1.4.2)
+Requirement already satisfied: cycler&gt;=0.10 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (0.11.0)
+Requirement already satisfied: python-dateutil&gt;=2.7 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (2.8.2)
+Requirement already satisfied: pyparsing&gt;=2.2.1 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (3.0.9)
+Requirement already satisfied: fonttools&gt;=4.22.0 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (4.25.0)
+Requirement already satisfied: packaging&gt;=20.0 in c:\users\rubde\anaconda3\lib\site-packages (from matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (21.3)
+Requirement already satisfied: pyzmq&gt;=17 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (23.2.0)
+Requirement already satisfied: debugpy&gt;=1.0 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.5.1)
+Requirement already satisfied: jupyter-client&gt;=6.1.12 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (7.3.4)
+Requirement already satisfied: tornado&gt;=6.1 in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.1)
+Requirement already satisfied: nest-asyncio in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.5.5)
+Requirement already satisfied: psutil in c:\users\rubde\anaconda3\lib\site-packages (from ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (5.9.0)
+Requirement already satisfied: parso&lt;0.9.0,&gt;=0.8.0 in c:\users\rubde\anaconda3\lib\site-packages (from jedi&gt;=0.16-&gt;ipython&lt;9-&gt;ipympl) (0.8.3)
+Requirement already satisfied: fastjsonschema in c:\users\rubde\anaconda3\lib\site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.16.2)
+Requirement already satisfied: jsonschema&gt;=2.6 in c:\users\rubde\anaconda3\lib\site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (3.2.0)
+Requirement already satisfied: jupyter_core in c:\users\rubde\anaconda3\lib\site-packages (from nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (4.11.1)
+Requirement already satisfied: wcwidth in c:\users\rubde\anaconda3\lib\site-packages (from prompt-toolkit!=3.0.0,!=3.0.1,&lt;3.1.0,&gt;=2.0.0-&gt;ipython&lt;9-&gt;ipympl) (0.2.5)
+Requirement already satisfied: six&gt;=1.5 in c:\users\rubde\anaconda3\lib\site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib&lt;4,&gt;=3.4.0-&gt;ipympl) (1.16.0)
+Requirement already satisfied: notebook&gt;=4.4.1 in c:\users\rubde\anaconda3\lib\site-packages (from widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.4.12)
+Requirement already satisfied: pyrsistent&gt;=0.14.0 in c:\users\rubde\anaconda3\lib\site-packages (from jsonschema&gt;=2.6-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.18.0)
+Requirement already satisfied: attrs&gt;=17.4.0 in c:\users\rubde\anaconda3\lib\site-packages (from jsonschema&gt;=2.6-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (21.4.0)
+Requirement already satisfied: entrypoints in c:\users\rubde\anaconda3\lib\site-packages (from jupyter-client&gt;=6.1.12-&gt;ipykernel&gt;=4.5.1-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.4)
+Requirement already satisfied: pywin32&gt;=1.0 in c:\users\rubde\anaconda3\lib\site-packages (from jupyter_core-&gt;nbformat&gt;=4.2.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (302)
+Requirement already satisfied: prometheus-client in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.14.1)
+Requirement already satisfied: jinja2 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.11.3)
+Requirement already satisfied: terminado&gt;=0.8.3 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.13.1)
+Requirement already satisfied: Send2Trash&gt;=1.8.0 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.8.0)
+Requirement already satisfied: nbconvert&gt;=5 in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (6.4.4)
+Requirement already satisfied: argon2-cffi in c:\users\rubde\anaconda3\lib\site-packages (from notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (21.3.0)
+Requirement already satisfied: jupyterlab-pygments in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.1.2)
+Requirement already satisfied: bleach in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (4.1.0)
+Requirement already satisfied: beautifulsoup4 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (4.11.1)
+Requirement already satisfied: testpath in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.6.0)
+Requirement already satisfied: pandocfilters&gt;=1.4.1 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.5.0)
+Requirement already satisfied: nbclient&lt;0.6.0,&gt;=0.5.0 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.5.13)
+Requirement already satisfied: defusedxml in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.7.1)
+Requirement already satisfied: mistune&lt;2,&gt;=0.8.1 in c:\users\rubde\anaconda3\lib\site-packages (from nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.8.4)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in c:\users\rubde\anaconda3\lib\site-packages (from jinja2-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.0.1)
+Requirement already satisfied: pywinpty&gt;=1.1.0 in c:\users\rubde\anaconda3\lib\site-packages (from terminado&gt;=0.8.3-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.0.2)
+Requirement already satisfied: argon2-cffi-bindings in c:\users\rubde\anaconda3\lib\site-packages (from argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (21.2.0)
+Requirement already satisfied: cffi&gt;=1.0.1 in c:\users\rubde\anaconda3\lib\site-packages (from argon2-cffi-bindings-&gt;argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (1.15.1)
+Requirement already satisfied: soupsieve&gt;1.2 in c:\users\rubde\anaconda3\lib\site-packages (from beautifulsoup4-&gt;nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.3.1)
+Requirement already satisfied: webencodings in c:\users\rubde\anaconda3\lib\site-packages (from bleach-&gt;nbconvert&gt;=5-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (0.5.1)
+Requirement already satisfied: pycparser in c:\users\rubde\anaconda3\lib\site-packages (from cffi&gt;=1.0.1-&gt;argon2-cffi-bindings-&gt;argon2-cffi-&gt;notebook&gt;=4.4.1-&gt;widgetsnbextension~=3.5.0-&gt;ipywidgets&lt;9,&gt;=7.6.0-&gt;ipympl) (2.21)
+Note: you may need to restart the kernel to use updated packages.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">scp</span>
+
+<span class="c1"># Input parameters</span>
+<span class="c1"># Nacelle</span>
+<span class="n">Mass_Nacelle</span> <span class="o">=</span> <span class="mi">5000</span>             <span class="c1"># [kg]</span>
+
+<span class="c1"># Pile</span>
+<span class="n">m_Pile</span> <span class="o">=</span> <span class="mi">1000</span>                   <span class="c1"># [kg/m]</span>
+<span class="n">EI_Pile</span> <span class="o">=</span> <span class="mf">1e9</span>                   <span class="c1"># [N.m2]</span>
+<span class="n">EA_Pile</span> <span class="o">=</span> <span class="mf">1e8</span>                   <span class="c1"># [N]</span>
+<span class="n">H_Pile</span> <span class="o">=</span> <span class="mi">100</span>                    <span class="c1"># [m]</span>
+
+<span class="c1"># Jacket</span>
+<span class="n">m_Jacket</span> <span class="o">=</span> <span class="mi">100</span>                  <span class="c1"># [kg/m]</span>
+<span class="n">EI_Jacket</span> <span class="o">=</span> <span class="mf">1e7</span>                 <span class="c1"># [N.m2]</span>
+<span class="n">EA_Jacket</span> <span class="o">=</span> <span class="mf">1e6</span>                 <span class="c1"># [N]</span>
+<span class="n">H_Jacket</span> <span class="o">=</span> <span class="mi">70</span>                   <span class="c1"># [m]</span>
+<span class="n">Base_Jacket</span> <span class="o">=</span> <span class="mf">30.23</span>             <span class="c1"># [m]</span>
+<span class="n">Top_Jacket</span> <span class="o">=</span> <span class="mf">16.13</span>              <span class="c1"># [m]</span>
+
+<span class="c1"># Define load parameters</span>
+<span class="n">f0</span> <span class="o">=</span> <span class="mi">2</span>                          <span class="c1"># [Hz]</span>
+<span class="n">A0</span> <span class="o">=</span> <span class="mf">0.1</span>                        <span class="c1"># [m]</span>
+<span class="n">T0</span> <span class="o">=</span> <span class="mi">20</span>                         <span class="c1"># [s]</span>
+
+<span class="c1"># Define output time vector</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>                       <span class="c1"># [s]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="o">*</span><span class="n">T0</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">nT</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-1-discretize-the-domain">
+<h2>Step 1: discretize the domain<a class="headerlink" href="#step-1-discretize-the-domain" title="Permalink to this headline">#</a></h2>
+<p>As done in tutorial 6, we start by discretizing the domain. We will discretize the structure using 21 nodes, as depicted in the following figure.</p>
+<p><img alt="figure" src="content/tutorial8_figure2.png" /></p>
+<p>Here we first define a matrix with the nodal coordinates.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define node coordinates</span>
+<span class="n">NodeCoord</span> <span class="o">=</span> <span class="p">([</span><span class="o">-</span><span class="p">(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">4</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 1</span>
+              <span class="p">[(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">4</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 2</span>
+             <span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 3</span>
+              <span class="p">[(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">3</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 4</span>
+             <span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 5</span>
+              <span class="p">[(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 6</span>
+             <span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">1</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 7</span>
+              <span class="p">[(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">1</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>      <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 8</span>
+             <span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>       <span class="mi">0</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 9</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 10</span>
+              <span class="p">[(</span><span class="n">Base_Jacket</span><span class="o">*</span><span class="mi">0</span><span class="o">+</span><span class="n">Top_Jacket</span><span class="o">*</span><span class="mi">4</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span>       <span class="mi">0</span><span class="o">*</span><span class="n">H_Jacket</span><span class="o">/</span><span class="mi">4</span><span class="p">],</span>  <span class="c1"># Point 11</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">10</span><span class="p">],</span>  <span class="c1"># Point 12</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">20</span><span class="p">],</span>  <span class="c1"># Point 13</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">30</span><span class="p">],</span>  <span class="c1"># Point 14</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">40</span><span class="p">],</span>  <span class="c1"># Point 15</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">50</span><span class="p">],</span>  <span class="c1"># Point 16</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">60</span><span class="p">],</span>  <span class="c1"># Point 17</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">70</span><span class="p">],</span>  <span class="c1"># Point 18</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">80</span><span class="p">],</span>  <span class="c1"># Point 19</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                 <span class="mi">90</span><span class="p">],</span>  <span class="c1"># Point 20</span>
+                                             <span class="p">[</span><span class="mi">0</span><span class="p">,</span>                <span class="mi">100</span><span class="p">])</span>  <span class="c1"># Point 21</span>
+<span class="n">nNode</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">NodeCoord</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Once we have the node coordinates we proceed to define the elemental connectivities. Here, we will use the same array to assign the material properties to each element. Note that they are different depending on which part of the structure they belong to.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define elements (and their properties</span>
+<span class="c1">#             NodeLeft    NodeRight          m         EA        EI</span>
+<span class="n">Elements</span> <span class="o">=</span> <span class="p">(</span>         <span class="p">[</span><span class="mi">1</span><span class="p">,</span>            <span class="mi">3</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">1</span><span class="p">,</span>            <span class="mi">4</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">2</span><span class="p">,</span>            <span class="mi">4</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">3</span><span class="p">,</span>            <span class="mi">4</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">3</span><span class="p">,</span>            <span class="mi">5</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">5</span><span class="p">,</span>            <span class="mi">4</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">4</span><span class="p">,</span>            <span class="mi">6</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">5</span><span class="p">,</span>            <span class="mi">6</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">5</span><span class="p">,</span>            <span class="mi">7</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">5</span><span class="p">,</span>            <span class="mi">8</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">6</span><span class="p">,</span>            <span class="mi">8</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">7</span><span class="p">,</span>            <span class="mi">8</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">7</span><span class="p">,</span>            <span class="mi">9</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">9</span><span class="p">,</span>            <span class="mi">8</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">8</span><span class="p">,</span>           <span class="mi">11</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mi">9</span><span class="p">,</span>           <span class="mi">10</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">10</span><span class="p">,</span>           <span class="mi">11</span><span class="p">,</span>   <span class="n">m_Jacket</span><span class="p">,</span>  <span class="n">EA_Jacket</span><span class="p">,</span> <span class="n">EI_Jacket</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">10</span><span class="p">,</span>           <span class="mi">12</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">12</span><span class="p">,</span>           <span class="mi">13</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">13</span><span class="p">,</span>           <span class="mi">14</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">14</span><span class="p">,</span>           <span class="mi">15</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">15</span><span class="p">,</span>           <span class="mi">16</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">16</span><span class="p">,</span>           <span class="mi">17</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">17</span><span class="p">,</span>           <span class="mi">18</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">18</span><span class="p">,</span>           <span class="mi">19</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">19</span><span class="p">,</span>           <span class="mi">20</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">20</span><span class="p">,</span>           <span class="mi">21</span><span class="p">,</span>   <span class="n">m_Pile</span><span class="p">,</span>    <span class="n">EA_Pile</span><span class="p">,</span>   <span class="n">EI_Pile</span><span class="p">])</span>
+<span class="n">nElem</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">Elements</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s plot the structure to make sure that it looks like the model in the figure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">EA</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">EI</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">m_Jacket</span> <span class="ow">and</span> <span class="n">EA</span> <span class="o">==</span> <span class="n">EA_Jacket</span> <span class="ow">and</span> <span class="n">EI</span> <span class="o">==</span> <span class="n">EI_Jacket</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+    <span class="k">elif</span> <span class="n">m</span> <span class="o">==</span> <span class="n">m_Pile</span> <span class="ow">and</span> <span class="n">EA</span> <span class="o">==</span> <span class="n">EA_Pile</span> <span class="ow">and</span> <span class="n">EI</span> <span class="o">==</span> <span class="n">EI_Pile</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: unknown material. Check your inputs.&quot;</span><span class="p">)</span>
+        <span class="k">break</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w5_t1_sol_10_0.png" src="../_images/w5_t1_sol_10_0.png" />
+</div>
+</div>
+</section>
+<section id="step-2-define-the-shape-functions">
+<h2>Step 2: define the shape functions<a class="headerlink" href="#step-2-define-the-shape-functions" title="Permalink to this headline">#</a></h2>
+<p>Here we will use the exact same functions as in tutorial 4 and 5. Linear shape functions for the axial displacement and cubic shape functions for the deflection and rotations. Since we already know its expression and we already have the value of the elemental matrices, we skip this step in this tutorial.</p>
+</section>
+<section id="step-3-computation-of-the-elemental-matrices">
+<h2>Step 3: computation of the elemental matrices<a class="headerlink" href="#step-3-computation-of-the-elemental-matrices" title="Permalink to this headline">#</a></h2>
+<p>In the theory we have seen that the mass and stiffness elemental matrices for the space frame using linear and cubic shape functions are given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \bold{M} = \frac{mL}{420} \begin{bmatrix} 140 &amp; 0 &amp; 0 &amp; 70 &amp; 0 &amp; 0 \\ 0 &amp; 156 &amp; 22L &amp; 0 &amp; 54 &amp; -13L \\ 0 &amp; 22L &amp; 4L^2 &amp; 0 &amp; 13L &amp; -3L^2 \\ 70 &amp; 0 &amp; 0 &amp; 140 &amp; 0 &amp; 0 \\ 0 &amp; 54 &amp; 13L &amp; 0 &amp; 156 &amp; -22L \\ 0 &amp; -13L &amp; -3L^2 &amp; 0 &amp; -22L &amp; 4L^2 \end{bmatrix} \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split} \quad \bold{K} = \begin{bmatrix} \frac{EA}{L} &amp; 0 &amp; 0 &amp; \frac{-EA}{L} &amp;  0 &amp; 0 \\ 0 &amp; \frac{12EI}{L^3} &amp; \frac{6EI}{L^2} &amp; 0 &amp; \frac{-12EI}{L^3} &amp; \frac{6EI}{L^2} \\ 0 &amp; \frac{6EI}{L^2} &amp; \frac{4EI}{L} &amp; 0 &amp; \frac{-6EI}{L^2} &amp; \frac{2EI}{L} \\ \frac{-EA}{L} &amp; 0 &amp; 0 &amp; \frac{EA}{L} &amp; 0 &amp; 0 \\ 0 &amp; \frac{-12EI}{L^3} &amp; \frac{-6EI}{L^2} &amp; 0 &amp; \frac{12EI}{L^3} &amp; \frac{-6EI}{L^2} \\ 0 &amp; \frac{6EI}{L^2} &amp; \frac{2EI}{L} &amp; 0 &amp; \frac{-6EI}{L^2} &amp; \frac{4EI}{L} \end{bmatrix}\end{split}\]</div>
+<p>These matrices are used directly when calling the <code class="docutils literal notranslate"><span class="pre">BeamMatrices</span></code> function within the assembly process.</p>
+</section>
+<section id="step-4-global-assembly">
+<h2>Step 4: global assembly<a class="headerlink" href="#step-4-global-assembly" title="Permalink to this headline">#</a></h2>
+<p>The last step is to compute the global matrices and the global forcing vector. We start by initializing the global matrices as 1-dimensional arrays.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nDof</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">nNode</span>              <span class="c1"># 3 Degrees of freedom per node</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="o">*</span><span class="n">nDof</span><span class="p">))</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="o">*</span><span class="n">nDof</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we loop over elements and perform all the elemental operations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">BeamMatrices</span> <span class="kn">import</span> <span class="n">BeamMatricesJacket</span>
+<span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+    <span class="c1"># Get the nodes of the elements</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+    
+    <span class="c1"># Get the degrees of freedom that correspond to each node</span>
+    <span class="n">Dofs_Left</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">NodeLeft</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="n">Dofs_Right</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">NodeRight</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="c1"># Get the properties of the element</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">EA</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">EI</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>
+
+    <span class="c1"># Calculate the matrices of the element</span>
+    <span class="n">Me</span><span class="p">,</span> <span class="n">Ke</span> <span class="o">=</span> <span class="n">BeamMatricesJacket</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">EA</span><span class="p">,</span> <span class="n">EI</span><span class="p">,</span> <span class="p">([</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeLeft</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">NodeCoord</span><span class="p">[</span><span class="n">NodeRight</span><span class="p">][</span><span class="mi">1</span><span class="p">]]))</span>
+
+    <span class="c1"># Assemble the matrices at the correct place</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dofs_Left</span><span class="p">,</span> <span class="n">Dofs_Right</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+            <span class="n">ij</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">nDof</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ij</span><span class="p">)</span>
+            <span class="c1">#print(ij)</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">Me</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">Ke</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            
+<span class="c1"># Reshape the global matrix from a 1-dimensional array to a 2-dimensional array</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nDof</span><span class="p">,</span> <span class="n">nDof</span><span class="p">))</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nDof</span><span class="p">,</span> <span class="n">nDof</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">~</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Temp</span>\<span class="n">ipykernel_182024</span>\<span class="mf">4135437953.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">BeamMatrices</span> <span class="kn">import</span> <span class="n">BeamMatricesJacket</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span>     <span class="c1"># Get the nodes of the elements</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span>     <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;BeamMatrices&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have the global mass and stiffness matrices. However, in this example we have an additional point mass at the top corresponding to the nacelle. Then, we need to account for this mass adding its value at the corresponding DOFs, in this case the corresponding horizontal and vertical displacements associated to the top node.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nacelle_node</span> <span class="o">=</span> <span class="n">nNode</span>
+<span class="n">nacelle_dof_h</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">nacelle_node</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">nacelle_dof_v</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="p">(</span><span class="n">nacelle_node</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+<span class="n">M</span><span class="p">[</span><span class="n">nacelle_dof_h</span><span class="p">,</span> <span class="n">nacelle_dof_h</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Mass_Nacelle</span>
+<span class="n">M</span><span class="p">[</span><span class="n">nacelle_dof_v</span><span class="p">,</span> <span class="n">nacelle_dof_v</span><span class="p">]</span> <span class="o">+=</span> <span class="n">Mass_Nacelle</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>That completes the filling of the matrices. Let’s have a look at the matrices’ structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Look at the matrix structure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">spy</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Mass matrix&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">spy</span><span class="p">(</span><span class="n">K</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Stiffness matrix&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;Stiffness matrix&#39;)
+</pre></div>
+</div>
+<img alt="../_images/w5_t1_sol_20_1.png" src="../_images/w5_t1_sol_20_1.png" />
+<img alt="../_images/w5_t1_sol_20_2.png" src="../_images/w5_t1_sol_20_2.png" />
+</div>
+</div>
+<p>To apply the boundary conditions, we will remove the rows associated to the fixed DOFs and add the contribution to the right-hand-side. First, we obtain the free and fixed DOFs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DofsP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>          <span class="c1"># prescribed DOFs</span>
+<span class="n">DofsF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nDof</span><span class="p">)</span>       <span class="c1"># free DOFs</span>
+<span class="n">DofsF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">DofsF</span><span class="p">,</span> <span class="n">DofsP</span><span class="p">)</span>  <span class="c1"># remove the fixed DOFs from the free DOFs array</span>
+
+<span class="c1"># free &amp; fixed array indices</span>
+<span class="n">fx</span> <span class="o">=</span> <span class="n">DofsF</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">fy</span> <span class="o">=</span> <span class="n">DofsF</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">bx</span> <span class="o">=</span> <span class="n">DofsP</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">by</span> <span class="o">=</span> <span class="n">DofsP</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can re-order the matrices and vectors in blocks, such that it’s easy to operate with the blocks corresponding with the fixed DOFs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mass</span>
+<span class="n">M_FF</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">M_FP</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+<span class="n">M_PF</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">M_PP</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+
+<span class="c1"># Stiffness</span>
+<span class="n">K_FF</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">K_FP</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+<span class="n">K_PF</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">K_PP</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-modal-analysis">
+<h2>Step 5: modal analysis<a class="headerlink" href="#step-5-modal-analysis" title="Permalink to this headline">#</a></h2>
+<p>Using the matrices associated to the free DOFs, we can perform a modal analysis to get more information on how the structure will deform and determine the natural frequencies.</p>
+<div class="math notranslate nohighlight">
+\[ ( \bold{K}_{FF} - \omega^2 \bold{M}_{FF} ) \bold{\phi} = \bold{0} \]</div>
+<p>To compute the natural frequencies and mode shapes we use the <code class="docutils literal notranslate"><span class="pre">eig</span></code> command, which is part of the NumPy package. For more information see: <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html">https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html</a></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">M_FF</span><span class="p">),</span> <span class="n">K_FF</span><span class="p">)</span>
+<span class="n">w2</span><span class="p">,</span> <span class="n">vr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">w2</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">w</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>57
+</pre></div>
+</div>
+</div>
+</div>
+<p>We sort the frequencies and mode shapes in descending order:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">argsort</span><span class="p">()</span><span class="c1">#[::-1]  </span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">vr_sorted</span> <span class="o">=</span> <span class="n">vr</span><span class="p">[:,</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">ModalShape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nDof</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)))</span>
+<span class="n">ModalShape</span><span class="p">[</span><span class="mi">6</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">vr_sorted</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vr_sorted</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[9.54670111e-03 6.12400478e-02 7.75951782e-02 2.22949413e-01
+ 3.41345804e-01 4.24175667e-01 5.45009096e-01 7.69380633e-01
+ 8.14514689e-01 8.57705614e-01 9.47721139e-01 1.08114083e+00
+ 1.15063104e+00 1.17208793e+00 1.29333981e+00 1.33214984e+00
+ 1.44940212e+00 1.50553079e+00 1.55474526e+00 1.76464968e+00
+ 1.91842048e+00 2.08594743e+00 2.14069101e+00 2.32322832e+00
+ 2.35579594e+00 2.70275589e+00 2.92565010e+00 3.06666475e+00
+ 3.07553042e+00 3.36698471e+00 4.06769028e+00 4.56639585e+00
+ 4.65540181e+00 5.81120726e+00 6.33664968e+00 6.40680246e+00
+ 8.07906009e+00 8.36924789e+00 8.90929311e+00 1.01871294e+01
+ 1.11301362e+01 1.22374634e+01 1.39232828e+01 1.42777068e+01
+ 1.60290031e+01 1.71255228e+01 1.83798075e+01 2.19487233e+01
+ 2.65011954e+01 3.18487149e+01 3.80827564e+01 4.53131189e+01
+ 5.35692736e+01 6.26091513e+01 7.15737540e+01 7.87706273e+01
+ 8.07864878e+01]
+[[-5.63304080e-03  5.65903825e-02 -1.01178027e-02  2.56211115e-01
+   2.40821822e-01  1.03029030e-01 -4.52813644e-01  1.00625939e-01
+   2.71522232e-01  4.00729126e-01 -3.70370728e-01  6.72310708e-01
+  -1.18268714e-01 -1.49592421e-02 -3.54124273e-01 -3.80817567e-01
+  -1.52303675e-01  1.27959966e-01  3.75679733e-02 -4.34682067e-02
+   7.62919215e-02 -5.84238734e-02 -2.28530663e-02  1.79614659e-02
+   8.57162138e-02 -3.03427635e-02  9.54625536e-02 -6.53694019e-03
+  -1.42607483e-02 -2.64592627e-02  6.05954732e-02 -1.23096295e-02
+  -1.77966418e-02  2.77016237e-02 -9.68439196e-03 -8.75509422e-03
+  -6.83114390e-03  4.87377471e-03  5.53089393e-03 -1.17068766e-03
+   1.89708179e-03  3.89063685e-04  9.18706348e-04 -2.32199406e-04
+  -1.19581979e-04  7.04409658e-05  8.92090653e-04  7.17214951e-04
+   6.38294090e-04 -6.06182817e-04 -5.98191689e-04  6.04793308e-04
+  -6.20710725e-04  6.42078903e-04 -6.66499116e-04 -7.37172759e-04
+   5.89545445e-04]
+ [-7.26434135e-03  3.01181640e-02  6.11817684e-02  1.01616510e-02
+  -4.45975738e-02 -3.23100801e-01  7.04640630e-02  1.98455144e-01
+   3.37148014e-01 -3.13303314e-01 -2.03162315e-02 -9.75210177e-02
+   3.36411549e-01  5.26143351e-01 -3.12891697e-01 -9.59806185e-02
+  -4.49688740e-01 -1.65382066e-01 -2.45778523e-01  2.65285124e-02
+  -8.78873135e-02 -1.71004190e-01  1.05944331e-01 -1.40415456e-02
+  -4.61230628e-01 -5.48803045e-02  5.39217904e-01 -1.12655138e-02
+  -2.36465317e-02 -1.55496886e-01  7.70458657e-02 -8.55296917e-03
+  -9.80418994e-03  5.59975944e-03 -1.74785894e-03 -1.38854023e-03
+  -8.18662581e-04  4.89632485e-04  5.37990672e-04 -4.37609621e-06
+   1.51023486e-04 -6.76626026e-05  7.12614822e-05  7.59273588e-05
+   7.71550164e-05 -5.94031190e-05  5.72903076e-05  4.77574064e-05
+   4.39258553e-05 -4.34433974e-05 -4.48128520e-05  4.73355898e-05
+  -5.05578503e-05  5.40757477e-05 -5.75616909e-05 -6.46841885e-05
+   5.19321480e-05]
+ [ 5.58536594e-04 -4.34263065e-03  6.41838658e-04 -1.41143366e-02
+  -9.27776446e-03 -5.60308238e-03  3.64781944e-03 -1.83945669e-02
+   1.72562312e-02 -8.54542830e-03 -6.57671886e-03 -2.49134089e-02
+  -5.89137479e-04  4.45965369e-03 -3.89370980e-02 -2.71258253e-02
+  -1.59092564e-02  2.01821868e-02  4.80683502e-03 -3.55535852e-03
+   1.34950497e-03  4.72243398e-02 -3.32609504e-02  4.96813703e-03
+   1.23924588e-01  3.85855911e-02 -3.49906653e-01  9.81972130e-03
+   2.62862684e-02  1.22600610e-01 -1.18352687e-01  1.91346561e-02
+   2.68986901e-02 -3.39154602e-02  1.11851147e-02  1.01932674e-02
+   7.11876040e-03 -4.96189187e-03 -5.58662961e-03  1.10217868e-03
+  -1.85017060e-03 -3.33258170e-04 -8.79425637e-04  1.85804941e-04
+   8.24789101e-05 -4.40646820e-05 -8.38860010e-04 -6.72047111e-04
+  -5.97037240e-04  5.66978619e-04  5.60088921e-04 -5.67188606e-04
+   5.83172962e-04 -6.04282645e-04  6.28136163e-04  6.95378671e-04
+  -5.56248530e-04]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see what these modes look like. Here, we plot the first 9 modes. Note that the system will have 19 x 3 = 57 modes (as many as the discrete system DOFs).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nMode</span> <span class="o">=</span> <span class="mi">9</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">nCol</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">nMode</span><span class="p">)))</span>
+<span class="n">nRow</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">nMode</span><span class="o">/</span><span class="n">nCol</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">iMode</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nMode</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">nRow</span><span class="p">,</span> <span class="n">nCol</span><span class="p">,</span> <span class="n">iMode</span><span class="p">)</span>
+    <span class="n">Shape</span> <span class="o">=</span> <span class="n">ModalShape</span><span class="p">[:,</span> <span class="n">iMode</span><span class="p">]</span>
+
+    <span class="c1"># Scale the mode such that maximum deformation is 10</span>
+    <span class="n">MaxTranslationx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Shape</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="n">MaxTranslationy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Shape</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="n">Shape</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">Shape</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span><span class="o">/</span><span class="n">MaxTranslationx</span><span class="o">*</span><span class="mi">10</span>
+    <span class="n">Shape</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">Shape</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span><span class="o">/</span><span class="n">MaxTranslationy</span><span class="o">*</span><span class="mi">10</span>
+
+    <span class="c1"># Get the deformed shape</span>
+    <span class="n">DisplacedNode</span> <span class="o">=</span> <span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">]</span> <span class="o">+</span> <span class="n">Shape</span><span class="p">[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">NodeCoord</span><span class="p">]</span> <span class="o">+</span> <span class="n">Shape</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">3</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">iElem</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nElem</span><span class="p">):</span>
+        <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">EA</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">EI</span> <span class="o">=</span> <span class="n">Elements</span><span class="p">[</span><span class="n">iElem</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="n">m_Jacket</span> <span class="ow">and</span> <span class="n">EA</span> <span class="o">==</span> <span class="n">EA_Jacket</span> <span class="ow">and</span> <span class="n">EI</span> <span class="o">==</span> <span class="n">EI_Jacket</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+        <span class="k">elif</span> <span class="n">m</span> <span class="o">==</span> <span class="n">m_Pile</span> <span class="ow">and</span> <span class="n">EA</span> <span class="o">==</span> <span class="n">EA_Pile</span> <span class="ow">and</span> <span class="n">EI</span> <span class="o">==</span> <span class="n">EI_Pile</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="s1">&#39;r&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ERROR: unknown material. Check your inputs.&quot;</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">DisplacedNode</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">NodeLeft</span><span class="p">],</span> <span class="n">DisplacedNode</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">NodeRight</span><span class="p">]],</span> 
+                    <span class="p">[</span><span class="n">DisplacedNode</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">NodeLeft</span><span class="p">],</span> <span class="n">DisplacedNode</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">NodeRight</span><span class="p">]],</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Mode &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">iMode</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;: f = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">iMode</span><span class="p">]))</span><span class="o">+</span><span class="s2">&quot; Hz&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="c1"># automatically fix subplot spacing</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/w5_t1_sol_30_0.png" src="../_images/w5_t1_sol_30_0.png" />
+</div>
+</div>
+</section>
+<section id="step-6-calculate-modal-quantities">
+<h2>Step 6: calculate modal quantities<a class="headerlink" href="#step-6-calculate-modal-quantities" title="Permalink to this headline">#</a></h2>
+<p>Now we want to compute the mass and stiffness coefficients that go on the diagonal of the respective mode, <span class="math notranslate nohighlight">\(m_{ii}\)</span> and <span class="math notranslate nohighlight">\(k_{ii}\)</span>. Here, we also compute the contribution from the external force, inluding the effect of the boundary conditions, <span class="math notranslate nohighlight">\(f_i^{eq}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{bmatrix} m_{11} \ddot{\Gamma}_1 \\ m_{22} \ddot{\Gamma}_2 \\ \vdots \\ m_{NN} \ddot{\Gamma}_N \end{bmatrix} + \begin{bmatrix} k_{11} \Gamma_1 \\ k_{22} \Gamma_2 \\ \vdots \\ k_{NN} \Gamma_N \end{bmatrix} = \begin{bmatrix} f_1^{eq} \\ f_2^{eq} \\ \vdots \\ f_N^{eq} \end{bmatrix} \rightarrow \begin{cases} m_{11}\ddot{\Gamma}_1 + k_{11}\Gamma_1 = f_1^{eq} \\ m_{22}\ddot{\Gamma}_2 + k_{22}\Gamma_2 = f_2^{eq} \\ \qquad \qquad \vdots \\ m_{NN}\ddot{\Gamma}_N + k_{NN}\Gamma_N = f_N^{eq} \end{cases} \end{split}\]</div>
+<p>Additionally, we also add damping into the system. In that case we use the modal damping ratio approach, with a damping ratio of 1% (<span class="math notranslate nohighlight">\(\xi_j=0.01\)</span>).</p>
+<div class="math notranslate nohighlight">
+\[ c_{jj} = \xi_j c_{cr,j} = 2 \xi_j \sqrt{m_{jj}k_{jj}} \]</div>
+<p>This will lead to a final system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{cases} m_{11}\ddot{\Gamma}_1 + c_{11}\dot{\Gamma}_1 + k_{11}\Gamma_1 = f_1^{eq} \\ m_{22}\ddot{\Gamma}_2 + c_{22}\dot{\Gamma}_2 + k_{22}\Gamma_2 = f_2^{eq} \\ \qquad \qquad \vdots \\ m_{NN}\ddot{\Gamma}_N + c_{NN}\dot{\Gamma}_N + k_{NN}\Gamma_N = f_N^{eq} \end{cases} \end{split}\]</div>
+<p><strong>Attention</strong>: we are calculating all the modes, but in general this shouldn’t be the case. You should only calculate the response for these modes that you want to consider. Here, we are calculating all modes, because we will compare the “reduced” and the “full” response. To consider only a few, you should replace <code class="docutils literal notranslate"><span class="pre">nMode</span></code> by the number of modes you wish to consider.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nMode</span> <span class="o">=</span> <span class="mi">9</span><span class="c1">#len(f)</span>
+<span class="n">PHI</span> <span class="o">=</span> <span class="n">vr_sorted</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="n">nMode</span><span class="p">]</span>
+
+<span class="n">Mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nMode</span><span class="p">)</span>
+<span class="n">Km</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nMode</span><span class="p">)</span>
+<span class="n">Cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nMode</span><span class="p">)</span>
+<span class="n">ModalDampRatio</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="c1"># Compute your &quot;nMode&quot; entries of the modal mass, stiffness and damping</span>
+<span class="k">for</span> <span class="n">iMode</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nMode</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Computing Mode: &#39;</span><span class="p">,</span><span class="n">iMode</span><span class="p">)</span>
+    <span class="n">Mm</span><span class="p">[</span><span class="n">iMode</span><span class="p">]</span> <span class="o">=</span> <span class="n">PHI</span><span class="p">[:,</span><span class="n">iMode</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">M_FF</span> <span class="o">@</span> <span class="n">PHI</span><span class="p">[:,</span><span class="n">iMode</span><span class="p">]</span>
+    <span class="n">Km</span><span class="p">[</span><span class="n">iMode</span><span class="p">]</span> <span class="o">=</span> <span class="n">PHI</span><span class="p">[:,</span><span class="n">iMode</span><span class="p">]</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">K_FF</span> <span class="o">@</span> <span class="n">PHI</span><span class="p">[:,</span><span class="n">iMode</span><span class="p">]</span>
+    <span class="n">Cm</span><span class="p">[</span><span class="n">iMode</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">ModalDampRatio</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mm</span><span class="p">[</span><span class="n">iMode</span><span class="p">]</span><span class="o">*</span><span class="n">Km</span><span class="p">[</span><span class="n">iMode</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mm = &#39;</span><span class="p">,</span><span class="n">Mm</span><span class="p">[</span><span class="n">iMode</span><span class="p">],</span><span class="s1">&#39;, Km = &#39;</span><span class="p">,</span> <span class="n">Km</span><span class="p">[</span><span class="n">iMode</span><span class="p">],</span><span class="s1">&#39;, Cm = &#39;</span><span class="p">,</span> <span class="n">Cm</span><span class="p">[</span><span class="n">iMode</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Computing Mode:  0
+Mm =  9770.858374621661 , Km =  35.155971712019834 , Cm =  11.72184321035478
+Computing Mode:  1
+Mm =  5878.202857165692 , Km =  870.3127554406257 , Cm =  45.23659989724618
+Computing Mode:  2
+Mm =  8174.205181928264 , Km =  1943.0086801167504 , Cm =  79.70583823420199
+Computing Mode:  3
+Mm =  4775.304243274488 , Km =  9370.730498321731 , Cm =  133.7880250414325
+Computing Mode:  4
+Mm =  5303.9900032874675 , Km =  24397.850714587512 , Cm =  227.51347765956388
+Computing Mode:  5
+Mm =  4412.846973209377 , Km =  31345.13221456897 , Cm =  235.22012823558143
+Computing Mode:  6
+Mm =  4040.488162793843 , Km =  47380.656846530306 , Cm =  276.72439945462185
+Computing Mode:  7
+Mm =  3147.261174568883 , Km =  73548.7034084374 , Cm =  304.2873501657649
+Computing Mode:  8
+Mm =  3778.954752412473 , Km =  98975.85673441576 , Cm =  386.79466603386174
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the equivalent force (accounting for boundary conditions)</span>
+
+<span class="c1"># Define the boundary conditions</span>
+<span class="k">def</span> <span class="nf">ub</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;=</span> <span class="n">T0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">A0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">f0</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">dub_dt2</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">f0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">ub</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">T0</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">F</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">PHI</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="p">(</span> <span class="n">K_FP</span> <span class="o">@</span> <span class="n">ub</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">T0</span><span class="p">)</span> <span class="o">+</span> <span class="n">M_FP</span> <span class="o">@</span> <span class="n">dub_dt2</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">T0</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">F</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 5.86853708e-13 -7.86413699e-12  2.16344216e-12 -4.21310947e-11
+ -4.31464709e-11 -2.23264004e-11  8.80773774e-11  6.99135454e-12
+ -5.90507968e-11]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the resulting ODE:</span>
+<span class="k">def</span> <span class="nf">qdot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
+    <span class="n">Um</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nMode</span><span class="p">]</span>
+    <span class="n">Vm</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="n">nMode</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">nMode</span><span class="p">]</span>
+    <span class="n">Am</span> <span class="o">=</span> <span class="p">(</span> <span class="n">F</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">Km</span> <span class="o">*</span> <span class="n">Um</span> <span class="o">+</span> <span class="n">Cm</span> <span class="o">*</span> <span class="n">Vm</span><span class="p">)</span> <span class="p">)</span> <span class="o">/</span> <span class="n">Mm</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Vm</span><span class="p">,</span><span class="n">Am</span><span class="p">)</span>
+<span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">nMode</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">scipy.integrate</span> <span class="k">as</span> <span class="nn">scpi</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">scpi</span><span class="o">.</span><span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">qdot</span><span class="p">,</span><span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span><span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">400</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x2327ed55668&gt;]
+</pre></div>
+</div>
+<img alt="../_images/w5_t1_sol_34_1.png" src="../_images/w5_t1_sol_34_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show the result on the original coordinates</span>
+<span class="n">U_F</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">t</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">PHI</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])))</span>
+<span class="k">for</span> <span class="n">iMode</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nMode</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">it</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="o">.</span><span class="n">t</span><span class="p">)):</span>
+        <span class="n">U_F</span><span class="p">[</span><span class="n">it</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">PHI</span><span class="p">[:,</span><span class="n">iMode</span><span class="p">]</span> <span class="o">*</span> <span class="n">q</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">iMode</span><span class="p">][</span><span class="n">it</span><span class="p">]</span>
+        
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">U_F</span><span class="p">[:,</span><span class="mi">9</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x2327eebf630&gt;]
+</pre></div>
+</div>
+<img alt="../_images/w5_t1_sol_35_1.png" src="../_images/w5_t1_sol_35_1.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="w5_t1.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 7: Modal superposition of a jacket wind turbine</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="w6_t0.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Week 6</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By TU Delft Offshore Engineering<br/>
+  
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
