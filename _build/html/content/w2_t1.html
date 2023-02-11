@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Tutorial 2.1: Linearizing the Equations of Motion &#8212; ComModHOS</title>
+    <title>Tutorial 2.1: Linearizing the Equations of Motion (Example only) &#8212; ComModHOS</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,11 +52,10 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w2_t1.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial 2.1: Linearizing the Equations of Motion" href="w2_t1_sol.html" />
-    <link rel="prev" title="Week 2" href="w2_t0.html" />
+    <link rel="next" title="Tutorial 2.2: Deriving the EOM of a pendulum" href="w2_t2.html" />
+    <link rel="prev" title="Week 2: Strucural models" href="w2_t0.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,7 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="user_guide.html">
+   How to get the most out of ComModHOS?
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course content
  </span>
@@ -127,35 +133,132 @@ const thebe_selector_output = ".output, .cell_output"
    Week 0
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w1_t0.html">
    Week 1
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w1_t1.html">
+     Tutorial 1: ODE solvers
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="w2_t0.html">
    Week 2
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Tutorial 2.1: Linearizing the Equations of Motion (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t2.html">
+     Tutorial 2.2: Deriving the EOM of a pendulum
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w3_t0.html">
    Week 3
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t1.html">
+     Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t2.html">
+     Tutorial 3.2: Solving a cantilever beam with Finite Differences
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w4_t0.html">
    Week 4
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t1.html">
+     Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t2.html">
+     Tutorial 4.2: FEM for an Euler-Bernoulli beam
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t3.html">
+     Tutorial 4.3: FEM for a jacket wind turbine (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w5_t0.html">
    Week 5
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w5_t1.html">
+     Solution 5.1: Modal superposition of a jacket wind turbine
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w6_t0.html">
    Week 6
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t1.html">
+     Tutorial 6.1: Static string
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t2.html">
+     Tutorial 6.2: Dynamic string (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="w7_t0.html">
@@ -267,19 +370,6 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="bottom"
-title="Source repository"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-
-</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -401,7 +491,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Tutorial 2.1: Linearizing the Equations of Motion</h1>
+                <h1>Tutorial 2.1: Linearizing the Equations of Motion (Example only)</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -465,8 +555,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-2-1-linearizing-the-equations-of-motion">
-<h1>Tutorial 2.1: Linearizing the Equations of Motion<a class="headerlink" href="#tutorial-2-1-linearizing-the-equations-of-motion" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-2-1-linearizing-the-equations-of-motion-example-only">
+<h1>Tutorial 2.1: Linearizing the Equations of Motion (Example only)<a class="headerlink" href="#tutorial-2-1-linearizing-the-equations-of-motion-example-only" title="Permalink to this headline">#</a></h1>
 <p>In this tutorial you will learn to linearize the Equations of Motion of the pendulum as covered in the lecture.</p>
 <section id="part-1-kinematic-equations">
 <h2>Part 1: Kinematic equations<a class="headerlink" href="#part-1-kinematic-equations" title="Permalink to this headline">#</a></h2>
@@ -474,8 +564,6 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="c1"># For myself: usedd for &quot;some&quot; symbolic operations in Python</span>
-
 <span class="n">var</span><span class="p">(</span><span class="s2">&quot;t x1 z1 r phi0&quot;</span><span class="p">)</span> <span class="c1"># independent variables      </span>
 <span class="n">phi1</span> <span class="o">=</span> <span class="n">Function</span><span class="p">(</span><span class="s2">&quot;phi1&quot;</span><span class="p">)(</span><span class="n">t</span><span class="p">)</span>
 <span class="n">x2</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">r</span><span class="o">*</span><span class="n">cos</span><span class="p">(</span><span class="n">phi1</span><span class="p">)</span>
@@ -565,7 +653,7 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">EOM_phi</span> <span class="o">=</span> <span class="n">diff</span><span class="p">(</span> <span class="n">diff</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">diff</span><span class="p">(</span><span class="n">phi1</span><span class="p">,</span> <span class="n">t</span><span class="p">)),</span> <span class="n">t</span><span class="p">)</span> <span class="o">-</span> <span class="n">diff</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">phi1</span><span class="p">)</span>
-<span class="c1"># ! LHS need derivative to &quot;velocity&quot;</span>
+<span class="c1"># ! LHS needs derivative to get &quot;velocity&quot;</span>
 <span class="n">EOM_phi</span> <span class="o">=</span> <span class="n">simplify</span><span class="p">(</span><span class="n">EOM_phi</span><span class="p">)</span>
 <span class="n">EOM_phi</span><span class="o">.</span><span class="n">evalf</span><span class="p">()</span>
 </pre></div>
@@ -698,7 +786,6 @@ title="Print to PDF"
 <span class="k">def</span> <span class="nf">qdot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
     <span class="n">vt</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">at</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">evalf</span><span class="p">(</span><span class="n">subs</span><span class="o">=</span><span class="p">{</span><span class="n">psisym</span><span class="p">:</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tsym</span><span class="p">:</span> <span class="n">t</span><span class="p">})</span>
-    <span class="nb">print</span><span class="p">([</span><span class="n">vt</span><span class="p">,</span><span class="n">at</span><span class="p">])</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">vt</span><span class="p">,</span><span class="n">at</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -718,9 +805,6 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 0]
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0, 0]
 </pre></div>
 </div>
@@ -730,234 +814,7 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">qdot</span><span class="p">,</span><span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">],</span><span class="n">y0</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.0, -9.81000000000000]
-[-9.99000999000999e-06, -9.81000000000000]
-[-0.0001998001998001998, -9.81000000000000]
-[-0.00029970029970029965, -9.80999995508986]
-[-0.0007992007829397424, -9.80999968063904]
-[-0.0008880008525343867, -9.80999960572721]
-[-0.0009990009601962054, -9.80999950099850]
-[-0.0009990009820623992, -9.80999950099851]
-[-0.002997002878432799, -9.80999750499255]
-[-0.003996003369275809, -9.80999201597632]
-[-0.008990989054277799, -9.80995958089667]
-[-0.009878969928796302, -9.80995120257226]
-[-0.010988966577551898, -9.80993962080853]
-[-0.0109889884437484, -9.80993962088068]
-[-0.03096888544965927, -9.80972006067201]
-[-0.040958330877229845, -9.80916118198363]
-[-0.09088873808661489, -9.80586796880756]
-[-0.09974864730679091, -9.80502101144213]
-[-0.11084407993005188, -9.80385174510392]
-[-0.11086594658662938, -9.80385244472089]
-[-0.31054093917245096, -9.78170140644184]
-[-0.40987089167247925, -9.72574389596185]
-[-0.8897058509101583, -9.39789026164981]
-[-0.9583568911717839, -9.31058851797434]
-[-1.0648941535040521, -9.19353043728367]
-[-1.0868072706228022, -9.20048738658223]
-[-1.5654895356231555, -8.64578754023238]
-[-1.7723633010534643, -8.09358152317922]
-[-2.516431637557323, -5.32175395483647]
-[-2.3524775761305117, -4.77602107521684]
-[-2.5018359378977553, -3.85406410762353]
-[-2.8828694253796145, -3.83418412617665]
-[-3.1243154282479115, -2.05327797147249]
-[-3.118872929882145, -0.995026189002061]
-[-2.7636257127884307, 3.09708761786537]
-[-2.3117509925667745, 2.70075557189966]
-[-2.1157004983763557, 3.92006743897423]
-[-2.611289029178901, 5.41641621915632]
-[-2.2914064149060835, 6.92928951924232]
-[-2.0309494572817335, 7.47723350780728]
-[-0.8358811633295047, 8.95001267151894]
-[-0.6956811535588114, 7.86748120633131]
-[-0.3052462658059456, 8.06231883629370]
-[-0.19019199021240496, 9.79138484562386]
-[0.43461406689305504, 9.91044387587666]
-[0.7555641401163188, 9.52995799619872]
-[1.8706435458632553, 7.04350441635887]
-[1.581865553295189, 5.79576114879633]
-[1.8869188774510284, 4.78106863861966]
-[2.5272147147983612, 5.79410293445078]
-[2.88443016147298, 4.26563907960090]
-[2.957026692410933, 3.25835706332953]
-[2.935829523722903, -0.908273053845441]
-[2.5009567475464647, -0.881047268745288]
-[2.4076428042449636, -2.16954564674943]
-[2.958923086326096, -3.21482370305028]
-[2.762835060848956, -4.98532641108732]
-[2.543300349486557, -5.73858001922290]
-[1.4537695098228043, -8.06582415361611]
-[1.2183987308809454, -6.98163818441769]
-[0.8343565201948668, -7.47420073237470]
-[0.8697744180575451, -9.42334980388559]
-[0.2720845425372579, -9.96453539326033]
-[-0.06537657721371626, -9.81675098181788]
-[-1.323834519321489, -8.18580947187941]
-[-1.136107116230085, -6.79715673195005]
-[-1.5020921469008521, -6.02783358553157]
-[-2.046689372910902, -7.42475784427909]
-[-2.4929872805023336, -6.21787948823625]
-[-2.6345233779119486, -5.31837403671631]
-[-2.9351429529518125, -1.34743862617313]
-[-2.548920251330643, -1.05639970890500]
-[-2.556856970945891, 0.214702244291684]
-[-3.120997200727407, 0.813234905627276]
-[-3.0694279428877556, 2.75473428779527]
-[-2.905138569847308, 3.68939394570410]
-[-1.9704830414265502, 6.79084886071355]
-[-1.6233505734074083, 5.74764068466370]
-[-1.2635803996807407, 6.54432979544073]
-[-1.4859847492317977, 8.63449677892312]
-[-0.9468986811702732, 9.54462888730892]
-[-0.6134295728905301, 9.62824464063072]
-[0.7126582978030123, 8.93754259015567]
-[0.635133398146321, 7.53318846072809]
-[1.0363587332069955, 7.04808446805400]
-[1.4563764336421663, 8.68375263423150]
-[1.9620073515198824, 7.85185703190305]
-[2.1603289557810594, 7.11098557557963]
-[2.7550432452927516, 3.59897784272684]
-[2.444771644719823, 3.06148057655930]
-[2.547387213020916, 1.89231561986268]
-[3.0838102431811736, 1.70832008230366]
-[3.192702909100091, -0.220030698839437]
-[3.108866512139212, -1.26080975368671]
-[2.4492297190360444, -5.01257266143452]
-[2.0219608038269445, -4.26072677712310]
-[1.735635640930624, -5.32436191717484]
-[2.128382843735094, -7.19520682567355]
-[1.690035462393534, -8.46722668325850]
-[1.3836808316215, -8.80851289863091]
-[0.07424349837529665, -9.26119131506245]
-[0.028949575692617913, -7.96352971757332]
-[-0.38318443501002086, -7.83372225016890]
-[-0.6438578870775995, -9.59899030528832]
-[-1.2441249933684786, -9.20400765484673]
-[-1.516471042754727, -8.59224481948989]
-[-2.3867712522089484, -5.37617946649616]
-[-2.0357025386161705, -4.45671818306601]
-[-2.2423774639321645, -3.27164484540202]
-[-2.9034330772911137, -3.67536908841995]
-[-3.134885850639922, -1.88170027043019]
-[-3.123538380524363, -0.824006867010723]
-[-2.7455200720442607, 3.24758220584572]
-[-2.295935560538828, 2.82654224721845]
-[-2.0931223208675416, 4.03483049554402]
-[-2.5802807099689407, 5.55800656928506]
-[-2.251198694882105, 7.05672847543499]
-[-1.986828239292839, 7.59105362798513]
-[-0.7804006189694872, 8.99291314342741]
-[-0.6462063695419453, 7.89166864404733]
-[-0.25321882534252094, 8.06371822245557]
-[-0.12803517196397474, 9.79999858431368]
-[0.49712200963101727, 9.88012237875786]
-[0.8154507248512652, 9.48006137585645]
-[1.9143522051072894, 6.92675935781283]
-[1.6182162344764988, 5.69849607197098]
-[1.9166495515351376, 4.66585564838146]
-[2.562555987212135, 5.63752596807498]
-[2.910775106779076, 4.08475848485492]
-[2.9769842781508267, 3.07099798165530]
-[2.927477609074393, -1.09921552072343]
-[2.490004091890598, -1.04214500808989]
-[2.387902334613361, -2.32785686318969]
-[2.9359223709617703, -3.41174185859273]
-[2.728945117306775, -5.15901190467818]
-[2.506206319500114, -5.89407010293903]
-[1.4094685468386827, -8.15369891792735]
-[1.1837879841330015, -7.07963751147237]
-[0.8001897725037028, -7.54658493975435]
-[0.8207572711067987, -9.46503928257494]
-[0.21983963103065962, -9.97622213671631]
-[-0.11712998767773042, -9.81076807833335]
-[-1.367320918447343, -8.11140986540702]
-[-1.171342307503414, -6.72845639477293]
-[-1.533648001245084, -5.93887313065505]
-[-2.08685092419986, -7.31253064482306]
-[-2.5273629848947468, -6.07928231019612]
-[-2.6640407862303075, -5.16979181793241]
-[-2.9409210715813305, -1.17500356197132]
-[-2.5499442573164024, -0.905934728429903]
-[-2.550347929764596, 0.369424785941362]
-[-3.1150129952949066, 1.00107464638094]
-[-3.051632904692277, 2.93578191580193]
-[-2.882141285075438, 3.85885012939636]
-[-1.9314156761199996, 6.90343228454335]
-[-1.592187126772255, 5.84735687330534]
-[-1.2287787807871071, 6.62130290898547]
-[-1.436854802436172, 8.71423068920135]
-[-0.8919869079714193, 9.59557185778030]
-[-0.5575576636841041, 9.66025363703092]
-[0.7655316295371528, 8.88986497966681]
-[0.6789507682035238, 7.48321155499929]
-[1.0780863442141335, 6.97374363411716]
-[1.5089098343418614, 8.59383928742030]
-[2.0094624102324175, 7.73166559042315]
-[2.203243730472188, 6.97881751937884]
-[2.776202191658254, 3.43094156107910]
-[2.462327514372037, 2.91202082256991]
-[2.557745267154243, 1.73647786854827]
-[3.0934051738496535, 1.52039759156924]
-[3.190364690565823, -0.414861356173891]
-[3.100001165429447, -1.45073180785692]
-[2.4165461843833067, -5.16170354423790]
-[1.9934763180759199, -4.38221239688127]
-[1.7003429312965135, -5.42861742465408]
-[2.0820384412654778, -7.32529557693295]
-[1.6347894729250128, -8.57234005992230]
-[1.3255088166981948, -8.89449573398619]
-[0.01104420883812507, -9.25834991439847]
-[-0.025239946354968623, -7.94779538460983]
-[-0.4377145212911224, -7.79009392211735]
-[-0.7109182087166515, -9.55113616760581]
-[-1.3061114194210384, -9.11653431105450]
-[-1.5732398083673962, -8.48989503680857]
-[-2.421543274246103, -5.23300669143229]
-[-2.0696501364852242, -4.34504375431390]
-[-2.267695861134026, -3.15398791857658]
-[-2.924307537217211, -3.50564387430008]
-[-3.1453720555735276, -1.69662416815632]
-[-3.127568737915591, -0.638266327803892]
-[-2.7234842940427835, 3.41308236716258]
-[-2.274552163055931, 2.96191208875277]
-[-2.06388338373666, 4.16003441322754]
-[-2.5441469987675314, 5.71687049532182]
-[-2.2046626574030608, 7.19895375330069]
-[-1.935908786791513, 7.71750939138953]
-[-0.7170039992231725, 9.03767838102136]
-[-0.5898346881014376, 7.91524183217896]
-[-0.19406789012539205, 8.06109848265225]
-[-0.05722264783072761, 9.80527718717902]
-[0.5679247832930846, 9.84106700870981]
-[0.8830655506459445, 9.41908967800527]
-[1.9630511361769512, 6.79191282206152]
-[1.6589757932777045, 5.58696835020655]
-[1.9496981844516923, 4.53481227483646]
-[2.6013048154971097, 5.45834441864015]
-[2.9391596325650813, 3.87880877089951]
-[2.9980975649523245, 2.85824890771948]
-[2.916615435376981, -1.31366871331244]
-[2.4765006548348154, -1.22257473876211]
-[2.364493186087804, -2.50439127150975]
-[2.9084542722447635, -3.63176140387576]
-[2.6895668894372577, -5.35139003385901]
-[2.463525330111009, -6.06560961128294]
-[1.3597650554025806, -8.24935882963711]
-[1.1448353548335641, -7.18917374462335]
-[0.7621910204023568, -7.62762527128396]
-[0.7665000456084856, -9.50822798426783]
-[0.6684134087723751, -9.58579756601317]
-[0.6184698588040647, -9.61341522536707]
-[0.3697998488985517, -9.73747598629557]
-[0.3270987012353569, -9.75110991573307]
-[0.27092072220172275, -9.76780530672547]
-[0.2682165674870712, -9.77058134353138]
+<span class="c1"># Note: The initial &quot;angle&quot; of 1 would not be considered small, so the linearization would in practice not be physically accurate.</span>
 </pre></div>
 </div>
 </div>
@@ -966,16 +823,18 @@ title="Print to PDF"
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Excursion [rad]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pendulum motion from Lagrangian equations&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x25543bf5ca0&gt;]
-</pre></div>
-</div>
-<img alt="../_images/w2_t1_33_1.png" src="../_images/w2_t1_33_1.png" />
+<img alt="../_images/w2_t1_33_0.png" src="../_images/w2_t1_33_0.png" />
 </div>
 </div>
+<hr class="docutils" />
+<p><span class="xref myst">The solution can be found here.</span></p>
 </section>
 </section>
 
@@ -1010,13 +869,13 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Week 2</p>
+            <p class="prev-next-title">Week 2: Strucural models</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="w2_t1_sol.html" title="next page">
+    <a class='right-next' id="next-link" href="w2_t2.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 2.1: Linearizing the Equations of Motion</p>
+        <p class="prev-next-title">Tutorial 2.2: Deriving the EOM of a pendulum</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

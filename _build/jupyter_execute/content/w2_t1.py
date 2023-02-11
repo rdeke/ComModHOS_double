@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 2.1: Linearizing the Equations of Motion
+# # Tutorial 2.1: Linearizing the Equations of Motion (Example only)
 # In this tutorial you will learn to linearize the Equations of Motion of the pendulum as covered in the lecture. 
 
 # ## Part 1: Kinematic equations
@@ -12,8 +12,6 @@
 
 
 from sympy import *
-# For myself: usedd for "some" symbolic operations in Python
-
 var("t x1 z1 r phi0") # independent variables      
 phi1 = Function("phi1")(t)
 x2 = x1 + r*cos(phi1)
@@ -78,7 +76,7 @@ L.evalf()
 
 
 EOM_phi = diff( diff(L, diff(phi1, t)), t) - diff(L, phi1)
-# ! LHS need derivative to "velocity"
+# ! LHS needs derivative to get "velocity"
 EOM_phi = simplify(EOM_phi)
 EOM_phi.evalf()
 
@@ -174,7 +172,6 @@ print(a)
 def qdot(t,q):
     vt = q[1]
     at = a.evalf(subs={psisym: q[0], tsym: t})
-    print([vt,at])
     return [vt,at]
 
 
@@ -190,6 +187,7 @@ qdot(0,[0,0])
 
 from scipy.integrate import solve_ivp
 sol = solve_ivp(fun=qdot,t_span=[0,10],y0=[1,0])
+# Note: The initial "angle" of 1 would not be considered small, so the linearization would in practice not be physically accurate.
 
 
 # In[18]:
@@ -197,4 +195,10 @@ sol = solve_ivp(fun=qdot,t_span=[0,10],y0=[1,0])
 
 import matplotlib.pyplot as plt
 plt.plot(sol.t,sol.y[0])
+plt.xlabel("Time [s]")
+plt.ylabel("Excursion [rad]")
+plt.title("Pendulum motion from Lagrangian equations");
 
+
+# -----------------------------------------------------------------------------------------------------
+# [The solution can be found here.](w2_t1_sol.ipynb)

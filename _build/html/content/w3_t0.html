@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Week 3 &#8212; ComModHOS</title>
+    <title>Week 3: Solving PDEs with Finite Differences &#8212; ComModHOS</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -50,11 +50,10 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w3_t0.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences" href="w3_t1.html" />
-    <link rel="prev" title="Tutorial 2.2: Deriving the EOM of the pendulum covered during the lecture" href="w2_t2_sol.html" />
+    <link rel="prev" title="Tutorial 2.2: Deriving the EOM of a pendulum" href="w2_t2.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -114,7 +113,14 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="user_guide.html">
+   How to get the most out of ComModHOS?
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course content
  </span>
@@ -125,35 +131,132 @@ const thebe_selector_output = ".output, .cell_output"
    Week 0
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w1_t0.html">
    Week 1
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w1_t1.html">
+     Tutorial 1: ODE solvers
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w2_t0.html">
    Week 2
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t1.html">
+     Tutorial 2.1: Linearizing the Equations of Motion (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t2.html">
+     Tutorial 2.2: Deriving the EOM of a pendulum
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1 current active">
+ <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
    Week 3
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t1.html">
+     Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t2.html">
+     Tutorial 3.2: Solving a cantilever beam with Finite Differences
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w4_t0.html">
    Week 4
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t1.html">
+     Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t2.html">
+     Tutorial 4.2: FEM for an Euler-Bernoulli beam
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t3.html">
+     Tutorial 4.3: FEM for a jacket wind turbine (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w5_t0.html">
    Week 5
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w5_t1.html">
+     Solution 5.1: Modal superposition of a jacket wind turbine
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w6_t0.html">
    Week 6
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t1.html">
+     Tutorial 6.1: Static string
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t2.html">
+     Tutorial 6.2: Dynamic string (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="w7_t0.html">
@@ -231,7 +334,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/w3_t0.md"
+        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/w3_t0.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -265,19 +368,6 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="bottom"
-title="Source repository"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-
-</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -291,23 +381,6 @@ title="Source repository"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
-title="Download notebook file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-code"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        <a href="../_sources/content/w3_t0.md"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
 title="Download source file"
 >
   
@@ -315,7 +388,7 @@ title="Download source file"
 <span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.md</span>
+<span class="headerbtn__text-container">.ipynb</span>
 </a>
 
       </li>
@@ -363,14 +436,29 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Week 3
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-1-introduction-to-finite-differences">
+   Part 3.1: Introduction to Finite Differences
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-difference-schemes">
-   Finite Difference schemes
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-2-creating-finite-difference-schemes">
+   Part 3.2: Creating Finite Difference Schemes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-3-non-uniform-discretizations">
+   Part 3.3 Non-uniform discretizations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-4-solving-pdes-with-finite-differences">
+   Part 3.4: Solving PDEs with finite differences
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-5-matrix-forms">
+   Part 3.5: Matrix forms
   </a>
  </li>
 </ul>
@@ -382,7 +470,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Week 3</h1>
+                <h1>Week 3: Solving PDEs with Finite Differences</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -392,14 +480,29 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Week 3
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-1-introduction-to-finite-differences">
+   Part 3.1: Introduction to Finite Differences
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#finite-difference-schemes">
-   Finite Difference schemes
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-2-creating-finite-difference-schemes">
+   Part 3.2: Creating Finite Difference Schemes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-3-non-uniform-discretizations">
+   Part 3.3 Non-uniform discretizations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-4-solving-pdes-with-finite-differences">
+   Part 3.4: Solving PDEs with finite differences
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-5-matrix-forms">
+   Part 3.5: Matrix forms
   </a>
  </li>
 </ul>
@@ -412,12 +515,34 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="week-3">
-<h1>Week 3<a class="headerlink" href="#week-3" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="week-3-solving-pdes-with-finite-differences">
+<h1>Week 3: Solving PDEs with Finite Differences<a class="headerlink" href="#week-3-solving-pdes-with-finite-differences" title="Permalink to this headline">#</a></h1>
+<p>This week the focus lies in learning …</p>
+<section id="part-3-1-introduction-to-finite-differences">
+<h2>Part 3.1: Introduction to Finite Differences<a class="headerlink" href="#part-3-1-introduction-to-finite-differences" title="Permalink to this headline">#</a></h2>
+<p>This theory is explained in [LINK TO VIDEO].</p>
+<p>(add course content written out))</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="finite-difference-schemes">
-<h1>Finite Difference schemes<a class="headerlink" href="#finite-difference-schemes" title="Permalink to this headline">#</a></h1>
-<p>xx</p>
+<section id="part-3-2-creating-finite-difference-schemes">
+<h2>Part 3.2: Creating Finite Difference Schemes<a class="headerlink" href="#part-3-2-creating-finite-difference-schemes" title="Permalink to this headline">#</a></h2>
+<p>This theory is explained in [LINK TO VIDEO].</p>
+<p>(add course content written out))</p>
+</section>
+<section id="part-3-3-non-uniform-discretizations">
+<h2>Part 3.3 Non-uniform discretizations<a class="headerlink" href="#part-3-3-non-uniform-discretizations" title="Permalink to this headline">#</a></h2>
+<p>This theory is explained in [LINK TO VIDEO].</p>
+<p>(add course content written out))</p>
+</section>
+<section id="part-3-4-solving-pdes-with-finite-differences">
+<h2>Part 3.4: Solving PDEs with finite differences<a class="headerlink" href="#part-3-4-solving-pdes-with-finite-differences" title="Permalink to this headline">#</a></h2>
+<p>This theory is explained in [LINK TO VIDEO].</p>
+<p>(add course content written out))</p>
+</section>
+<section id="part-3-5-matrix-forms">
+<h2>Part 3.5: Matrix forms<a class="headerlink" href="#part-3-5-matrix-forms" title="Permalink to this headline">#</a></h2>
+<p>This theory is explained in [LINK TO VIDEO].</p>
+<p>(add course content written out))</p>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -449,11 +574,11 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="w2_t2_sol.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="w2_t2.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Tutorial 2.2: Deriving the EOM of the pendulum covered during the lecture</p>
+            <p class="prev-next-title">Tutorial 2.2: Deriving the EOM of a pendulum</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="w3_t1.html" title="next page">

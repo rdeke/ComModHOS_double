@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 9: Dynamic string
+# # Tutorial 6.2: Dynamic string (Example only)
 # 
 # In this tutorial we will learn how to describe the motion of an oscillating axially deformed string. Here, we will use the FEM to solve a geometrically nonlinear structure subject to gravity loading in a dynamic configuration. The equation of motion of an axially deformed string can be obtained by coupling a string and a rod EOMs, giving the following system of PDEs:
 # 
@@ -76,7 +76,7 @@ for iElem in np.arange(0, nElem):
     
 # plot the supports
 plt.plot(D, 0, 'vr')
-plt.axis('equal')
+plt.axis('equal');
 
 
 # Note that the distance between supports is smaller than the string length. Therefore, the final string position will take a catenary shape between these two points.
@@ -135,7 +135,6 @@ TENSION = np.zeros((nElem))
 
 while CONV == 0:
     kIter += 1
-    print("Iteration: "+str(kIter)+" ...\n")
     # Check stability - define a number of maximum iterations. If solution
     # hasn't converged, check what is going wrong (if something).
     if kIter > nMaxIter:
@@ -155,10 +154,6 @@ while CONV == 0:
                     [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]])
         Fi_elem, K_elem, Tension, WARN = StringForcesAndStiffness(NodePos, EA, l0, TENSION_ONLY)
         TENSION[iElem] = Tension
-
-
-        if WARN:
-            print("WARNING: Element "+str(iElem+1)+" is under compression.\n")
         
         Fi[DofsLeft:DofsLeft + 2] += Fi_elem[0]
         Fi[DofsRight:DofsRight + 2] += Fi_elem[1]
@@ -214,7 +209,6 @@ while CONV == 0:
         plt.pause(0.05)
 
 if CONV == 1:
-    print("Converged solution at iteration: "+str(kIter))
     for iElem in np.arange(0, nElem):
             NodeLeft = int(Element[iElem, 0])
             NodeRight = int(Element[iElem, 1])
@@ -303,7 +297,7 @@ fy = FreeDof[np.newaxis, :]
 # In[10]:
 
 
-from StringDynamicForces import StringDynamicForces
+from module_imports.StringDynamicForces import StringDynamicForces
 def ACCELERATIONS(t, U, NodeCoord, Element, FreeDof, C, M, Pext, TENSION_ONLY):
     nDof = len(U)
     u = U[:nDof//2]
@@ -350,7 +344,7 @@ Tend = 10
 tspan = np.arange(0, Tend, dt)
 
 def odefun(t, U):
-    print(t)
+    # print(t) # Can add to follow progress - may take a few minutes
     return ACCELERATIONS(t, U, NodeCoord, Element, FreeDof, C, M, Pext, TENSION_ONLY)
 
 sol = scp.solve_ivp(fun=odefun, t_span=[tspan[0], tspan[-1]], y0=U0, t_eval=tspan)  

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 5: FEM for an Euler-Bernoulli beam
+# # Solution 4.2: FEM for an Euler-Bernoulli beam
 # In this tutorial we will use the FEM to solve a simple Euler-Bernoulli (EB) beam. We recall that the equation of motion of an EB beam is given by the following PDE:
 # 
 # $$ \rho A \frac{\partial^2 u(x,t)}{\partial t^2} + E I \frac{\partial^4 u(x,t)}{\partial x^4} = q(x) $$
@@ -11,7 +11,7 @@
 # * Length of $ L = 3$ m
 # * Clamped at $ x = 0 $, that means $ u(0,t) = 0 $ and $ u'(0,t) = 0 \quad \forall t $
 # * The rod is at rest initially,  $ u(x,0) = 0$ and $ \dot{u}(x,0) = 0 $
-# * A dynamic distributed load $ q(x,t) = 1e-3(L-x)+1e3sin(2\pi t) $ $N/m$ is applied
+# * A dynamic distributed load $ q(x,t) = 0.001\cdot(L-x)+1e3\cdot\sin(2\pi t) $ $N/m$ is applied
 # * $\rho = 8e3$ $kg/m^3$
 # * $A = 0.01$ $m^2$
 # * $E = 2.1e9$ $Pa$
@@ -28,7 +28,7 @@ u0 = 0          # [m]
 u0_dt2 = 0      # [m/s^2]
 du0 = 0         # [m]
 du0_dt2 = 0     # [m/s^2]
-def pressure(x, t):
+def q(x, t):
     return 1e-3*(L - x) + 1e3*np.sin(2*np.pi*t)
 rho = 8e3       # [kg/m^3]
 A = 1e-2        # [m^2]
@@ -172,7 +172,7 @@ for idof in np.arange(0, 4):
         def eqn_M(x):
             return rho*A*N_k[idof](x)*N_k[jdof](x)
         def eqn_K(x): 
-            return E*I*ddN_k[idof](x)*ddN_k[jdof](x) +1*N_k[idof](x)*N_k[jdof](x)
+            return E*I*ddN_k[idof](x)*ddN_k[jdof](x)
         M_k[idof, jdof] = scp.quad(eqn_M, 0, h)[0]
         K_k[idof, jdof] = scp.quad(eqn_K, 0, h)[0]
 
@@ -192,87 +192,41 @@ for idof in np.arange(0, 4):
 
 
 # Implement directly here ...
-# eqn = q
-
-
-# In[8]:
-
-
-# # def make_Q(eqn, xe):
-# #     return lambda t: scp.quad(eqn, xe[0], xe[1], args=(1,))[0]
 
 # def make_Q(eqn, xe):
-#     return scp.quad(eqn, xe[0], xe[1])[0]
+#     return lambda t: scp.quad(eqn, xe[0], xe[1], args=(1,))[0]
 
-# Q2_k = []
-# for ie in np.arange(0, ne):
-#     dofs = elem_dofs[ie]
-#     nodes = [dof_node[dofs[0]], dof_node[dofs[-1]]]
-#     xe = xn[nodes]
-#     Q_k = []
-#     for idof in np.arange(0, 4):
-#         def eqn1(x): 
-#             return (1e-3*(L-x))*N_k[idof](x)
-#         def eqn2(x):
-#             return 1e3*N_k[idof](x)
-#         def make_Q1():
-#             return lambda t: [make_Q(eqn1, xe), make_Q(eqn2, xe)]
-#         #Q_k.append([make_Q(eqn1, xe), make_Q(eqn2, xe)])
-#         Q_k.append(make_Q1())
-#     Q2_k.append(Q_k)
+def make_Q(eqn, xe):
+    return scp.quad(eqn, xe[0], xe[1])[0]
 
-
-# In[ ]:
-
-
-
+Q2_k = []
+for ie in np.arange(0, ne):
+    dofs = elem_dofs[ie]
+    nodes = [dof_node[dofs[0]], dof_node[dofs[-1]]]
+    xe = xn[nodes]
+    Q_k = []
+    for idof in np.arange(0, 4):
+        def eqn1(x): 
+            return (1e-3*(L-x))*N_k[idof](x)
+        def eqn2(x):
+            return 1e3*N_k[idof](x)
+        def make_Q1():
+            return lambda t: [make_Q(eqn1, xe), make_Q(eqn2, xe)]
+        #Q_k.append([make_Q(eqn1, xe), make_Q(eqn2, xe)])
+        Q_k.append(make_Q(eqn1, xe))
+    Q2_k.append(Q_k)
 
 
 # ## Step 4: global assembly
 # 
 # To construct the global matrices we add all the elemental contributions to the corresponding nodes.
 
-# In[9]:
-
-
-# K = np.zeros((ndofs*ndofs))       # 1-D array for global stiffness matrix
-# M = np.zeros((ndofs*ndofs))       # 1-D array for global mass matrix
-# Q = np.zeros(ndofs)              # 1-D array for Q vector
-
-# for ie in np.arange(0, ne):
-#     # Get the nodes of the elements
-#     dofs = elem_dofs[ie]
-#     NodeLeft = dof_node[dofs[0]]
-#     NodeRight = dof_node[dofs[-1]]
-    
-#     # Get the degrees of freedom that correspond to each node
-#     Dofs_Left = 2*(NodeLeft) + np.arange(0, 2)
-#     Dofs_Right = 2*(NodeRight) + np.arange(0, 2)
-
-#     # Assemble the matrices at the correct place
-#     nodes = np.append(Dofs_Left, Dofs_Right)
-#     for i in np.arange(0, 4):
-#         Q[nodes[i]] = Q[nodes[i]] + Q2_k[ie][i]
-#         for j in np.arange(0, 4):
-#             ij = nodes[j] + nodes[i]*ndofs
-#             M[ij] = M[ij] + M_k[i, j]
-#             K[ij] = K[ij] + K_k[i, j]
-            
-# # Reshape the global matrix from a 1-D array to a 2-D array
-# M = M.reshape((ndofs, ndofs))
-# K = K.reshape((ndofs, ndofs))
-
-# # Transform the Q vector into functions dependent on time
-# Q_vector = []
-# for i in np.arange(0, ndofs):
-#     Q_vector.append(lambda t: Q[i] + 0.0*t)
-
-
-# In[10]:
+# In[8]:
 
 
 K = np.zeros((ndofs*ndofs))       # 1-D array for global stiffness matrix
 M = np.zeros((ndofs*ndofs))       # 1-D array for global mass matrix
+Q = np.zeros(ndofs)               # 1-D array for Q vector
 
 for ie in np.arange(0, ne):
     # Get the nodes of the elements
@@ -287,6 +241,7 @@ for ie in np.arange(0, ne):
     # Assemble the matrices at the correct place
     nodes = np.append(Dofs_Left, Dofs_Right)
     for i in np.arange(0, 4):
+        Q[nodes[i]] = Q[nodes[i]] + Q2_k[ie][i]
         for j in np.arange(0, 4):
             ij = nodes[j] + nodes[i]*ndofs
             M[ij] = M[ij] + M_k[i, j]
@@ -296,65 +251,33 @@ for ie in np.arange(0, ne):
 M = M.reshape((ndofs, ndofs))
 K = K.reshape((ndofs, ndofs))
 
-
-# In[11]:
-
-
-def Qassembly(t, q):
-    
-    eqn = pressure #fun(x,t,y,z)
-
-    Q2_k = []  # large vector
-    for ie in np.arange(0, ne):
-        dofs = elem_dofs[ie]
-        nodes = [dof_node[dofs[0]], dof_node[dofs[-1]]]
-        xe = xn[nodes]
-        z = q[4*ie+1] # Vertical DOF is second entry of each smaller vector
-        Q_k = [] # small vector
-        for idof in np.arange(0, 4):
-            Q_k.append(scp.quad(eqn, xe[0], xe[1], args=(t))[0]) # y = 0 does not matter
-        Q2_k.append(Q_k)
-    
-    # ---------------------------------------------------------------------------------------------
-    
-    Q = np.zeros(ndofs)              # 1-D array for Q vector
-
-    for ie in np.arange(0, ne):
-        # Get the nodes of the elements
-        dofs = elem_dofs[ie]
-        NodeLeft = dof_node[dofs[0]]
-        NodeRight = dof_node[dofs[-1]]
-
-        # Get the degrees of freedom that correspond to each node
-        Dofs_Left = 2*(NodeLeft) + np.arange(0, 2)
-        Dofs_Right = 2*(NodeRight) + np.arange(0, 2)
-
-        # Assemble the matrices at the correct place
-        nodes = np.append(Dofs_Left, Dofs_Right)
-        for i in np.arange(0, 4):
-            Q[nodes[i]] = Q[nodes[i]] + Q2_k[ie][i]
-    
-    return Q # See lower for fx definition
-
-
-# In[12]:
-
-
-# Q_vector
+# Transform the Q vector into functions dependent on time
+Q_vector = []
+for i in np.arange(0, ndofs):
+    Q_vector.append(lambda t: Q[i] + 10e3*np.sin(2*np.pi*t))
+    # Q_vector.append(lambda t: Q[i] + 0.02*t)
+    # This does not seem to be correct??
 
 
 # We can use the `spy` command from the MatPlotLib.PyPlot package and inspect the structure of the matrices. Since the nodes are only attached to two elements at each side, we will only have contributions from the neighbour nodes. Therefore, you see that the matrices have a tri-block-diagonal structure.
 
-# In[13]:
+# In[9]:
 
 
 plt.figure()
 plt.spy(M);
 
 
+# In[10]:
+
+
+plt.figure()
+plt.spy(K);
+
+
 # To apply the boundary conditions, we will remove the rows associated to the fixed DOFs and add the contribution to the right-hand-side. First, we identify the free and fixed DOFs.
 
-# In[14]:
+# In[11]:
 
 
 fixed_dofs = np.arange(0, 2)                    # fixed DOFs
@@ -370,9 +293,9 @@ by = fixed_dofs[np.newaxis, :]
 
 # We can re-order the matrices and vectors in blocks, such that it's easy to operate with the blocks corresponding with the fixed DOFs. We'll use the notation $_I$ to designate an interior DOF and $_B$ to designate a boundary node.
 # 
-# $$ \begin{bmatrix} \bold{M}_{II} & \bold{M}_{IB} \\ \bold{M}_{BI} &\bold{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{K}_{II} & \bold{K}_{IB} \\ \bold{K}_{BI} &\bold{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{Q}_{I}  \\ \bold{Q}_{B}  \end{bmatrix} $$
+# $$ \begin{bmatrix} \boldsymbol{M}_{II} & \boldsymbol{M}_{IB} \\ \boldsymbol{M}_{BI} &\boldsymbol{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{K}_{II} & \boldsymbol{K}_{IB} \\ \boldsymbol{K}_{BI} &\boldsymbol{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{Q}_{I}  \\ \boldsymbol{Q}_{B}  \end{bmatrix} $$
 
-# In[15]:
+# In[12]:
 
 
 # Mass
@@ -390,9 +313,9 @@ Kbb = K[bx, by]
 
 # Now operating with the different blocks, we can get a system of ODEs for the free DOFs, which is given by:
 # 
-# $$ \bold{M}_{II}\bold{\ddot{u}}_I + \bold{K}_{II} \bold{u}_I = \bold{Q}_I - \bold{M}_{IB}\bold{\ddot{u}}_B - \bold{K}_{IB} \bold{u}_B $$
+# $$ \boldsymbol{M}_{II}\boldsymbol{\ddot{u}}_I + \boldsymbol{K}_{II} \boldsymbol{u}_I = \boldsymbol{Q}_I - \boldsymbol{M}_{IB}\boldsymbol{\ddot{u}}_B - \boldsymbol{K}_{IB} \boldsymbol{u}_B $$
 
-# In[16]:
+# In[13]:
 
 
 ub = np.array([u0, du0])
@@ -404,7 +327,7 @@ RHS = -np.dot(Mib, ub_dt2) - np.dot(Kib, ub)
 # 
 # At this point we have all the information to solve the ODE for each DOF. We can use what we learned in the previous modules.
 
-# In[17]:
+# In[14]:
 
 
 # Construct a matrix to reshape Q 
@@ -418,40 +341,19 @@ vdofs = np.arange(nfdofs, 2*nfdofs)
 q0 = np.zeros((2*nfdofs))
 
 # Time span (output purposes)
-tf = 50
-tspan = np.arange(0, tf, 1e-3)
+tf = 5
+tspan = np.arange(0, tf, tf/1e3)
 
 # Solve
 def odefun(t, q):
-    return np.append(q[vdofs], np.linalg.solve(Mii, np.transpose(np.dot(R, Qassembly(t,q)).reshape(1,-1) 
-                                                                 + RHS - np.dot(Kii, q0[udofs])))).tolist()
+    return np.append(q[vdofs], np.linalg.solve(Mii, np.transpose(np.dot(R, Q).reshape(1,-1) + RHS - np.dot(Kii, q0[udofs])))).tolist()
 
 sol = scp.solve_ivp(fun=odefun, t_span=[tspan[0], tspan[-1]], y0=q0, t_eval=tspan)  
 
-
-# In[18]:
-
-
 # Plot results
 plt.figure()
-plt.plot(sol.t,sol.y[int(len(sol.y)/2-1)])
-#plt.ylim((-10,1))
-plt.xlabel('Time [s]');
-
-
-# In[19]:
-
-
-x = np.linspace(0,L,len(sol.y))
-deflec_t = [sol.y[i][-1] for i in range(len(sol.y))] # solution at time t over beam
-plt.plot(x,deflec_t)
-
-
-# In[20]:
-
-
-for j in range(len(sol.t)):
-    x = np.linspace(0,L,int(len(sol.y)/2))
-    deflec_t = [sol.y[i][j] for i in range(int(len(sol.y)/2))] # solution at time t over beam
-    plt.plot(x,deflec_t/np.max(sol.y)*np.random.uniform(1.4,1.6))
+plt.plot(sol.t,sol.y[nfdofs-1])
+plt.xlabel('Time [s]')
+plt.ylabel("Deflection [m]")
+plt.title("Beam end deflection");
 

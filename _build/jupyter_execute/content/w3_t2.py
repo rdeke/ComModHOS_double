@@ -42,10 +42,6 @@ from scipy.integrate import solve_ivp
 
 
 # Your code goes here
-L = 10
-N = 10
-x = np.linspace(0,L,N+1)
-print(x)
 
 
 # ### Step 2: Discretize the EOM of the beam
@@ -69,35 +65,10 @@ print(x)
 # Replacing these expressions into the equation of motion we get the discrete system:
 # 
 # > Your derivations go here
-# $$\rho A \ddot{w_i} + \frac{EI}{\Delta x^4} \left( w_{i-2}-4w_{i-1}+6w_i-4w_{i+1}+w_{i+2} \right) = q_i(t)$$
 
 # ### Step 3: Apply boundary conditions
 # 
 # > Your derivations go here
-# $$ w_0 = 0$$
-# $$w_0' = 0$$
-# $$\dot{w_0} = 0$$
-# $$\ddot{w_0} = 0 $$
-# $$EI\ w_N^{'''} = F_{\mathrm{ext}}(t) $$
-# $$EI\ w_N^{''} = M_{\mathrm{ext}}(t) $$
-
-# So this means that:
-# 
-# 0) Intermediate:
-# 
-# 
-# 1) i = 1 also needs i = -1: 
-# $$ w_i^{'} = \frac{-0.5w_{i-1}+0.5w_{i+1}}{\Delta x}$$
-# $$\Rightarrow  w_0^{'} = \frac{-0.5w_{-1}+0.5w_{1}}{\Delta x} = 0 $$
-# $$\Rightarrow w_1 = w_{-1}$$ 
-# 
-# 2) i = N-1 also needs i = N+1:
-# $$ EI\ w_{N}^{''} = EI\ \frac{w_{N-1}-2w_{N}+w_{N+1}}{\Delta x^2} = M_{\mathrm{ext}} $$
-# $$ \Rightarrow w_{N+1} = \frac{\Delta x^2}{EI}M_{\mathrm{ext}}-w_{N-1}+2w_{N} $$
-# 
-# 3) i = N also needs i = N+2:
-# $$EI\ w_N^{'''} = EI\ \frac{-0.5w_{N-2}+w_{N-1}-w_{N+1}+0.5w_{N+2}}{\Delta x^3} = F_{\mathrm{ext}} $$
-# $$ \Rightarrow w_{N+2} = 2\frac{\Delta x^3}{EI}F_{\mathrm{ext}}+w_{N-2}-2w_{N-1}+2w_{N+1} $$
 
 # ### Step 4: Matrix form
 # 
@@ -105,27 +76,48 @@ print(x)
 # 
 # - For $i=1$:
 # > Your derivations go here
-# $$ \rho A \ddot{w_1} + \frac{EI}{\Delta x^4} \left( 7w_1-4w_{2}+w_{3} \right) = q_1 $$
+# 
 # - For $i=2$:
 # > Your derivations go here
-# $$ \rho A \ddot{w_2} + \frac{EI}{\Delta x^4} \left(-4w_{1}+6w_{2}-4w_{3}+w_{4} \right) = q_2 $$
+# 
 # - For $i=3,...,N-2$:
 # > Your derivations go here
-# $$\rho A \ddot{w_i} + \frac{EI}{\Delta x^4} \left( w_{i-2}-4w_{i-1}+6w_i-4w_{i+1}+w_{i+2} \right) = q_i$$
+# 
 # - For $i=N-1$:
 # > Your derivations go here
-# $$\rho A \ddot{w_{N-1}} + \frac{EI}{\Delta x^4} \left( w_{N-3}-4w_{N-2}+5w_{N-1}-2w_{N} \right) = 
-# q_{N-1}-\frac{1}{\Delta x^2}M_{\mathrm{ext}}$$
+# 
 # - For $i=N$:
 # > Your derivations go here
 # 
-# This is equivalent to the following system:
+# 
+# This is equivalent to the following system in compact form:
 # > Your derivations go here
 # 
-# And in a compact form:
-# $$\boldsymbol{M}\ddot{\boldsymbol{w}}+\boldsymbol{K}\boldsymbol{w}=\boldsymbol{F}$$
+# with vectors  $\boldsymbol{w}$ and $\boldsymbol{F}$, and matrices $\boldsymbol{M}$ and $\boldsymbol{K}$ equal to:
+# > Your derivations go here
+# 
+
+# Some info for the coming exercises:
 
 # In[3]:
+
+
+def qfunc(x_i,t): # Can choose whatever you need, x are the free node coordinates in an array, so here without w_0
+    return (x_i[1:]**2 - 3*x_i[1:] - 1)*np.sin(t) * 1e2
+def F_ext(t):
+    return 1e3 *np.cos(t)
+def M_ext(t):
+    return 1e4 *(np.sin(t)+np.cos(t))
+rho = 7850 # kg/m3, steel
+
+b = 0.2
+h = 0.5
+A = b*h # m2
+E = 1 # For increased stability, added later
+EI = 1/3*b*h**3*E
+
+
+# In[4]:
 
 
 # Construct the matrices and external force vector
@@ -135,16 +127,18 @@ print(x)
 # 
 # Now, we just need to apply what we learned in the previous session to solve the dynamic problem. The main novelty is that here we work with matrices.
 
-# In[4]:
+# In[5]:
 
 
-# Define the ODE function 
+# Define the ODE function
 
 # Define initial state
 
 # Define time interval and time evaluation points
 
+
 # Solve
+
 
 # Plot
 
@@ -156,3 +150,6 @@ print(x)
 
 
 
+
+# -----------------------------------------------------------------------------------------------------
+# [The solution can be found here.](w3_t2_sol.ipynb)

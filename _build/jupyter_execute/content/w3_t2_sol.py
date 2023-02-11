@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 3.2: Solving a cantilever beam with Finite Differences
+# # Solution 3.2: Solving a cantilever beam with Finite Differences
 # 
 # In this tutorial we will learn how to obtain the motion of a cantilever beam using Finite Differences
 # 
@@ -83,9 +83,6 @@ print(x)
 
 # So this means that:
 # 
-# 0) Intermediate:
-# 
-# 
 # 1) i = 1 also needs i = -1: 
 # $$ w_i^{'} = \frac{-0.5w_{i-1}+0.5w_{i+1}}{\Delta x}$$
 # $$\Rightarrow  w_0^{'} = \frac{-0.5w_{-1}+0.5w_{1}}{\Delta x} = 0 $$
@@ -118,41 +115,159 @@ print(x)
 # q_{N-1}-\frac{1}{\Delta x^2}M_{\mathrm{ext}}$$
 # - For $i=N$:
 # > Your derivations go here
+# $$\rho A \ddot{w_{N}} + \frac{EI}{\Delta x^4} \left( 2w_{N-2}-4w_{N-1}+2w_{N}\right) = 
+# q_{N}+\frac{1}{\Delta x^2}M_{\mathrm{ext}}-\frac{2}{\Delta x}F_{\mathrm{ext}}$$
 # 
-# This is equivalent to the following system:
+# This is equivalent to the following system in compact form:
 # > Your derivations go here
-# 
-# And in a compact form:
 # $$\boldsymbol{M}\ddot{\boldsymbol{w}}+\boldsymbol{K}\boldsymbol{w}=\boldsymbol{F}$$
+# with vectors  $\boldsymbol{w}$ and $\boldsymbol{F}$, and matrices $\boldsymbol{M}$ and $\boldsymbol{K}$ equal to:
+# 
+# $$ \boldsymbol{w} = \left[  {\begin{array}{c}
+#                                 w_1 \\ w_2 \\ w_3 \\ \vdots \\ w_{N-2} \\ w_{N-1} \\ w_{N}
+#                             \end{array}} 
+#                     \right]
+# $$
+# 
+# $$ \boldsymbol{M} = \left[  {\begin{array}{ccccc}
+#                                 \rho A & 0 & \cdots & 0 \\
+#                                 0 & \rho A & \cdots & 0 \\
+#                                 \vdots & \vdots & \vdots & \ddots \\
+#                                 0 & 0 & \cdots & \rho A \\
+#                             \end{array}} 
+#                     \right]
+# $$
+# 
+# $$ \boldsymbol{K} = \frac{EI}{\Delta x^4}
+#                     \left[  {\begin{array}{ccccccccccc}
+#                                 7 & -4 & 1 &  0 & 0 & \cdots & 0 & 0 & 0 & 0 & 0 \\
+#                                 -4 & 6 & -4 & 1 & 0 & \cdots & 0 & 0 & 0 & 0 & 0 \\
+#                                 1 & -4 & 6 & -4 & 1 & \cdots & 0 & 0 & 0 & 0 & 0 \\
+#                                 \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+#                                 0 & 0 & 0 & 0 & 0 & \cdots & 1 & -4 & 6 & -4 & 1 \\
+#                                 0 & 0 & 0 & 0 & 0 & \cdots & 0 & 1 & -4 & 5 & -2 \\
+#                                 0 & 0 & 0 & 0 & 0 & \cdots & 0 & 0 & 2 & -4 & 2 \\
+#                             \end{array}} 
+#                     \right]
+# $$
+# 
+# $$ \boldsymbol{F} = \left[  {\begin{array}{c}
+#                                 q_1 \\ q_2 \\ q_3 \\ \vdots \\ q_{N-2} \\
+#                                 q_{N-1}-\frac{1}{\Delta x^2}M_{\mathrm{ext}} \\
+#                                 q_N + \frac{1}{\Delta x^2}M_{\mathrm{ext}}-\frac{2}{\Delta x}F_{\mathrm{ext}}
+#                             \end{array}} 
+#                     \right]
+# $$
+# 
+# 
+
+# Some info for the coming exercises:
 
 # In[3]:
 
 
+def qfunc(x_i,t): # Can choose whatever you need, x are the free node coordinates in an array, so here without w_0
+    return (x_i[1:]**2 - 3*x_i[1:] - 1)*np.sin(t) * 1e2
+def F_ext(t):
+    return 1e3 *np.cos(t)
+def M_ext(t):
+    return 1e4 *(np.sin(t)+np.cos(t))
+rho = 7850 # kg/m3, steel
+
+b = 0.2
+h = 0.5
+A = b*h # m2
+E = 1 # For increased stability
+EI = 1/3*b*h**3*E
+
+
+# In[4]:
+
+
 # Construct the matrices and external force vector
+DeltaX = L/N
+def Ffunc(t):
+    q_part = qfunc(x,t)    
+    ext_part = np.zeros(N)
+    ext_part[-2:] = [-M_ext(t)/DeltaX**2, M_ext(t)/DeltaX**2-2*F_ext(t)/DeltaX]
+    return q_part + ext_part
+
+M = np.diag(rho*A*np.ones(N))
+
+K = np.zeros((N,N))
+K[0,0:3] = [-7, -4, 1]
+K[1,0:4] = [-4, 6, -4, 1]
+for i in range(2,N-2):
+    K[i,i-2:i+3] = [1, -4, 6, -4, 1]
+K[-2,-4:] = [1, -4, 5, -2]
+K[-1,-3:] = [2, -4, 2]
+K = (EI/DeltaX**4) * K
 
 
 # # Step 5: Solve the ODE system
 # 
 # Now, we just need to apply what we learned in the previous session to solve the dynamic problem. The main novelty is that here we work with matrices.
 
-# In[4]:
+# In[5]:
 
 
-# Define the ODE function 
+# Define the ODE function
+M_inv = np.linalg.inv(M)
+def fun(t,dispvelo):
+    u = dispvelo[:N]
+    v = dispvelo[N:]
+    a = (M_inv @ (Ffunc(t) - K @ u)) # @ determines the dit productm, M_inv is just unit matrix
+    return np.concatenate((v, a))
 
 # Define initial state
+dispvelo0 = np.zeros(2*N)
 
 # Define time interval and time evaluation points
+t0 = 0
+tf = 50
 
 # Solve
+sol = solve_ivp(fun,t_span=[t0, tf],y0=dispvelo0,method="Radau",t_eval=np.linspace(t0,tf,2000))
 
 # Plot
+E = 210e9
+plt.plot(sol.t,sol.y[-1]/E)
+plt.xlabel("Time [s]")
+plt.ylabel("Excursion [m]")
+plt.title("Excursion of beam end");
 
 
 # ## Exercise: Add a point mass at the extreme of the beam
 
-# In[ ]:
+# In[6]:
 
 
+# Only 1 change: a point mass m on the mass matrix
+m = 10e3 # 10 tons
+M = np.diag(rho*A*np.ones(N))
+M[-1,-1] += m
 
+M_inv = np.linalg.inv(M)
+def fun(t,dispvelo):
+    u = dispvelo[:N]
+    v = dispvelo[N:]
+    a = (M_inv @ (Ffunc(t) - K @ u)) # @ determines the dit productm, M_inv is just unit matrix
+    return np.concatenate((v, a))
+
+# Define initial state
+dispvelo0 = np.zeros(2*N)
+
+# Define time interval and time evaluation points
+t0 = 0
+tf = 50
+
+# Solve
+sol = solve_ivp(fun,t_span=[t0, tf],y0=dispvelo0,method="Radau",t_eval=np.linspace(t0,tf,2000))
+
+# Plot
+E = 210e9
+plt.plot(sol.t,sol.y[-1]/E)
+plt.xlabel("Time [s]")
+plt.ylabel("Excursion [m]")
+plt.title("Excursion of beam end");
 

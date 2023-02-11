@@ -1,36 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 5.1: Modal superposition of a jacket wind turbine
+# # Solution 5.1: Modal superposition of a jacket wind turbine
 # 
 # In this tutorial we will use the model defined in tutorial 6 to apply the modal superposition technique in a simplified jacket wind turbine. We assume that the structure can be modelled as a space frame with structural elements that are subject to axial displacement and bending. Therefore, the equations of motion at a given element are given by: 
 # 
 # $$ \rho A \frac{\partial^2 u (x,t)}{\partial t^2} - E A \frac{\partial^2 u(x,t)}{\partial x^2} = q_u(x) $$
 # 
 # $$ \rho A \frac{\partial^2 v (x,t)}{\partial t^2} + E I \frac{\partial^4 v(x,t)}{\partial x^4} = q_v(x) $$
-# 
-# In the following figure we have a sketch of the simplified geometry that will be used in this example.
-# 
-# ![figure](tutorial8_figure.png)
-# 
 
 # ## Step 0: input parameters
 # 
 # Let's start by setting some parameters:
 
 # In[1]:
-
-
-pip install scipy
-
-
-# In[2]:
-
-
-pip install ipympl
-
-
-# In[3]:
 
 
 import numpy as np
@@ -68,14 +51,12 @@ nT = len(T)
 
 # ## Step 1: discretize the domain 
 # 
-# As done in tutorial 6, we start by discretizing the domain. We will discretize the structure using 21 nodes, as depicted in the following figure.
-# 
-# ![figure](tutorial8_figure2.png)
+# As done in tutorial 4.3, we start by discretizing the domain. We will discretize the structure using 21 nodes.
 # 
 # Here we first define a matrix with the nodal coordinates.
 # 
 
-# In[4]:
+# In[2]:
 
 
 # Define node coordinates
@@ -105,7 +86,7 @@ nNode = len(NodeCoord)
 
 # Once we have the node coordinates we proceed to define the elemental connectivities. Here, we will use the same array to assign the material properties to each element. Note that they are different depending on which part of the structure they belong to.
 
-# In[5]:
+# In[3]:
 
 
 # Define elements (and their properties
@@ -142,7 +123,7 @@ nElem = len(Elements)
 
 # Let's plot the structure to make sure that it looks like the model in the figure.
 
-# In[6]:
+# In[4]:
 
 
 plt.figure()
@@ -172,8 +153,8 @@ plt.grid()
 # 
 # In the theory we have seen that the mass and stiffness elemental matrices for the space frame using linear and cubic shape functions are given by:
 # 
-# $$ \bold{M} = \frac{mL}{420} \begin{bmatrix} 140 & 0 & 0 & 70 & 0 & 0 \\ 0 & 156 & 22L & 0 & 54 & -13L \\ 0 & 22L & 4L^2 & 0 & 13L & -3L^2 \\ 70 & 0 & 0 & 140 & 0 & 0 \\ 0 & 54 & 13L & 0 & 156 & -22L \\ 0 & -13L & -3L^2 & 0 & -22L & 4L^2 \end{bmatrix} $$
-# $$ \quad \bold{K} = \begin{bmatrix} \frac{EA}{L} & 0 & 0 & \frac{-EA}{L} &  0 & 0 \\ 0 & \frac{12EI}{L^3} & \frac{6EI}{L^2} & 0 & \frac{-12EI}{L^3} & \frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{4EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{2EI}{L} \\ \frac{-EA}{L} & 0 & 0 & \frac{EA}{L} & 0 & 0 \\ 0 & \frac{-12EI}{L^3} & \frac{-6EI}{L^2} & 0 & \frac{12EI}{L^3} & \frac{-6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{2EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{4EI}{L} \end{bmatrix}$$
+# $$ \boldsymbol{M} = \frac{mL}{420} \begin{bmatrix} 140 & 0 & 0 & 70 & 0 & 0 \\ 0 & 156 & 22L & 0 & 54 & -13L \\ 0 & 22L & 4L^2 & 0 & 13L & -3L^2 \\ 70 & 0 & 0 & 140 & 0 & 0 \\ 0 & 54 & 13L & 0 & 156 & -22L \\ 0 & -13L & -3L^2 & 0 & -22L & 4L^2 \end{bmatrix} $$
+# $$ \quad \boldsymbol{K} = \begin{bmatrix} \frac{EA}{L} & 0 & 0 & \frac{-EA}{L} &  0 & 0 \\ 0 & \frac{12EI}{L^3} & \frac{6EI}{L^2} & 0 & \frac{-12EI}{L^3} & \frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{4EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{2EI}{L} \\ \frac{-EA}{L} & 0 & 0 & \frac{EA}{L} & 0 & 0 \\ 0 & \frac{-12EI}{L^3} & \frac{-6EI}{L^2} & 0 & \frac{12EI}{L^3} & \frac{-6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{2EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{4EI}{L} \end{bmatrix}$$
 # 
 # These matrices are used directly when calling the `BeamMatrices` function within the assembly process.
 
@@ -181,7 +162,7 @@ plt.grid()
 # 
 # The last step is to compute the global matrices and the global forcing vector. We start by initializing the global matrices as 1-dimensional arrays.
 
-# In[7]:
+# In[5]:
 
 
 nDof = 3*nNode              # 3 Degrees of freedom per node
@@ -191,10 +172,10 @@ M = np.zeros((nDof*nDof))
 
 # Then we loop over elements and perform all the elemental operations.
 
-# In[8]:
+# In[6]:
 
 
-from BeamMatrices import BeamMatricesJacket
+from module_imports.BeamMatrices import BeamMatricesJacket
 for iElem in np.arange(0, nElem):
     # Get the nodes of the elements
     NodeLeft = Elements[iElem][0]-1
@@ -217,8 +198,6 @@ for iElem in np.arange(0, nElem):
     for i in np.arange(0, 6):
         for j in np.arange(0, 6):
             ij = nodes[j] + nodes[i]*nDof
-            print(ij)
-            #print(ij)
             M[ij] = M[ij] + Me[i, j]
             K[ij] = K[ij] + Ke[i, j]
             
@@ -229,7 +208,7 @@ K = K.reshape((nDof, nDof))
 
 # Now we have the global mass and stiffness matrices. However, in this example we have an additional point mass at the top corresponding to the nacelle. Then, we need to account for this mass adding its value at the corresponding DOFs, in this case the corresponding horizontal and vertical displacements associated to the top node.
 
-# In[9]:
+# In[7]:
 
 
 nacelle_node = nNode
@@ -241,7 +220,7 @@ M[nacelle_dof_v, nacelle_dof_v] += Mass_Nacelle
 
 # That completes the filling of the matrices. Let's have a look at the matrices' structure.
 
-# In[10]:
+# In[8]:
 
 
 # Look at the matrix structure
@@ -250,12 +229,12 @@ plt.spy(M)
 plt.title("Mass matrix")
 plt.figure()
 plt.spy(K)
-plt.title("Stiffness matrix")
+plt.title("Stiffness matrix");
 
 
 # To apply the boundary conditions, we will remove the rows associated to the fixed DOFs and add the contribution to the right-hand-side. First, we obtain the free and fixed DOFs.
 
-# In[11]:
+# In[9]:
 
 
 DofsP = np.arange(0, 6)          # prescribed DOFs
@@ -271,7 +250,7 @@ by = DofsP[np.newaxis, :]
 
 # We can re-order the matrices and vectors in blocks, such that it's easy to operate with the blocks corresponding with the fixed DOFs.
 
-# In[12]:
+# In[10]:
 
 
 # Mass
@@ -289,13 +268,15 @@ K_PP = K[bx, by]
 
 # ## Step 5: modal analysis
 # 
+# Here we divert from tutorial 4.3.
+# 
 # Using the matrices associated to the free DOFs, we can perform a modal analysis to get more information on how the structure will deform and determine the natural frequencies.
 # 
-# $$ ( \bold{K}_{FF} - \omega^2 \bold{M}_{FF} ) \bold{\phi} = \bold{0} $$
+# $$ ( \boldsymbol{K}_{FF} - \omega^2 \boldsymbol{M}_{FF} ) \boldsymbol{\phi} = \boldsymbol{0} $$
 # 
 # To compute the natural frequencies and mode shapes we use the `eig` command, which is part of the NumPy package. For more information see: https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html
 
-# In[13]:
+# In[11]:
 
 
 mat = np.dot(np.linalg.inv(M_FF), K_FF)
@@ -307,7 +288,7 @@ len(f)
 
 # We sort the frequencies and mode shapes in descending order:
 
-# In[14]:
+# In[12]:
 
 
 idx = f.argsort()#[::-1]  
@@ -315,13 +296,11 @@ f = f[idx]
 vr_sorted = vr[:,idx]
 ModalShape = np.zeros((nDof, len(f)))
 ModalShape[6:, :] = vr_sorted
-print(f)
-print(vr_sorted[0:3])
 
 
 # Let's see what these modes look like. Here, we plot the first 9 modes. Note that the system will have 19 x 3 = 57 modes (as many as the discrete system DOFs).
 
-# In[15]:
+# In[13]:
 
 
 nMode = 9
@@ -378,10 +357,9 @@ plt.tight_layout()
 # 
 # **Attention**: we are calculating all the modes, but in general this shouldn't be the case. You should only calculate the response for these modes that you want to consider. Here, we are calculating all modes, because we will compare the "reduced" and the "full" response. To consider only a few, you should replace `nMode` by the number of modes you wish to consider.
 
-# In[16]:
+# In[14]:
 
 
-nMode = 9#len(f)
 PHI = vr_sorted[:,0:nMode]
 
 Mm = np.zeros(nMode)
@@ -390,17 +368,15 @@ Cm = np.zeros(nMode)
 ModalDampRatio = 0.01
 # Compute your "nMode" entries of the modal mass, stiffness and damping
 for iMode in np.arange(0,nMode):
-    print('Computing Mode: ',iMode)
+    print('Computing Mode: ',iMode+1) # Starts at 0 off course
     Mm[iMode] = PHI[:,iMode].T @ M_FF @ PHI[:,iMode]
     Km[iMode] = PHI[:,iMode].T @ K_FF @ PHI[:,iMode]
     Cm[iMode] = 2*ModalDampRatio*np.sqrt(Mm[iMode]*Km[iMode])
     print('Mm = ',Mm[iMode],', Km = ', Km[iMode],', Cm = ', Cm[iMode])
 
 
-# In[17]:
+# In[15]:
 
-
-# Compute the equivalent force (accounting for boundary conditions)
 
 # Define the boundary conditions
 def ub(t, T0):
@@ -408,16 +384,22 @@ def ub(t, T0):
         return A0*np.sin(2*np.pi*f0*t)*np.array([1, 0, 0, 1, 0, 0])
     else:
         return np.array([0, 0, 0, 0, 0, 0])
+    # Note the change at T0. What effect will this have? 
 def dub_dt2(t, T0):
     return -(2*np.pi*f0)**2*ub(t, T0)
 
 def F(t):
     return -PHI.T @ ( K_FP @ ub(t,T0) + M_FP @ dub_dt2(t,T0) )
 
-print(F(20))
 
+# -----------------------------------------------------------------------------------------------------
+# **Problem**: Solve the equation and plot the results
+# 
+# *Hint*: Which matrices are needed to get the modal acceleration in the ODE solver?
+# 
+# ---------------------------------------------------------------------------------------------------
 
-# In[18]:
+# In[16]:
 
 
 # Solve the resulting ODE:
@@ -430,10 +412,13 @@ q0 = np.zeros(2*nMode)
 
 import scipy.integrate as scpi
 q = scpi.solve_ivp(fun=qdot,y0=q0,t_span=[0,400])
-plt.plot(q.y[5])
+plt.plot(q.y[5]) # Can pick any of 9 modes you like
+plt.xlabel("Time [s]")
+plt.ylabel("Modal excursion")
+plt.title("Modal results");
 
 
-# In[19]:
+# In[17]:
 
 
 # Show the result on the original coordinates
@@ -443,10 +428,7 @@ for iMode in np.arange(0,nMode):
         U_F[it,:] = PHI[:,iMode] * q.y[iMode][it]
         
 plt.plot(U_F[:,9])
-
-
-# In[ ]:
-
-
-
+plt.xlabel("Time [s]")
+plt.ylabel("Excursion [m]")
+plt.title("FEM results from modal analysis");
 

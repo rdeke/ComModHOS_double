@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # 5 Tutorial 2: Wave simulation
+# # Solution 2.3: Wave simulation
 # 
 # In this tutorial you will learn how to simulate a wave elevation using the wave spectrum and assuming potential theory to describe the water kinematics. 
 # 
@@ -26,12 +26,6 @@
 # - `rand_seed`   - Random number seed, applies to all random numbers (phase, rand frequency)
 
 # In[1]:
-
-
-import numpy as np
-
-
-# In[2]:
 
 
 from module_imports.tutorial2_4_wave_spectrum import wave_spectrum

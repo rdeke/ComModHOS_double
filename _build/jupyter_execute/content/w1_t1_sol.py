@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 1: ODE solvers
+# # Solution 1: ODE solvers
 # In this tutorial you will learn to solve an MCK (mass-damper-spring) using a Python ODE solver. The MCK has 1 DOF and consequently the state veector contains 2 entries; displacement and velocity. 
 # 
 # $$ \boldsymbol{q} = \begin{bmatrix} u \\ \dot{u} \end{bmatrix}$$
@@ -12,18 +12,6 @@
 # We start by defining the numerical values of all parameters:
 
 # In[1]:
-
-
-pip install scipy;
-
-
-# In[2]:
-
-
-pip install ipympl;
-
-
-# In[3]:
 
 
 import numpy as np
@@ -38,7 +26,7 @@ m =         1   # [kg]
 
 # We want to solve the problem in the interval $ t \in [0,10] $, and get the solution with a resolution of $ \Delta t = 0.01$. Then, the vector of evaluation points will be defined as:
 
-# In[4]:
+# In[2]:
 
 
 # Time interval
@@ -52,7 +40,7 @@ tspan =     np.linspace(t_0,t_f,steps)   # vector of evaluation points [s]
 
 # The initial conditions for this example will be: $ u(0) = 1.0 $ and $ \dot{u}(0) = 0.0$.
 
-# In[5]:
+# In[3]:
 
 
 # Initial conditions
@@ -85,17 +73,6 @@ init_velo = 0
 # 
 # Here, the variable $\dot{\boldsymbol{q}}$ is the time derivative of our current state, $t$ is the current time and $\boldsymbol{q}$ is our current state. As the solver requires this interface, we have to create our `fun` accordingly or we will get answers that have no physical meaning!
 # 
-# Now we are faced with the problem that we need to have access to our parameters inside our `fun`. But our `fun` can only have the arguments $(t,\boldsymbol{q})$. To overcome this problem we will use an anonymous function (AF) to pass along the parameters to our `fun`. In Python an anonymous function is also known as a Lambda function.
-# 
-# `AF = lambda -,-,- : fun(-,-,-)`
-# 
-# where you have to replace the dashed marks. Now we can use this AF in our call to the solver:
-# 
-# `[T,q] = solve_ivp(AF,tspan,q_0)`
-# 
-# You can also directly declare the AF in the call to the solver if you prefer:
-# 
-# `[T,q] = solve_ivp(lambda -,-,- : fun(-,-,-),tspan,q_0)`
 # 
 # -----------------------------------------------------------------------------------------------------
 # **Problem**: Create a `fun` function that can receive the time, the state variable and the parameters as arguments. Implement the ODE function, $\mathcal{F}$, for the 1DOF MCK system such that $\dot{q}=\mathcal{F} (q)$.
@@ -105,16 +82,16 @@ init_velo = 0
 # -----------------------------------------------------------------------------------------------------
 # 
 
-# In[6]:
+# In[4]:
 
 
 # Solve the problem of part 3 here
+
 def q_dot(t,q):
     # A function that given a time "t" and a vector "q" returns the derivative of "q" --> q_dot
     u = q[0]       # First entry of vector q is the displacement
     v = q[1]       # Second entry of vector q is the velocity
     a = (-k*u - c*v)/m # From the equation of motion we can compute the acceleration
-    # q = [u, v] =>  dq = [v, a]
     return [v, a]
 
 
@@ -131,34 +108,47 @@ def q_dot(t,q):
 # 
 # -----------------------------------------------------------------------------------------------------
 
-# In[7]:
+# In[5]:
 
 
 # Solve the problem of part 4 here
-q0 = [init_disp, init_velo]
+
+q0 = [init_disp, init_velo] # Defined in cell 3
 
 
 # ## Part 5: Solve
-# Once everything works the solver will return T and q. Each row in q corresponds to your state at that time-step. you can then plot your results with:
+# ### Part5.1: RK5 scheme
+# Once everything works the solver will return T and q. Each row in q corresponds to your state at that time-step. You can then plot your results with:
 
-# In[8]:
+# In[6]:
 
 
-# Solve the problem
 sol = solve_ivp(fun=q_dot,t_span=[t_0, t_f], y0=q0, t_eval=tspan)
-
 # Plotting the solution
-plt.plot(sol.t,sol.y[0])
-plt.plot(sol.t,sol.y[1])
+plt.plot(sol.t,sol.y[0],label="Displacement")
+plt.plot(sol.t,sol.y[1],label="Velocity")
 plt.xlabel('Time [s]')
+plt.ylabel('Displacement [m] / Velocity [m/s]')
+plt.legend()
+plt.title("ODE results using solve_ivp");
 
 
-# Let's write the Forward Euler solver:
+# ### Part5.2: RK5 scheme
+# In the cell above the RK5 scheme was used for the time integration. However, we can simply make our own time integration scheme as well.
+# 
+# -----------------------------------------------------------------------------------------------------
+# **Problem**: Create your `FE_solver` function
+# 
+# *Hint*: Start by making all required arrays, and then loop over the different time entries. How are the displacement, velocity, and acceleration linked? Can we use a vector notation?
+# 
+# ---------------------------------------------------------------------------------------------------
 
-# In[9]:
+# In[7]:
 
 
-# Foward Euler solver
+# Solve the problem of part 5.2 here 
+
+# FE solver
 def FE_solver(qdot, tspan, q0):
     
     # Initialize the solution vector at the times we want to evaluate.
@@ -171,38 +161,41 @@ def FE_solver(qdot, tspan, q0):
     
     # Loop over time entries
     for i,t in enumerate(tspan[1:]):
-        dq = qdot(t,q[i]) # Evaluate the derivative using the function provided as argument
-        # update the solution vector at step "i"
-        q[i+1] = q[i] + np.multiply(dq,dt)  # q_{i+1} = q_i + qdot_i*dt
+        # Evaluate the derivative using the function provided as argument
+        dq = qdot(t,q[i]) 
+        # Update the solution vector at step "i"
+        q[i+1] = q[i] + np.multiply(dq,dt)
         
     return q
 
 
-# In[10]:
+# In[8]:
 
 
 # Solve the problem
 FE_sol = FE_solver(q_dot, tspan,q0)
 
 # Plotting the solution
-plt.plot(tspan,FE_sol[:,0])
-plt.plot(tspan,FE_sol[:,1])
+plt.plot(tspan,FE_sol[:,0],label="Displacement") 
+# Note the slightly different notation than FE_sol.y[0]. This is because the .y result is intrinsicly bound to the solve_ivp function. However, adaptations to FE_solver could give the same result 
+plt.plot(tspan,FE_sol[:,1],label="Velocity")
 plt.xlabel('Time [s]')
+plt.ylabel('Displacement [m] / Velocity [m/s]')
+plt.legend()
+plt.title("ODE results using FE_solver (self made)");
 
 
+# ## Part 5.3: Performance comparison
 # The Forward Euler method is less accurate than the `solve_ivp` solver and it accumulates as time evolves. Let's plot the error.
 
-# In[11]:
+# In[9]:
 
 
 # Plotting the error
-plt.plot(tspan,abs(FE_sol[:,0]-sol.y[0]))
-plt.plot(tspan,abs(FE_sol[:,1]-sol.y[1]))
+plt.plot(tspan,abs(FE_sol[:,0]-sol.y[0]),label="Displacement")
+plt.plot(tspan,abs(FE_sol[:,1]-sol.y[1]),label="Velocity")
 plt.xlabel('Time [s]')
-
-
-# In[ ]:
-
-
-
+plt.ylabel('Displacement error [m] / Velocity error [m/s]')
+plt.legend()
+plt.title("ODE absolute error from FE to RK4");
 
