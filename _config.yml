@@ -4,38 +4,47 @@ author: TU Delft Offshore Engineering
 copyright: "2023"
 logo: "images/logo/TU_logo.png"
 
-exclude_patterns: [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", LICENSE.md]
-
-description: >- # this means to ignore newlines until "baseurl:"
-  This is a collection of note and examples in numerical computations.
-
-execute_notebooks: auto
+# description: >- # this means to ignore newlines until "baseurl:"
+#   This is a collection of note and examples in numerical computations.
 
 execute:
   timeout: 120
+  execute_notebooks: auto
+  exclude_patterns: #[_build, Thumbs.db, .DS_Store, LICENSE.md, w1_t1]
+      - '_build'
+      - 'Thumbs.db'
+      - '.DS_Store'
+      #- "**.ipynb_checkpoints"
+      - 'LICENSE.md'
+      - 'w1_t1.ipynb'
+      - 'w2_t2.ipynb'
+      - 'w2_t3.ipynb'
+      - 'w4_t1.ipynb'
+      - 'w4_t2.ipynb'
+      - 'w5_t1.ipynb'
+      - 'w6_t1.ipynb'
 
 # Bibliography settings
 bibtex_bibfiles:
   - references.bib
 
-html:
-  baseurl: https://kyleniemeyer.github.io/computational-thermo
-  home_page_in_navbar: true
-  use_repository_button: true
-
+# html:
+#   baseurl: https://kyleniemeyer.github.io/computational-thermo
+#   home_page_in_navbar: true
+#   use_repository_button: true
 
 repository:
   url: https://github.com/TUDelft-CITG/ComModHOS.git
   branch: master
   path_to_book: "book"
 
-launch_buttons:
-  binderhub_url: "https://mybinder.org"
-  thebelab: true
+# launch_buttons:
+#   binderhub_url: "https://mybinder.org"
+#   thebelab: true
 
-binder:
-  binderhub_url: "https://mybinder.org"
-  text: "Launch binder"
+# binder:
+#   binderhub_url: "https://mybinder.org"
+#   text: "Launch binder"
 
 sphinx:
   config:

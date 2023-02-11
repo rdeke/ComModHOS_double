@@ -1,16 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 6: FEM for a jacket wind turbine
+# # Tutorial 4.3: FEM for a jacket wind turbine (Example only)
 # In this tutorial we will use the FEM to solve a simplified jacket wind turbine. We assume that the structure can be modelled as a space frame with structural elements that are subject to axial discplacement and bending. Therefore, the equations of motion at a given element are given by:
 # 
 # $$ \rho A \frac{\partial^2 u (x,t)}{\partial t^2} - E A \frac{\partial^2 u(x,t)}{\partial x^2} = q_u(x) $$
 # 
 # $$ \rho A \frac{\partial^2 v (x,t)}{\partial t^2} + E I \frac{\partial^4 v(x,t)}{\partial x^4} = q_v(x) $$
-# 
-# In the following figure we have a sketch of the simplified geometry that will be used in this example.
-# 
-# ![figure](tutorial8_figure.png)
 # 
 # Let's start by initializing the script and setting some parameters:
 
@@ -51,9 +47,7 @@ nT = len(T)
 
 
 # ## Step 1: discretize the domain
-# As usual, we start by discretizing the domain. We will discretize the structure using 21 nodes, as depicted in the following figure.
-# 
-# ![figure2](tutorial8_figure2.png)
+# As usual, we start by discretizing the domain. We will discretize the structure using 21 nodes.
 # 
 # Here we first define a matrix with the nodal coordinates.
 
@@ -154,8 +148,8 @@ plt.grid()
 # 
 # In the theory we have seen that the mass and stiffness elemental matrices for the space frame using linear and cubic shape functions are given by:
 # 
-# $$ \bold{M} = \frac{mL}{420} \begin{bmatrix} 140 & 0 & 0 & 70 & 0 & 0 \\ 0 & 156 & 22L & 0 & 54 & -13L \\ 0 & 22L & 4L^2 & 0 & 13L & -3L^2 \\ 70 & 0 & 0 & 140 & 0 & 0 \\ 0 & 54 & 13L & 0 & 156 & -22L \\ 0 & -13L & -3L^2 & 0 & -22L & 4L^2 \end{bmatrix} $$
-# $$ \quad \bold{K} = \begin{bmatrix} \frac{EA}{L} & 0 & 0 & \frac{-EA}{L} &  0 & 0 \\ 0 & \frac{12EI}{L^3} & \frac{6EI}{L^2} & 0 & \frac{-12EI}{L^3} & \frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{4EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{2EI}{L} \\ \frac{-EA}{L} & 0 & 0 & \frac{EA}{L} & 0 & 0 \\ 0 & \frac{-12EI}{L^3} & \frac{-6EI}{L^2} & 0 & \frac{12EI}{L^3} & \frac{-6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{2EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{4EI}{L} \end{bmatrix}$$
+# $$ \boldsymbol{M} = \frac{mL}{420} \begin{bmatrix} 140 & 0 & 0 & 70 & 0 & 0 \\ 0 & 156 & 22L & 0 & 54 & -13L \\ 0 & 22L & 4L^2 & 0 & 13L & -3L^2 \\ 70 & 0 & 0 & 140 & 0 & 0 \\ 0 & 54 & 13L & 0 & 156 & -22L \\ 0 & -13L & -3L^2 & 0 & -22L & 4L^2 \end{bmatrix} $$
+# $$ \quad \boldsymbol{K} = \begin{bmatrix} \frac{EA}{L} & 0 & 0 & \frac{-EA}{L} &  0 & 0 \\ 0 & \frac{12EI}{L^3} & \frac{6EI}{L^2} & 0 & \frac{-12EI}{L^3} & \frac{6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{4EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{2EI}{L} \\ \frac{-EA}{L} & 0 & 0 & \frac{EA}{L} & 0 & 0 \\ 0 & \frac{-12EI}{L^3} & \frac{-6EI}{L^2} & 0 & \frac{12EI}{L^3} & \frac{-6EI}{L^2} \\ 0 & \frac{6EI}{L^2} & \frac{2EI}{L} & 0 & \frac{-6EI}{L^2} & \frac{4EI}{L} \end{bmatrix}$$
 # 
 # These matrices are used directly when calling the `BeamMatrices` function within the assembly process.
 
@@ -272,7 +266,7 @@ K_PP = K[bx, by]
 # 
 # Using the matrices associated to the free DOFs, we can perform a modal analysis to get more information on how the structure will deform and determine the natural frequencies.
 # 
-# $$ ( \bold{K}_{FF} - \omega^2 \bold{M}_{FF} ) \bold{\phi} = \bold{0} $$
+# $$ ( \boldsymbol{K}_{FF} - \omega^2 \boldsymbol{M}_{FF} ) \boldsymbol{\phi} = \boldsymbol{0} $$
 # 
 # To compute the natural frequencies and mode shapes we use the `eig` command, which is part of the NumPy package. For more information see: https://numpy.org/doc/stable/reference/generated/numpy.linalg.eig.html
 
@@ -373,7 +367,6 @@ tspan = np.arange(0, tf, 0.01)
 
 # Solve
 def odefun(t, q):
-    print(t)
     return np.append(q[vdofs], np.linalg.solve(M_FF, -np.dot(K_FP, ub(t, T0)) - 
             np.dot(M_FP, dub_dt2(t, T0)) - np.dot(K_FF, q[udofs]))).tolist()
 
@@ -390,11 +383,18 @@ for it in np.arange(0, len(tspan)):
     u_total[it, DofsP] = ub(tspan[it], T0)
 nacelle_result = u_total[:, 60:63]
 
-fig, axs = plt.subplots(1, 3, figsize = (15, 6))
+fig, axs = plt.subplots(1, 3, figsize = (10, 3))
 axs[0].plot(sol.t, nacelle_result[:, 0])
 axs[0].set_title("u$_h$")
+axs[0].set_xlabel("Time [s]")
+axs[0].set_ylabel("u$_h$ [m]")
 axs[1].plot(sol.t, nacelle_result[:, 1])
 axs[1].set_title("u$_v$")
+axs[1].set_xlabel("Time [s]")
+axs[1].set_ylabel("u$_v$ [m]")
 axs[2].plot(sol.t, nacelle_result[:, 2])
-axs[2].set_title("Rotation");
+axs[2].set_title("$\phi_{top}$")
+axs[2].set_xlabel("Time[s]")
+axs[2].set_ylabel("$\phi_{top}$ [rad]")
+fig.tight_layout();
 

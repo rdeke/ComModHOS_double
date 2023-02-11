@@ -11,19 +11,7 @@
 # 
 # As usual, we first define the parameters:
 
-# In[1]:
-
-
-#pip install scipy;
-
-
-# In[2]:
-
-
-#pip install ipympl;
-
-
-# In[3]:
+# In[ ]:
 
 
 import numpy as np
@@ -38,7 +26,7 @@ g = 9.81    # [m/s^2] gravity constant
 
 # We now define a parameter that will be used as a flag to determine if the string can handle tension only or if it can also handle compression. By default we set it to 1 (tension only). If you want to add the possibility to handle compressions, set it to 0.
 
-# In[4]:
+# In[ ]:
 
 
 TENSION_ONLY = 1
@@ -48,7 +36,7 @@ TENSION_ONLY = 1
 # 
 # We will use the FEM to solve this problem. Then, we start by discretizing the domain in such a way that the maximum element length $l_{max}$ is 1 m.
 
-# In[5]:
+# In[ ]:
 
 
 lmax = 1                    # [m] maximum length of each string(wire) element
@@ -59,7 +47,7 @@ nNode = nElem + 1           # [-] number of nodes
 
 # We create the nodal coordinates vector and an array with the properties of the element: node connectivity and material properties.
 
-# In[6]:
+# In[ ]:
 
 
 NodeCoord = np.zeros((nNode, 2))
@@ -74,7 +62,7 @@ for iElem in np.arange(0, nElem):
 
 # Let's plot the undeformed (horizontal) position of the string, together with the position of the supports
 
-# In[7]:
+# In[ ]:
 
 
 # plot the undeformed wire
@@ -100,7 +88,7 @@ plt.axis('equal');
 # 
 # We start by defining the free and fixed DOFs.
 
-# In[8]:
+# In[ ]:
 
 
 nDof = 2*nNode                          # number of DOFs
@@ -121,7 +109,7 @@ fy = FreeDof[np.newaxis, :]
 # 
 # Where $s$ is the coordinate along the undeformed position of the wire and $SAG$ the maximum vertical distance of the string.
 
-# In[9]:
+# In[ ]:
 
 
 SAG = 20                            # Let us assume a big sag - this will assure that all elements
@@ -139,7 +127,7 @@ u[1:nDof+1:2] = y - np.array([i[1] for i in NodeCoord])
 
 # Plot the initial guess.
 
-# In[10]:
+# In[ ]:
 
 
 # plot the initial guess
@@ -166,7 +154,7 @@ plt.axis('equal');
 # 
 # In the external force $ \bf{F}_{ext} $ we will only have the contribution of the gravity load, which does not depend on the position of the string. Then, we can take it out of the iteration loop and assemble it at the beginning.
 
-# In[11]:
+# In[ ]:
 
 
 Pext = np.zeros((nDof))
@@ -194,7 +182,7 @@ for iElem in np.arange(0, nElem):
 # 4. If not converged, compute increment $ \bf{\delta u}^i =\bf{K} (\bf{u}^i)^{-1} \bf{R} (\bf{u}^i)$. Here, we also enforce that the increment must not be greater than the element length (for convergence purposes).
 # 5. Update displacements $\bf{u}^{i+1} = {u}^i +\bf{\delta u}^i $
 
-# In[12]:
+# In[ ]:
 
 
 from module_imports.StringForcesAndStiffness import StringForcesAndStiffness
@@ -207,7 +195,6 @@ TENSION = np.zeros((nElem))
 
 while CONV == 0:
     kIter += 1
-    print("Iteration: "+str(kIter)+" ...\n")
     # Check stability - define a number of maximum iterations. If solution
     # hasn't converged, check what is going wrong (if something).
     if kIter > nMaxIter:
@@ -227,10 +214,6 @@ while CONV == 0:
                     [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]])
         Fi_elem, K_elem, Tension, WARN = StringForcesAndStiffness(NodePos, EA, l0, TENSION_ONLY)
         TENSION[iElem] = Tension
-
-
-        if WARN:
-            print("WARNING: Element "+str(iElem+1)+" is under compression.\n")
         
         Fi[DofsLeft:DofsLeft + 2] += Fi_elem[0]
         Fi[DofsRight:DofsRight + 2] += Fi_elem[1]
@@ -303,15 +286,11 @@ if CONV == 1:
     plt.title("Converged solution at iteration: "+str(kIter))
 else:
     print("Solution did not converge")
-        
-
-    
-    
 
 
 # We can also check what the tension looks like.
 
-# In[13]:
+# In[ ]:
 
 
 # plot the tension
@@ -320,236 +299,36 @@ X = (np.array([i[0] for i in NodeCoord[0:-1]]) + np.array([i[0] for i in NodeCoo
 plt.plot(X, TENSION)
 plt.title("Tension")
 plt.xlabel("x [m]")
-plt.ylabel("y [m]")
+plt.ylabel("y [m]");
 
 
 # ## Exercise
 # Determine the mooring configuration of a floating wind turbine attached to two cables of different length:
 # 
-# $$L_{\mbox{left}}=100$$
-# $$L_{\mbox{right}}=150$$
+# $$L_{left}=100$$
+# $$L_{right}=150$$
 # 
 # The anchors are positioned at $[-50,-60]$ and $[60,-60]$. The floating wind turbine is at $[0,0]$.
 
-# In[14]:
+# In[ ]:
 
 
 ## Right side
 
 # Step 1: discretize the domain
 
-L = 150     # [m] string length
-D = 60      # [m] distance between supports
-H = 60      # [m] water depth
-EA = 1e6    # [Pa] stiffness
-m = 1       # [kg] mass
-g = 9.81    # [m/s^2] gravity constant
 
-lmax = 5                    # [m] maximum length of each string(wire) element
-nElem = int(np.ceil(L/lmax))# [-] number of elements   
-lElem = L/nElem             # [m] actual tensionless element size
-nNode = nElem + 1           # [-] number of nodes 
-
-NodeCoord = np.zeros((nNode, 2))
-Element = np.zeros((nElem, 5))
-
-for iElem in np.arange(0, nElem):
-    NodeLeft = iElem
-    NodeRight = iElem + 1
-    NodeCoord[NodeRight] = NodeCoord[NodeLeft] + [lElem, -H/L*lElem]
-    Element[iElem, :] = [NodeLeft, NodeRight, m, EA, lElem]
-    
-# plot the undeformed wire
-plt.figure()
-for iElem in np.arange(0, nElem):
-    NodeLeft = int(Element[iElem, 0])
-    NodeRight = int(Element[iElem, 1])
-
-    plt.plot([NodeCoord[NodeLeft][0], NodeCoord[NodeRight][0]], [NodeCoord[NodeLeft][1], NodeCoord[NodeRight][1]], 'g')
-    
-# plot the supports
-plt.plot([0, D], [0, -H], 'vr')
-plt.axis('equal');
-
-
-# In[15]:
+# In[ ]:
 
 
 # Step 2: compute initial configuration
-
-nDof = 2*nNode                          # number of DOFs
-FreeDof = np.arange(0, nDof)            # free DOFs 
-FixedDof = [0,1, -2, -1]                # fixed DOFs
-FreeDof = np.delete(FreeDof, FixedDof)  # remove the fixed DOFs from the free DOFs array
-
-# free & fixed array indices
-fx = FreeDof[:, np.newaxis]
-fy = FreeDof[np.newaxis, :]
-
-SAG = 202
-s = np.array([i[0] for i in NodeCoord])
-x = D*(s/L)
-y = -H*(s/L)-4*SAG*((x/D)-(x/D)**2)
-u = np.zeros((nDof))
-u[0:nDof+1:2] = x - np.array([i[0] for i in NodeCoord])
-u[1:nDof+1:2] = y - np.array([i[1] for i in NodeCoord])
-# The displacement of the node corresponds to the actual position minus the initial position
-# Remember that we use a Global Coordinate System (GCS) here.
-
-# plot the initial guess
-plt.figure()
-for iElem in np.arange(0, nElem):
-    NodeLeft = int(Element[iElem, 0])
-    NodeRight = int(Element[iElem, 1])
-    DofsLeft = 2*NodeLeft 
-    DofsRight = 2*NodeRight
-    plt.plot([NodeCoord[NodeLeft][0] + u[DofsLeft], NodeCoord[NodeRight][0] + u[DofsRight]], 
-                [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]], '-ok')
-    plt.plot([NodeCoord[NodeLeft][0], NodeCoord[NodeRight][0]], [NodeCoord[NodeLeft][1], NodeCoord[NodeRight][1]], 'g')
-    
-# plot the supports
-plt.plot([0, D], [0, -H], 'vr')
-plt.axis('equal');
-
-
-# In[16]:
-
-
-# Step 3: Assemble system and solve
-
-Pext = np.zeros((nDof))
-for iElem in np.arange(0, nElem):
-    NodeLeft = int(Element[iElem, 0])
-    NodeRight = int(Element[iElem, 1])
-    DofsLeft = 2*NodeLeft 
-    DofsRight = 2*NodeRight
-    l0 = Element[iElem, 4]
-    m = Element[iElem, 2]
-    Pelem = -g*l0*m/2           # Half weight to each node
-    Pext[DofsLeft + 1] += Pelem
-    Pext[DofsRight + 1] += Pelem
-
-
-# In[17]:
-
-
-from StringForcesAndStiffness import StringForcesAndStiffness
-# Convergence parameters
-CONV = 0
-PLOT = False
-kIter = 0
-nMaxIter = 100
-TENSION = np.zeros((nElem))
-
-while CONV == 0:
-    kIter += 1
-#     print("Iteration: "+str(kIter)+" ...\n")
-    # Check stability - define a number of maximum iterations. If solution
-    # hasn't converged, check what is going wrong (if something).
-    if kIter > nMaxIter:
-        break
-    
-    # Assemble vector with internal forces and stiffnes matrix
-    K = np.zeros((nDof*nDof)) 
-    Fi = np.zeros((nDof))
-    for iElem in np.arange(0, nElem):
-        NodeLeft = int(Element[iElem, 0])
-        NodeRight = int(Element[iElem, 1])
-        DofsLeft = 2*NodeLeft 
-        DofsRight = 2*NodeRight
-        l0 = Element[iElem, 4]
-        EA = Element[iElem, 3]
-        NodePos = ([NodeCoord[NodeLeft][0] + u[DofsLeft], NodeCoord[NodeRight][0] + u[DofsRight]], 
-                    [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]])
-        Fi_elem, K_elem, Tension, WARN = StringForcesAndStiffness(NodePos, EA, l0, TENSION_ONLY)
-        TENSION[iElem] = Tension
-
-
-#         if WARN:
-#             print("WARNING: Element "+str(iElem+1)+" is under compression.\n")
-        
-        Fi[DofsLeft:DofsLeft + 2] += Fi_elem[0]
-        Fi[DofsRight:DofsRight + 2] += Fi_elem[1]
-
-        # Assemble the matrices at the correct place
-        # Get the degrees of freedom that correspond to each node
-        Dofs_Left = 2*(NodeLeft) + np.arange(0, 2)
-        Dofs_Right = 2*(NodeRight) + np.arange(0, 2)
-        nodes = np.append(Dofs_Left , Dofs_Right)
-        for i in np.arange(0, 4):
-            for j in np.arange(0, 4):
-                ij = nodes[i] + nodes[j]*nDof
-                K[ij] = K[ij] + K_elem[i, j]
-
-    K = K.reshape((nDof, nDof))
-
-    # Calculate residual forces
-    R = Pext - Fi
-
-    # Check for convergence
-    if np.linalg.norm(R[FreeDof])/np.linalg.norm(Pext[FreeDof]) < 1e-3:
-        CONV = 1
-
-    # Calculate increment of displacements
-    du = np.zeros((nDof))
-    du[FreeDof] = np.linalg.solve(K[fx, fy], R[FreeDof])
-
-    # Apply archlength to help with convergence
-    Scale = np.min(np.append(np.array([1]), lElem/np.max(np.abs(du))))
-    du = du*Scale   # Enforce that each node does not displace
-                    # more (at each iteration) than the length
-                    # of the elements
-
-    # Update displacement of nodes
-    u += du
-
-    # plot the updated configuration
-    if PLOT:
-        fig = plt.figure()
-        for iElem in np.arange(0, nElem):
-            NodeLeft = int(Element[iElem, 0])
-            NodeRight = int(Element[iElem, 1])
-            DofsLeft = 2*NodeLeft 
-            DofsRight = 2*NodeRight
-            plt.plot([NodeCoord[NodeLeft][0] + u[DofsLeft], NodeCoord[NodeRight][0] + u[DofsRight]], 
-                        [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]], '-ok')
-            
-        # plot the supports
-        plt.plot([0, D], [0, -H], 'vr')
-        plt.axis('equal')
-        plt.xlabel("x [m]")
-        plt.ylabel("y [m]")
-        plt.title("Iteration: "+str(kIter))
-        plt.pause(0.05)
-
-if CONV == 1:
-    print("Converged solution at iteration: "+str(kIter))
-    for iElem in np.arange(0, nElem):
-            NodeLeft = int(Element[iElem, 0])
-            NodeRight = int(Element[iElem, 1])
-            DofsLeft = 2*NodeLeft 
-            DofsRight = 2*NodeRight
-            plt.plot([NodeCoord[NodeLeft][0] + u[DofsLeft], NodeCoord[NodeRight][0] + u[DofsRight]], 
-                        [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]], '-ok')
-            
-    # plot the supports
-    plt.plot([0, D], [0, -H], 'vr')
-    plt.axis('equal')
-    plt.xlabel("x [m]")
-    plt.ylabel("y [m]")
-    plt.title("Converged solution at iteration: "+str(kIter))
-else:
-    print("Solution did not converge") 
-
-
-# In[31]:
-
-
-Fi
 
 
 # In[ ]:
 
 
+# Step 3: Assemble system and solve
 
 
+# -----------------------------------------------------------------------------------------------------
+# [The solution can be found here.](w6_t1_sol.ipynb)

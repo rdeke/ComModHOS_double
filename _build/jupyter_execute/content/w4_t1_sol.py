@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 4: FEM for a rod
+# # Solution 4.1: FEM for a rod
 # In this tutorial we will learn how to define the FEM to solve a rod subject to axial loading. The equation of motion of a rod is given by the following PDE:
 # 
 # $$ \rho A \frac{\partial^2 u(x,t)}{\partial t^2} - EA \frac{\partial^2u(x,t)}{\partial x^2} = q(x) $$
@@ -11,7 +11,7 @@
 # - Length of $L = 3$ $m$
 # - Fixed at $x=0$, that means $u(0,t) = 0 \forall t $
 # - The rod is at rest initially, $u(x,0) = 0$ and $\dot{u}(x,0) = 0$
-# - A dynamic point load $P=10e3 sin(2\pi t)$ $N$ is applied at $x=L$
+# - A dynamic point load $P=10e3 \cdot \sin(2\pi t)$ $N$ is applied at $x=L$
 # - $\rho = 8.0e3$ $kg/m^3$
 # - $A = 0.01$ $m^2$
 # - $E = 2.1e9$ $Pa$

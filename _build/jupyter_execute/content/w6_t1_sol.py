@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 6.1: Static string
+# # Solution 6.1: Static string
 # 
 # In this tutorial we will learn how to define the static equilibrium position of a string. Here, we will use the FEM to solve a geometrically nonlinear structure subject to gravity loading in a static configuration. The equation of motion of an axially deformed string can be obtained by coupling a string and a rod EOMs, giving the following system of PDEs:
 # 
@@ -12,18 +12,6 @@
 # As usual, we first define the parameters:
 
 # In[1]:
-
-
-#pip install scipy;
-
-
-# In[2]:
-
-
-#pip install ipympl;
-
-
-# In[3]:
 
 
 import numpy as np
@@ -38,7 +26,7 @@ g = 9.81    # [m/s^2] gravity constant
 
 # We now define a parameter that will be used as a flag to determine if the string can handle tension only or if it can also handle compression. By default we set it to 1 (tension only). If you want to add the possibility to handle compressions, set it to 0.
 
-# In[4]:
+# In[2]:
 
 
 TENSION_ONLY = 1
@@ -48,7 +36,7 @@ TENSION_ONLY = 1
 # 
 # We will use the FEM to solve this problem. Then, we start by discretizing the domain in such a way that the maximum element length $l_{max}$ is 1 m.
 
-# In[5]:
+# In[3]:
 
 
 lmax = 1                    # [m] maximum length of each string(wire) element
@@ -59,7 +47,7 @@ nNode = nElem + 1           # [-] number of nodes
 
 # We create the nodal coordinates vector and an array with the properties of the element: node connectivity and material properties.
 
-# In[6]:
+# In[4]:
 
 
 NodeCoord = np.zeros((nNode, 2))
@@ -74,7 +62,7 @@ for iElem in np.arange(0, nElem):
 
 # Let's plot the undeformed (horizontal) position of the string, together with the position of the supports
 
-# In[7]:
+# In[5]:
 
 
 # plot the undeformed wire
@@ -100,7 +88,7 @@ plt.axis('equal');
 # 
 # We start by defining the free and fixed DOFs.
 
-# In[8]:
+# In[6]:
 
 
 nDof = 2*nNode                          # number of DOFs
@@ -121,7 +109,7 @@ fy = FreeDof[np.newaxis, :]
 # 
 # Where $s$ is the coordinate along the undeformed position of the wire and $SAG$ the maximum vertical distance of the string.
 
-# In[9]:
+# In[7]:
 
 
 SAG = 20                            # Let us assume a big sag - this will assure that all elements
@@ -139,7 +127,7 @@ u[1:nDof+1:2] = y - np.array([i[1] for i in NodeCoord])
 
 # Plot the initial guess.
 
-# In[10]:
+# In[8]:
 
 
 # plot the initial guess
@@ -166,7 +154,7 @@ plt.axis('equal');
 # 
 # In the external force $ \bf{F}_{ext} $ we will only have the contribution of the gravity load, which does not depend on the position of the string. Then, we can take it out of the iteration loop and assemble it at the beginning.
 
-# In[11]:
+# In[9]:
 
 
 Pext = np.zeros((nDof))
@@ -194,7 +182,7 @@ for iElem in np.arange(0, nElem):
 # 4. If not converged, compute increment $ \bf{\delta u}^i =\bf{K} (\bf{u}^i)^{-1} \bf{R} (\bf{u}^i)$. Here, we also enforce that the increment must not be greater than the element length (for convergence purposes).
 # 5. Update displacements $\bf{u}^{i+1} = {u}^i +\bf{\delta u}^i $
 
-# In[12]:
+# In[10]:
 
 
 from module_imports.StringForcesAndStiffness import StringForcesAndStiffness
@@ -207,7 +195,6 @@ TENSION = np.zeros((nElem))
 
 while CONV == 0:
     kIter += 1
-    print("Iteration: "+str(kIter)+" ...\n")
     # Check stability - define a number of maximum iterations. If solution
     # hasn't converged, check what is going wrong (if something).
     if kIter > nMaxIter:
@@ -227,10 +214,6 @@ while CONV == 0:
                     [NodeCoord[NodeLeft][1] + u[DofsLeft + 1], NodeCoord[NodeRight][1] + u[DofsRight + 1]])
         Fi_elem, K_elem, Tension, WARN = StringForcesAndStiffness(NodePos, EA, l0, TENSION_ONLY)
         TENSION[iElem] = Tension
-
-
-        if WARN:
-            print("WARNING: Element "+str(iElem+1)+" is under compression.\n")
         
         Fi[DofsLeft:DofsLeft + 2] += Fi_elem[0]
         Fi[DofsRight:DofsRight + 2] += Fi_elem[1]
@@ -303,15 +286,11 @@ if CONV == 1:
     plt.title("Converged solution at iteration: "+str(kIter))
 else:
     print("Solution did not converge")
-        
-
-    
-    
 
 
 # We can also check what the tension looks like.
 
-# In[13]:
+# In[11]:
 
 
 # plot the tension
@@ -320,21 +299,22 @@ X = (np.array([i[0] for i in NodeCoord[0:-1]]) + np.array([i[0] for i in NodeCoo
 plt.plot(X, TENSION)
 plt.title("Tension")
 plt.xlabel("x [m]")
-plt.ylabel("y [m]")
+plt.ylabel("y [m]");
 
 
 # ## Exercise
 # Determine the mooring configuration of a floating wind turbine attached to two cables of different length:
 # 
-# $$L_{\mbox{left}}=100$$
-# $$L_{\mbox{right}}=150$$
+# $$L_{left}=100$$
+# $$L_{right}=150$$
 # 
 # The anchors are positioned at $[-50,-60]$ and $[60,-60]$. The floating wind turbine is at $[0,0]$.
 
-# In[14]:
+# In[12]:
 
 
 ## Right side
+# (The idea for te left side is the same, bu with D = 50 and then mirorring the final result)
 
 # Step 1: discretize the domain
 
@@ -372,7 +352,7 @@ plt.plot([0, D], [0, -H], 'vr')
 plt.axis('equal');
 
 
-# In[15]:
+# In[13]:
 
 
 # Step 2: compute initial configuration
@@ -412,7 +392,7 @@ plt.plot([0, D], [0, -H], 'vr')
 plt.axis('equal');
 
 
-# In[16]:
+# In[14]:
 
 
 # Step 3: Assemble system and solve
@@ -430,10 +410,9 @@ for iElem in np.arange(0, nElem):
     Pext[DofsRight + 1] += Pelem
 
 
-# In[17]:
+# In[15]:
 
 
-from StringForcesAndStiffness import StringForcesAndStiffness
 # Convergence parameters
 CONV = 0
 PLOT = False
@@ -540,16 +519,4 @@ if CONV == 1:
     plt.title("Converged solution at iteration: "+str(kIter))
 else:
     print("Solution did not converge") 
-
-
-# In[31]:
-
-
-Fi
-
-
-# In[ ]:
-
-
-
 

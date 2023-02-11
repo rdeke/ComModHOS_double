@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+# # Solution 3.1: Solving the dynamic motion of a rod using Finite Differences
 # In this tutorial you will learn how to solve the dynamic motion of a rod using Finite Differences. Here we will follow the example presented in the lectures.
 # 
 # Let's consider the EOM of a rod of length $L$:
-# $$ \rho A\ddot{u}-EAu{''}=q(x,t)\qquad\mbox{for }x\in[0,L], $$
+# $$ \rho A\ddot{u}-EAu{''}=q(x,t)\qquad \forall x\in[0,L] $$
 # with $\rho$ the density, $A$ the cross section area, $E$ the young modulus and $q$ an external (distributed) load.
 # 
 # The system is subject to boundary conditions:
@@ -207,7 +207,7 @@ tspan = np.linspace(t0,tf,nt+1)
 # Solve (we use Radau method because the ODE is very stiff and it works best for this case)
 sol = solve_ivp(fun=q_dot,t_span=[t0,tf],y0=q0,t_eval=tspan,method='Radau')
 
-# Plot
+# Plot in local mode -- creates animated plot
 import time
 import pylab as pl
 from IPython import display
@@ -217,22 +217,41 @@ for i in range(0,len(tspan)):
     #display.display(pl.gcf())
     plt.plot(np.linspace(0,L,N),sol.y[0:N,i])
     plt.ylim((-0.015,0.015))
+    plt.xlabel("Beam position [m]")
+    plt.ylabel("Displacement [m]")
+    plt.title("Beam displacement animation")
     time.sleep(0.05)
     plt.show()
+
+
+# In[5]:
+
+
+# Pick time value:
+time_pick = 86
+time_closest = sol.t.flat[np.abs(sol.t - time_pick).argmin()]
+time_idx = np.where(sol.t == time_closest)[0]
+disp_pick = np.reshape(sol.y[0:N,time_idx],N)
+disp_full = np.concatenate(([0], disp_pick))
+print(disp_full)
+plt.plot(x,disp_full)
+plt.xlabel("Beam position [m]")
+plt.ylabel("Displacement [m]")
+plt.title(f"Beam displacament at {time_closest:.0f} s");
 
 
 # ## Exercise: Add friction to the system
 # 
 # Solve the same problem, but considering friction in the rod for $x<L/2$. In that case, the equation of motion reads:
-# $$ \rho A\ddot{u}-EAu{''}+k_f(x) u=q(x,t)\qquad\mbox{for }x\in[0,L], $$
-# with $k_f(x)=\begin{cases}k_0\qquad\mbox{if $x<L/2$}\\0\qquad\mbox{otherwise}\end{cases}$
+# $$ \rho A\ddot{u}-EAu{''}+k_f(x) u=q(x,t)\qquad \forall x\in[0,L], $$
+# with $$ k_f(x)= \begin{cases}k_0\qquad {if x<L/2} \\ 0\qquad {otherwise} \end{cases}$$
 # 
 # Compare the solution using $k_0=1.0e8$ and $k_0=1.0e5$.
 
-# In[5]:
+# In[6]:
 
 
-# Exrtra parameters
+# Extra parameters
 k_0 = 1.0e5
 # Double-parameters not repeated
 
@@ -269,13 +288,16 @@ def q_dot(t,q):
 # Solve (we use Radau method because the ODE is very stiff and it works best for this case)
 sol = solve_ivp(fun=q_dot,t_span=[t0,tf],y0=q0,t_eval=tspan,method='Radau')
 
-# Plot
+# Plot (in local mode only)
 for i in range(0,len(tspan)):
     #fig,ax = plt.subplots()
     display.clear_output(wait=True)
     #display.display(pl.gcf())
     plt.plot(np.linspace(0,L,N),sol.y[0:N,i])
     plt.ylim((-0.015,0.015))
+    plt.xlabel("Beam position [m]")
+    plt.ylabel("Displacement [m]")
+    plt.title("Beam displacement animation with friction")
     time.sleep(0.05)
     plt.show()
 

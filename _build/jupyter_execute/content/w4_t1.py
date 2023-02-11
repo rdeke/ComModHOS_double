@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Tutorial 4: FEM for a rod
+# # Tutorial 4.1: FEM for a rod (Example only)
 # In this tutorial we will learn how to define the FEM to solve a rod subject to axial loading. The equation of motion of a rod is given by the following PDE:
 # 
 # $$ \rho A \frac{\partial^2 u(x,t)}{\partial t^2} - EA \frac{\partial^2u(x,t)}{\partial x^2} = q(x) $$
@@ -11,12 +11,12 @@
 # - Length of $L = 3$ $m$
 # - Fixed at $x=0$, that means $u(0,t) = 0 \forall t $
 # - The rod is at rest initially, $u(x,0) = 0$ and $\dot{u}(x,0) = 0$
-# - A dynamic point load $P=10e3 sin(2\pi t)$ $N$ is applied at $x=L$
+# - A dynamic point load $P=10e3 \cdot \sin(2\pi t)$ $N$ is applied at $x=L$
 # - $\rho = 8.0e3$ $kg/m^3$
 # - $A = 0.01$ $m^2$
 # - $E = 2.1e9$ $Pa$
 
-# In[1]:
+# In[ ]:
 
 
 import numpy as np
@@ -37,7 +37,7 @@ E = 2.1e9
 # ## Step 1: discretize the domain
 # We consider a discretization made out of $n_e = 5$ elements equally spaced.
 
-# In[2]:
+# In[ ]:
 
 
 ne = 5
@@ -47,7 +47,7 @@ xn = np.linspace(0, L, nn)
 
 # Let's plot the discretization
 
-# In[3]:
+# In[ ]:
 
 
 nodes = (xn, np.ones(nn))
@@ -57,7 +57,7 @@ plt.plot(nodes[0], nodes[1],"o-");
 
 # We will need the information of the element-nodes connectivity, that is the nodes attached to each element. 
 
-# In[4]:
+# In[ ]:
 
 
 elem_nodes = []
@@ -67,7 +67,7 @@ for ie in np.arange(0,ne):
 
 # This will give us a table with the index of the nodes attached to each element:
 
-# In[5]:
+# In[ ]:
 
 
 dicts = {}
@@ -88,7 +88,7 @@ for k,v in dicts.items():
 # 
 # where $h=x_2-x_1$. Since all the nodes are equally distributed: $h=\frac{L}{N}$.
 
-# In[6]:
+# In[ ]:
 
 
 h = L/ne
@@ -104,7 +104,7 @@ for ie in np.arange(0,ne):
 
 # Let's see how these functions look like:
 
-# In[7]:
+# In[ ]:
 
 
 plt.figure()
@@ -151,7 +151,7 @@ plt.title("Shape function derivatives");
 # 
 # For more information see: https://docs.sympy.org/latest/index.html
 
-# In[8]:
+# In[ ]:
 
 
 import sympy as smp
@@ -171,9 +171,9 @@ for ie in np.arange(0,ne): # Loop over elements, get nodes attached to elements
 # 
 # $$ {M}^k = \frac{\rho A h}{6} \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix} = \begin{bmatrix} 16 & 8 \\ 8 & 16 \end{bmatrix} $$
 # 
-# and we see that the computed matrices give the desired result:
+# and we could see that the computed matrices give the desired result through:
 
-# In[9]:
+# In[ ]:
 
 
 print(M_k_sym[0])
@@ -188,21 +188,10 @@ print(M_k_sym[0])
 # 
 # $$ {K}^k = \frac{EA}{h} \begin{bmatrix} 1 & -1 \\ 1 & -1 \end{bmatrix} = 3.5e7 \begin{bmatrix} 1 & -1 \\ -1 & 1 \end{bmatrix} $$
 
-# In[10]:
+# In[ ]:
 
 
 # Implement the symbolic computation of the integrals for the stiffness matrix here
-x = smp.Symbol('x')
-K_k_sym = []
-for ie in np.arange(0,ne):
-    nodes = elem_nodes[ie]
-    xe = xn[nodes]
-    K_k_sym.append(np.zeros((2,2)))
-    for i in np.arange(0,len(nodes)):
-        for j in np.arange(0,len(nodes)):
-            eqn = E*A*dN[ie][i](x)*dN[ie][j](x)
-            K_k_sym[ie][i,j] = smp.integrate(eqn,(x, xe[0], xe[1]))
-print(K_k_sym[0])
 
 
 # ### Numerical computation of the integral:
@@ -218,13 +207,13 @@ print(K_k_sym[0])
 # 
 # For more information see: https://docs.scipy.org/doc/scipy/tutorial/integrate.html and https://docs.scipy.org/doc/scipy/reference/index.html#
 
-# In[11]:
+# In[ ]:
 
 
 del x   # need to remove the symbolic x-variable when switching to scipy (only once)
 
 
-# In[12]:
+# In[ ]:
 
 
 import scipy.integrate as scp
@@ -254,7 +243,7 @@ M_k_num[4][1,1] = M_k_num[4][1,1] + 1e3
 
 # Again, we display the matrix value to ensure that it is well computed:
 
-# In[13]:
+# In[ ]:
 
 
 print(M_k_num[0])
@@ -265,7 +254,7 @@ print("Rounding errors for numerical integration: "+str(abs(M_k_num[0]-M_k_sym[0
 # 
 # We do the same operation for the stiffness matrix.
 
-# In[14]:
+# In[ ]:
 
 
 K_k_num = []
@@ -290,7 +279,7 @@ for ie in np.arange(2,ne):
             K_k_num[ie][i,j] = scp.quad(eqn, xe[0], xe[1])[0]
 
 
-# In[15]:
+# In[ ]:
 
 
 print(K_k_num[0])
@@ -299,7 +288,7 @@ print(K_k_num[0])
 # ## Step 4: global assembly
 # To construct the global matrices we add all the elemental contributions to the corresponding nodes.
 
-# In[16]:
+# In[ ]:
 
 
 M = np.zeros(nn*nn)
@@ -319,7 +308,7 @@ K = K.reshape((nn, nn))
 
 # Now we have the global mass and stiffness matrices:
 
-# In[17]:
+# In[ ]:
 
 
 print(M)
@@ -328,7 +317,7 @@ print(K)
 
 # In the right-hand-side, we will have a vector that accounts for the external forces. In that case, we have a point load at the last node, so we define the global vector directly as
 
-# In[18]:
+# In[ ]:
 
 
 def Q(t):
@@ -339,7 +328,7 @@ def Q(t):
 # 
 # To apply the boundary conditions, we will remove the rows associated to the fixed DOFs and add the contribution to the right-hand-side. First, we identify the free and fixed DOFs.
 
-# In[19]:
+# In[ ]:
 
 
 fixed_dofs = np.array([0])
@@ -355,11 +344,11 @@ by = fixed_dofs[np.newaxis, :]
 
 # We can re-order the matrices and vectors in blocks, such that it's easy to operate with the blocks corresponding with the fixed DOFs. We'll use the notation $_I$ to designate an interior DOF and $_B$ to designate a boundary node. 
 # 
-# $$ \begin{bmatrix} \bold{M}_{II} & \bold{M}_{IB} \\ \bold{M}_{BI} &\bold{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{K}_{II} & \bold{K}_{IB} \\ \bold{K}_{BI} &\bold{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{Q}_{I}  \\ \bold{Q}_{B}  \end{bmatrix} $$
+# $$ \begin{bmatrix} \boldsymbol{M}_{II} & \boldsymbol{M}_{IB} \\ \boldsymbol{M}_{BI} &\boldsymbol{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{K}_{II} & \boldsymbol{K}_{IB} \\ \boldsymbol{K}_{BI} &\boldsymbol{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{Q}_{I}  \\ \boldsymbol{Q}_{B}  \end{bmatrix} $$
 # 
 # 
 
-# In[20]:
+# In[ ]:
 
 
 Mii = M[fx, fy]
@@ -375,9 +364,9 @@ Kbb = K[bx, by]
 
 # Now operating with the different blocks, we can get a system of ODEs for the free DOFs, which is given by: 
 # 
-# $$ \bold{M}_{II}\bold{\ddot{u}}_I + \bold{K}_{II} \bold{u}_I = \bold{Q}_I - \bold{M}_{IB}\bold{\ddot{u}}_B - \bold{K}_{IB} \bold{u}_B $$
+# $$ \boldsymbol{M}_{II}\boldsymbol{\ddot{u}}_I + \boldsymbol{K}_{II} \boldsymbol{u}_I = \boldsymbol{Q}_I - \boldsymbol{M}_{IB}\boldsymbol{\ddot{u}}_B - \boldsymbol{K}_{IB} \boldsymbol{u}_B $$
 
-# In[21]:
+# In[ ]:
 
 
 ub = np.array([u0])
@@ -388,7 +377,7 @@ RHS = -Mib*ub_dt2-Kib*ub
 # ## Step 5: solving the ODE
 # At this point we have all the information to solve the ODE for each DOF. We can use what we learned in the previous modules.
 
-# In[22]:
+# In[ ]:
 
 
 # Construct a matrix to reshape Q 
@@ -416,3 +405,6 @@ plt.figure()
 plt.plot(sol.t,sol.y[1])
 plt.xlabel('Time [s]');
 
+
+# -----------------------------------------------------------------------------------------------------
+# [The solution can be found here.](w4_t1_sol.ipynb)
