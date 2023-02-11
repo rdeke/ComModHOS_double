@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences &#8212; ComModHOS</title>
+    <title>Solution 3.1: Solving the dynamic motion of a rod using Finite Differences &#8212; ComModHOS</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,11 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w3_t1_sol.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial 3.2: Solving a cantilever beam with Finite Differences" href="w3_t2.html" />
-    <link rel="prev" title="Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences" href="w3_t1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,46 +113,150 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="user_guide.html">
+   How to get the most out of ComModHOS?
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course content
  </span>
 </p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="w0_t0.html">
    Week 0
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w1_t0.html">
    Week 1
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w1_t1.html">
+     Tutorial 1: ODE solvers
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w2_t0.html">
    Week 2
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t1.html">
+     Tutorial 2.1: Linearizing the Equations of Motion (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t2.html">
+     Tutorial 2.2: Deriving the EOM of a pendulum
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w3_t0.html">
    Week 3
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t1.html">
+     Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t2.html">
+     Tutorial 3.2: Solving a cantilever beam with Finite Differences
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w4_t0.html">
    Week 4
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t1.html">
+     Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t2.html">
+     Tutorial 4.2: FEM for an Euler-Bernoulli beam
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t3.html">
+     Tutorial 4.3: FEM for a jacket wind turbine (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w5_t0.html">
    Week 5
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w5_t1.html">
+     Solution 5.1: Modal superposition of a jacket wind turbine
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w6_t0.html">
    Week 6
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t1.html">
+     Tutorial 6.1: Static string
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t2.html">
+     Tutorial 6.2: Dynamic string (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="w7_t0.html">
@@ -267,19 +368,6 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="bottom"
-title="Source repository"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-
-</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -350,7 +438,7 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+   Solution 3.1: Solving the dynamic motion of a rod using Finite Differences
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -403,7 +491,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences</h1>
+                <h1>Solution 3.1: Solving the dynamic motion of a rod using Finite Differences</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -415,7 +503,7 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
-   Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+   Solution 3.1: Solving the dynamic motion of a rod using Finite Differences
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
@@ -469,11 +557,11 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-3-1-solving-the-dynamic-motion-of-a-rod-using-finite-differences">
-<h1>Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences<a class="headerlink" href="#tutorial-3-1-solving-the-dynamic-motion-of-a-rod-using-finite-differences" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="solution-3-1-solving-the-dynamic-motion-of-a-rod-using-finite-differences">
+<h1>Solution 3.1: Solving the dynamic motion of a rod using Finite Differences<a class="headerlink" href="#solution-3-1-solving-the-dynamic-motion-of-a-rod-using-finite-differences" title="Permalink to this headline">#</a></h1>
 <p>In this tutorial you will learn how to solve the dynamic motion of a rod using Finite Differences. Here we will follow the example presented in the lectures.</p>
 <p>Let’s consider the EOM of a rod of length <span class="math notranslate nohighlight">\(L\)</span>:
-$<span class="math notranslate nohighlight">\( \rho A\ddot{u}-EAu{''}=q(x,t)\qquad\mbox{for }x\in[0,L], \)</span><span class="math notranslate nohighlight">\(
+$<span class="math notranslate nohighlight">\( \rho A\ddot{u}-EAu{''}=q(x,t)\qquad \forall x\in[0,L] \)</span><span class="math notranslate nohighlight">\(
 with \)</span>\rho<span class="math notranslate nohighlight">\( the density, \)</span>A<span class="math notranslate nohighlight">\( the cross section area, \)</span>E<span class="math notranslate nohighlight">\( the young modulus and \)</span>q$ an external (distributed) load.</p>
 <p>The system is subject to boundary conditions:</p>
 <ul class="simple">
@@ -677,7 +765,7 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
 <span class="c1"># Solve (we use Radau method because the ODE is very stiff and it works best for this case)</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">q_dot</span><span class="p">,</span><span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">],</span><span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span><span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;Radau&#39;</span><span class="p">)</span>
 
-<span class="c1"># Plot</span>
+<span class="c1"># Plot in local mode -- creates animated plot</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">pl</span>
 <span class="kn">from</span> <span class="nn">IPython</span> <span class="kn">import</span> <span class="n">display</span>
@@ -687,6 +775,9 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
     <span class="c1">#display.display(pl.gcf())</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">,</span><span class="n">i</span><span class="p">])</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.015</span><span class="p">,</span><span class="mf">0.015</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Beam position [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Displacement [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam displacement animation&quot;</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
@@ -696,15 +787,39 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
 <img alt="../_images/w3_t1_sol_9_0.png" src="../_images/w3_t1_sol_9_0.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pick time value:</span>
+<span class="n">time_pick</span> <span class="o">=</span> <span class="mi">86</span>
+<span class="n">time_closest</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span> <span class="o">-</span> <span class="n">time_pick</span><span class="p">)</span><span class="o">.</span><span class="n">argmin</span><span class="p">()]</span>
+<span class="n">time_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span> <span class="o">==</span> <span class="n">time_closest</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">disp_pick</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">,</span><span class="n">time_idx</span><span class="p">],</span><span class="n">N</span><span class="p">)</span>
+<span class="n">disp_full</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(([</span><span class="mi">0</span><span class="p">],</span> <span class="n">disp_pick</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">disp_full</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">disp_full</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Beam position [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Displacement [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Beam displacament at </span><span class="si">{</span><span class="n">time_closest</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.         0.00072095 0.00144104 0.00215941 0.00287518 0.00358746
+ 0.00429534 0.00499791 0.00569421 0.00638325 0.00706402]
+</pre></div>
+</div>
+<img alt="../_images/w3_t1_sol_10_1.png" src="../_images/w3_t1_sol_10_1.png" />
+</div>
+</div>
 <section id="exercise-add-friction-to-the-system">
 <h2>Exercise: Add friction to the system<a class="headerlink" href="#exercise-add-friction-to-the-system" title="Permalink to this headline">#</a></h2>
 <p>Solve the same problem, but considering friction in the rod for <span class="math notranslate nohighlight">\(x&lt;L/2\)</span>. In that case, the equation of motion reads:
-$<span class="math notranslate nohighlight">\( \rho A\ddot{u}-EAu{''}+k_f(x) u=q(x,t)\qquad\mbox{for }x\in[0,L], \)</span><span class="math notranslate nohighlight">\(
-with \)</span>k_f(x)=\begin{cases}k_0\qquad\mbox{if <span class="math notranslate nohighlight">\(x&lt;L/2\)</span>}\0\qquad\mbox{otherwise}\end{cases}$</p>
+$<span class="math notranslate nohighlight">\( \rho A\ddot{u}-EAu{''}+k_f(x) u=q(x,t)\qquad \forall x\in[0,L], \)</span><span class="math notranslate nohighlight">\(
+with \)</span><span class="math notranslate nohighlight">\( k_f(x)= \begin{cases}k_0\qquad {if x&lt;L/2} \\ 0\qquad {otherwise} \end{cases}\)</span>$</p>
 <p>Compare the solution using <span class="math notranslate nohighlight">\(k_0=1.0e8\)</span> and <span class="math notranslate nohighlight">\(k_0=1.0e5\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Exrtra parameters</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Extra parameters</span>
 <span class="n">k_0</span> <span class="o">=</span> <span class="mf">1.0e5</span>
 <span class="c1"># Double-parameters not repeated</span>
 
@@ -741,20 +856,23 @@ with \)</span>k_f(x)=\begin{cases}k_0\qquad\mbox{if <span class="math notranslat
 <span class="c1"># Solve (we use Radau method because the ODE is very stiff and it works best for this case)</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">q_dot</span><span class="p">,</span><span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">],</span><span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span><span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;Radau&#39;</span><span class="p">)</span>
 
-<span class="c1"># Plot</span>
+<span class="c1"># Plot (in local mode only)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">tspan</span><span class="p">)):</span>
     <span class="c1">#fig,ax = plt.subplots()</span>
     <span class="n">display</span><span class="o">.</span><span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1">#display.display(pl.gcf())</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">,</span><span class="n">i</span><span class="p">])</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.015</span><span class="p">,</span><span class="mf">0.015</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Beam position [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Displacement [m]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam displacement animation with friction&quot;</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/w3_t1_sol_11_0.png" src="../_images/w3_t1_sol_11_0.png" />
+<img alt="../_images/w3_t1_sol_12_0.png" src="../_images/w3_t1_sol_12_0.png" />
 </div>
 </div>
 </section>
@@ -787,20 +905,6 @@ with \)</span>k_f(x)=\begin{cases}k_0\qquad\mbox{if <span class="math notranslat
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="w3_t1.html" title="previous page">
-        <i class="fas fa-angle-left"></i>
-        <div class="prev-next-info">
-            <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences</p>
-        </div>
-    </a>
-    <a class='right-next' id="next-link" href="w3_t2.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 3.2: Solving a cantilever beam with Finite Differences</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
-    </a>
 </div>
             </footer>
         </div>

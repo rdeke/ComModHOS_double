@@ -52,11 +52,10 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w3_t2.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial 3.2: Solving a cantilever beam with Finite Differences" href="w3_t2_sol.html" />
-    <link rel="prev" title="Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences" href="w3_t1_sol.html" />
+    <link rel="next" title="Week 4: Solving PDEs with Finite Element MEthods" href="w4_t0.html" />
+    <link rel="prev" title="Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences" href="w3_t1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,7 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="user_guide.html">
+   How to get the most out of ComModHOS?
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course content
  </span>
@@ -127,35 +133,132 @@ const thebe_selector_output = ".output, .cell_output"
    Week 0
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w1_t0.html">
    Week 1
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w1_t1.html">
+     Tutorial 1: ODE solvers
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w2_t0.html">
    Week 2
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t1.html">
+     Tutorial 2.1: Linearizing the Equations of Motion (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t2.html">
+     Tutorial 2.2: Deriving the EOM of a pendulum
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="w3_t0.html">
    Week 3
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t1.html">
+     Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Tutorial 3.2: Solving a cantilever beam with Finite Differences
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w4_t0.html">
    Week 4
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t1.html">
+     Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t2.html">
+     Tutorial 4.2: FEM for an Euler-Bernoulli beam
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t3.html">
+     Tutorial 4.3: FEM for a jacket wind turbine (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w5_t0.html">
    Week 5
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w5_t1.html">
+     Solution 5.1: Modal superposition of a jacket wind turbine
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w6_t0.html">
    Week 6
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t1.html">
+     Tutorial 6.1: Static string
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t2.html">
+     Tutorial 6.2: Dynamic string (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="w7_t0.html">
@@ -267,19 +370,6 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="bottom"
-title="Source repository"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-
-</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -507,15 +597,6 @@ $<span class="math notranslate nohighlight">\( w(0) = w'(0) = \dot{w}(0) = \ddot
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Your code goes here</span>
-<span class="n">L</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.  1.  2.  3.  4.  5.  6.  7.  8.  9. 10.]
 </pre></div>
 </div>
 </div>
@@ -537,35 +618,14 @@ $<span class="math notranslate nohighlight">\( w(0) = w'(0) = \dot{w}(0) = \ddot
 \[ w_i^{'} = \frac{-0.5w_{i-1}+0.5w_{i+1}}{\Delta x}\]</div>
 <p>Replacing these expressions into the equation of motion we get the discrete system:</p>
 <blockquote>
-<div><p>Your derivations go here
-$<span class="math notranslate nohighlight">\(\rho A \ddot{w_i} + \frac{EI}{\Delta x^4} \left( w_{i-2}-4w_{i-1}+6w_i-4w_{i+1}+w_{i+2} \right) = q_i(t)\)</span>$</p>
+<div><p>Your derivations go here</p>
 </div></blockquote>
 </section>
 <section id="step-3-apply-boundary-conditions">
 <h3>Step 3: Apply boundary conditions<a class="headerlink" href="#step-3-apply-boundary-conditions" title="Permalink to this headline">#</a></h3>
 <blockquote>
-<div><p>Your derivations go here
-$<span class="math notranslate nohighlight">\( w_0 = 0\)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(w_0' = 0\)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(\dot{w_0} = 0\)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(\ddot{w_0} = 0 \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(EI\ w_N^{'''} = F_{\mathrm{ext}}(t) \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(EI\ w_N^{''} = M_{\mathrm{ext}}(t) \)</span>$</p>
+<div><p>Your derivations go here</p>
 </div></blockquote>
-<p>So this means that:</p>
-<ol class="simple">
-<li><p>Intermediate:</p></li>
-<li><p>i = 1 also needs i = -1:
-$<span class="math notranslate nohighlight">\( w_i^{'} = \frac{-0.5w_{i-1}+0.5w_{i+1}}{\Delta x}\)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(\Rightarrow  w_0^{'} = \frac{-0.5w_{-1}+0.5w_{1}}{\Delta x} = 0 \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(\Rightarrow w_1 = w_{-1}\)</span>$</p></li>
-<li><p>i = N-1 also needs i = N+1:
-$<span class="math notranslate nohighlight">\( EI\ w_{N}^{''} = EI\ \frac{w_{N-1}-2w_{N}+w_{N+1}}{\Delta x^2} = M_{\mathrm{ext}} \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\( \Rightarrow w_{N+1} = \frac{\Delta x^2}{EI}M_{\mathrm{ext}}-w_{N-1}+2w_{N} \)</span>$</p></li>
-<li><p>i = N also needs i = N+2:
-$<span class="math notranslate nohighlight">\(EI\ w_N^{'''} = EI\ \frac{-0.5w_{N-2}+w_{N-1}-w_{N+1}+0.5w_{N+2}}{\Delta x^3} = F_{\mathrm{ext}} \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\( \Rightarrow w_{N+2} = 2\frac{\Delta x^3}{EI}F_{\mathrm{ext}}+w_{N-2}-2w_{N-1}+2w_{N+1} \)</span>$</p></li>
-</ol>
 </section>
 <section id="step-4-matrix-form">
 <h3>Step 4: Matrix form<a class="headerlink" href="#step-4-matrix-form" title="Permalink to this headline">#</a></h3>
@@ -574,30 +634,25 @@ $<span class="math notranslate nohighlight">\(EI\ w_N^{'''} = EI\ \frac{-0.5w_{N
 <li><p>For <span class="math notranslate nohighlight">\(i=1\)</span>:</p></li>
 </ul>
 <blockquote>
-<div><p>Your derivations go here
-$<span class="math notranslate nohighlight">\( \rho A \ddot{w_1} + \frac{EI}{\Delta x^4} \left( 7w_1-4w_{2}+w_{3} \right) = q_1 \)</span>$</p>
+<div><p>Your derivations go here</p>
 </div></blockquote>
 <ul class="simple">
 <li><p>For <span class="math notranslate nohighlight">\(i=2\)</span>:</p></li>
 </ul>
 <blockquote>
-<div><p>Your derivations go here
-$<span class="math notranslate nohighlight">\( \rho A \ddot{w_2} + \frac{EI}{\Delta x^4} \left(-4w_{1}+6w_{2}-4w_{3}+w_{4} \right) = q_2 \)</span>$</p>
+<div><p>Your derivations go here</p>
 </div></blockquote>
 <ul class="simple">
 <li><p>For <span class="math notranslate nohighlight">\(i=3,...,N-2\)</span>:</p></li>
 </ul>
 <blockquote>
-<div><p>Your derivations go here
-$<span class="math notranslate nohighlight">\(\rho A \ddot{w_i} + \frac{EI}{\Delta x^4} \left( w_{i-2}-4w_{i-1}+6w_i-4w_{i+1}+w_{i+2} \right) = q_i\)</span>$</p>
+<div><p>Your derivations go here</p>
 </div></blockquote>
 <ul class="simple">
 <li><p>For <span class="math notranslate nohighlight">\(i=N-1\)</span>:</p></li>
 </ul>
 <blockquote>
-<div><p>Your derivations go here
-$<span class="math notranslate nohighlight">\(\rho A \ddot{w_{N-1}} + \frac{EI}{\Delta x^4} \left( w_{N-3}-4w_{N-2}+5w_{N-1}-2w_{N} \right) = 
-q_{N-1}-\frac{1}{\Delta x^2}M_{\mathrm{ext}}\)</span>$</p>
+<div><p>Your derivations go here</p>
 </div></blockquote>
 <ul class="simple">
 <li><p>For <span class="math notranslate nohighlight">\(i=N\)</span>:</p></li>
@@ -605,12 +660,34 @@ q_{N-1}-\frac{1}{\Delta x^2}M_{\mathrm{ext}}\)</span>$</p>
 <blockquote>
 <div><p>Your derivations go here</p>
 </div></blockquote>
-<p>This is equivalent to the following system:</p>
+<p>This is equivalent to the following system in compact form:</p>
 <blockquote>
 <div><p>Your derivations go here</p>
 </div></blockquote>
-<p>And in a compact form:
-$<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}}+\boldsymbol{K}\boldsymbol{w}=\boldsymbol{F}\)</span>$</p>
+<p>with vectors  <span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{F}\)</span>, and matrices <span class="math notranslate nohighlight">\(\boldsymbol{M}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{K}\)</span> equal to:</p>
+<blockquote>
+<div><p>Your derivations go here</p>
+</div></blockquote>
+<p>Some info for the coming exercises:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">qfunc</span><span class="p">(</span><span class="n">x_i</span><span class="p">,</span><span class="n">t</span><span class="p">):</span> <span class="c1"># Can choose whatever you need, x are the free node coordinates in an array, so here without w_0</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x_i</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">x_i</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e2</span>
+<span class="k">def</span> <span class="nf">F_ext</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1e3</span> <span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">M_ext</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1e4</span> <span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mi">7850</span> <span class="c1"># kg/m3, steel</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">h</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">b</span><span class="o">*</span><span class="n">h</span> <span class="c1"># m2</span>
+<span class="n">E</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># For increased stability, added later</span>
+<span class="n">EI</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">h</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="n">E</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct the matrices and external force vector</span>
@@ -626,13 +703,15 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
 <p>Now, we just need to apply what we learned in the previous session to solve the dynamic problem. The main novelty is that here we work with matrices.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the ODE function </span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the ODE function</span>
 
 <span class="c1"># Define initial state</span>
 
 <span class="c1"># Define time interval and time evaluation points</span>
 
+
 <span class="c1"># Solve</span>
+
 
 <span class="c1"># Plot</span>
 </pre></div>
@@ -641,6 +720,8 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
 </div>
 <section id="exercise-add-a-point-mass-at-the-extreme-of-the-beam">
 <h2>Exercise: Add a point mass at the extreme of the beam<a class="headerlink" href="#exercise-add-a-point-mass-at-the-extreme-of-the-beam" title="Permalink to this headline">#</a></h2>
+<hr class="docutils" />
+<p><a class="reference internal" href="w3_t2_sol.html"><span class="doc std std-doc">The solution can be found here.</span></a></p>
 </section>
 </section>
 
@@ -671,17 +752,17 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="w3_t1_sol.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="w3_t1.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="w3_t2_sol.html" title="next page">
+    <a class='right-next' id="next-link" href="w4_t0.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 3.2: Solving a cantilever beam with Finite Differences</p>
+        <p class="prev-next-title">Week 4: Solving PDEs with Finite Element MEthods</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Tutorial 5: FEM for an Euler-Bernoulli beam &#8212; ComModHOS</title>
+    <title>Tutorial 4.2: FEM for an Euler-Bernoulli beam &#8212; ComModHOS</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,11 +52,10 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2]}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="canonical" href="https://kyleniemeyer.github.io/computational-thermo/content/w4_t2.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial 5: FEM for an Euler-Bernoulli beam" href="w4_t2_sol.html" />
-    <link rel="prev" title="Tutorial 4: FEM for a rod" href="w4_t1_sol.html" />
+    <link rel="next" title="Tutorial 4.3: FEM for a jacket wind turbine (Example only)" href="w4_t3.html" />
+    <link rel="prev" title="Tutorial 4.1: FEM for a rod (Example only)" href="w4_t1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,7 +115,14 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="user_guide.html">
+   How to get the most out of ComModHOS?
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Course content
  </span>
@@ -127,35 +133,132 @@ const thebe_selector_output = ".output, .cell_output"
    Week 0
   </a>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w1_t0.html">
    Week 1
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w1_t1.html">
+     Tutorial 1: ODE solvers
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w2_t0.html">
    Week 2
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t1.html">
+     Tutorial 2.1: Linearizing the Equations of Motion (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t2.html">
+     Tutorial 2.2: Deriving the EOM of a pendulum
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w3_t0.html">
    Week 3
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t1.html">
+     Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3_t2.html">
+     Tutorial 3.2: Solving a cantilever beam with Finite Differences
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="w4_t0.html">
    Week 4
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t1.html">
+     Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Tutorial 4.2: FEM for an Euler-Bernoulli beam
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t3.html">
+     Tutorial 4.3: FEM for a jacket wind turbine (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w5_t0.html">
    Week 5
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w5_t1.html">
+     Solution 5.1: Modal superposition of a jacket wind turbine
+    </a>
+   </li>
+  </ul>
  </li>
- <li class="toctree-l1">
+ <li class="toctree-l1 has-children">
   <a class="reference internal" href="w6_t0.html">
    Week 6
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t1.html">
+     Tutorial 6.1: Static string
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w6_t2.html">
+     Tutorial 6.2: Dynamic string (Example only)
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="w7_t0.html">
@@ -267,19 +370,6 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/TUDelft-CITG/ComModHOS.git"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="bottom"
-title="Source repository"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fab fa-github"></i>
-  </span>
-
-</a>
 
 <div class="menu-dropdown menu-dropdown-download-buttons">
   <button class="headerbtn menu-dropdown__trigger"
@@ -382,7 +472,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Tutorial 5: FEM for an Euler-Bernoulli beam</h1>
+                <h1>Tutorial 4.2: FEM for an Euler-Bernoulli beam</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -427,8 +517,8 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-5-fem-for-an-euler-bernoulli-beam">
-<h1>Tutorial 5: FEM for an Euler-Bernoulli beam<a class="headerlink" href="#tutorial-5-fem-for-an-euler-bernoulli-beam" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-4-2-fem-for-an-euler-bernoulli-beam">
+<h1>Tutorial 4.2: FEM for an Euler-Bernoulli beam<a class="headerlink" href="#tutorial-4-2-fem-for-an-euler-bernoulli-beam" title="Permalink to this headline">#</a></h1>
 <p>In this tutorial we will use the FEM to solve a simple Euler-Bernoulli (EB) beam. We recall that the equation of motion of an EB beam is given by the following PDE:</p>
 <div class="math notranslate nohighlight">
 \[ \rho A \frac{\partial^2 u(x,t)}{\partial t^2} + E I \frac{\partial^4 u(x,t)}{\partial x^4} = q(x) \]</div>
@@ -437,7 +527,7 @@ title="Print to PDF"
 <li><p>Length of <span class="math notranslate nohighlight">\( L = 3\)</span> m</p></li>
 <li><p>Clamped at <span class="math notranslate nohighlight">\( x = 0 \)</span>, that means <span class="math notranslate nohighlight">\( u(0,t) = 0 \)</span> and <span class="math notranslate nohighlight">\( u'(0,t) = 0 \quad \forall t \)</span></p></li>
 <li><p>The rod is at rest initially,  <span class="math notranslate nohighlight">\( u(x,0) = 0\)</span> and <span class="math notranslate nohighlight">\( \dot{u}(x,0) = 0 \)</span></p></li>
-<li><p>A dynamic distributed load <span class="math notranslate nohighlight">\( q(x,t) = 1e-3(L-x)+1e3sin(2\pi t) \)</span> <span class="math notranslate nohighlight">\(N/m\)</span> is applied</p></li>
+<li><p>A dynamic distributed load <span class="math notranslate nohighlight">\( q(x,t) = 1e-3(L-x)+1e3\cdot\sin(2\pi t) \)</span> <span class="math notranslate nohighlight">\(N/m\)</span> is applied</p></li>
 <li><p><span class="math notranslate nohighlight">\(\rho = 8e3\)</span> <span class="math notranslate nohighlight">\(kg/m^3\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(A = 0.01\)</span> <span class="math notranslate nohighlight">\(m^2\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(E = 2.1e9\)</span> <span class="math notranslate nohighlight">\(Pa\)</span></p></li>
@@ -453,7 +543,7 @@ title="Print to PDF"
 <span class="n">u0_dt2</span> <span class="o">=</span> <span class="mi">0</span>      <span class="c1"># [m/s^2]</span>
 <span class="n">du0</span> <span class="o">=</span> <span class="mi">0</span>         <span class="c1"># [m]</span>
 <span class="n">du0_dt2</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># [m/s^2]</span>
-<span class="k">def</span> <span class="nf">pressure</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">q</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">1e-3</span><span class="o">*</span><span class="p">(</span><span class="n">L</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
 <span class="n">rho</span> <span class="o">=</span> <span class="mf">8e3</span>       <span class="c1"># [kg/m^3]</span>
 <span class="n">A</span> <span class="o">=</span> <span class="mf">1e-2</span>        <span class="c1"># [m^2]</span>
@@ -576,9 +666,6 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/w4_t2_9_0.png" src="../_images/w4_t2_9_0.png" />
-</div>
 </div>
 </section>
 <section id="step-3-computation-of-the-elemental-matrices">
@@ -599,7 +686,7 @@ title="Print to PDF"
         <span class="k">def</span> <span class="nf">eqn_M</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">rho</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">N_k</span><span class="p">[</span><span class="n">idof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">N_k</span><span class="p">[</span><span class="n">jdof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
         <span class="k">def</span> <span class="nf">eqn_K</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
-            <span class="k">return</span> <span class="n">E</span><span class="o">*</span><span class="n">I</span><span class="o">*</span><span class="n">ddN_k</span><span class="p">[</span><span class="n">idof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">ddN_k</span><span class="p">[</span><span class="n">jdof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span><span class="mi">1</span><span class="o">*</span><span class="n">N_k</span><span class="p">[</span><span class="n">idof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">N_k</span><span class="p">[</span><span class="n">jdof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">E</span><span class="o">*</span><span class="n">I</span><span class="o">*</span><span class="n">ddN_k</span><span class="p">[</span><span class="n">idof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">ddN_k</span><span class="p">[</span><span class="n">jdof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
         <span class="n">M_k</span><span class="p">[</span><span class="n">idof</span><span class="p">,</span> <span class="n">jdof</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn_M</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">K_k</span><span class="p">[</span><span class="n">idof</span><span class="p">,</span> <span class="n">jdof</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn_K</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
@@ -616,35 +703,6 @@ title="Print to PDF"
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Implement directly here ...</span>
-<span class="c1"># eqn = q</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># # def make_Q(eqn, xe):</span>
-<span class="c1"># #     return lambda t: scp.quad(eqn, xe[0], xe[1], args=(1,))[0]</span>
-
-<span class="c1"># def make_Q(eqn, xe):</span>
-<span class="c1">#     return scp.quad(eqn, xe[0], xe[1])[0]</span>
-
-<span class="c1"># Q2_k = []</span>
-<span class="c1"># for ie in np.arange(0, ne):</span>
-<span class="c1">#     dofs = elem_dofs[ie]</span>
-<span class="c1">#     nodes = [dof_node[dofs[0]], dof_node[dofs[-1]]]</span>
-<span class="c1">#     xe = xn[nodes]</span>
-<span class="c1">#     Q_k = []</span>
-<span class="c1">#     for idof in np.arange(0, 4):</span>
-<span class="c1">#         def eqn1(x): </span>
-<span class="c1">#             return (1e-3*(L-x))*N_k[idof](x)</span>
-<span class="c1">#         def eqn2(x):</span>
-<span class="c1">#             return 1e3*N_k[idof](x)</span>
-<span class="c1">#         def make_Q1():</span>
-<span class="c1">#             return lambda t: [make_Q(eqn1, xe), make_Q(eqn2, xe)]</span>
-<span class="c1">#         #Q_k.append([make_Q(eqn1, xe), make_Q(eqn2, xe)])</span>
-<span class="c1">#         Q_k.append(make_Q1())</span>
-<span class="c1">#     Q2_k.append(Q_k)</span>
 </pre></div>
 </div>
 </div>
@@ -655,45 +713,9 @@ title="Print to PDF"
 <p>To construct the global matrices we add all the elemental contributions to the corresponding nodes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># K = np.zeros((ndofs*ndofs))       # 1-D array for global stiffness matrix</span>
-<span class="c1"># M = np.zeros((ndofs*ndofs))       # 1-D array for global mass matrix</span>
-<span class="c1"># Q = np.zeros(ndofs)              # 1-D array for Q vector</span>
-
-<span class="c1"># for ie in np.arange(0, ne):</span>
-<span class="c1">#     # Get the nodes of the elements</span>
-<span class="c1">#     dofs = elem_dofs[ie]</span>
-<span class="c1">#     NodeLeft = dof_node[dofs[0]]</span>
-<span class="c1">#     NodeRight = dof_node[dofs[-1]]</span>
-    
-<span class="c1">#     # Get the degrees of freedom that correspond to each node</span>
-<span class="c1">#     Dofs_Left = 2*(NodeLeft) + np.arange(0, 2)</span>
-<span class="c1">#     Dofs_Right = 2*(NodeRight) + np.arange(0, 2)</span>
-
-<span class="c1">#     # Assemble the matrices at the correct place</span>
-<span class="c1">#     nodes = np.append(Dofs_Left, Dofs_Right)</span>
-<span class="c1">#     for i in np.arange(0, 4):</span>
-<span class="c1">#         Q[nodes[i]] = Q[nodes[i]] + Q2_k[ie][i]</span>
-<span class="c1">#         for j in np.arange(0, 4):</span>
-<span class="c1">#             ij = nodes[j] + nodes[i]*ndofs</span>
-<span class="c1">#             M[ij] = M[ij] + M_k[i, j]</span>
-<span class="c1">#             K[ij] = K[ij] + K_k[i, j]</span>
-            
-<span class="c1"># # Reshape the global matrix from a 1-D array to a 2-D array</span>
-<span class="c1"># M = M.reshape((ndofs, ndofs))</span>
-<span class="c1"># K = K.reshape((ndofs, ndofs))</span>
-
-<span class="c1"># # Transform the Q vector into functions dependent on time</span>
-<span class="c1"># Q_vector = []</span>
-<span class="c1"># for i in np.arange(0, ndofs):</span>
-<span class="c1">#     Q_vector.append(lambda t: Q[i] + 0.0*t)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndofs</span><span class="o">*</span><span class="n">ndofs</span><span class="p">))</span>       <span class="c1"># 1-D array for global stiffness matrix</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndofs</span><span class="o">*</span><span class="n">ndofs</span><span class="p">))</span>       <span class="c1"># 1-D array for global mass matrix</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndofs</span><span class="p">)</span>               <span class="c1"># 1-D array for Q vector</span>
 
 <span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ne</span><span class="p">):</span>
     <span class="c1"># Get the nodes of the elements</span>
@@ -708,6 +730,7 @@ title="Print to PDF"
     <span class="c1"># Assemble the matrices at the correct place</span>
     <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dofs_Left</span><span class="p">,</span> <span class="n">Dofs_Right</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">Q</span><span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">Q2_k</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
             <span class="n">ij</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">ndofs</span>
             <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">M_k</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
@@ -716,54 +739,13 @@ title="Print to PDF"
 <span class="c1"># Reshape the global matrix from a 1-D array to a 2-D array</span>
 <span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ndofs</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">))</span>
 <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ndofs</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">Qassembly</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
-    
-    <span class="n">eqn</span> <span class="o">=</span> <span class="n">pressure</span> <span class="c1">#fun(x,t,y,z)</span>
 
-    <span class="n">Q2_k</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># large vector</span>
-    <span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ne</span><span class="p">):</span>
-        <span class="n">dofs</span> <span class="o">=</span> <span class="n">elem_dofs</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
-        <span class="n">nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">dof_node</span><span class="p">[</span><span class="n">dofs</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">dof_node</span><span class="p">[</span><span class="n">dofs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]]</span>
-        <span class="n">xe</span> <span class="o">=</span> <span class="n">xn</span><span class="p">[</span><span class="n">nodes</span><span class="p">]</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">4</span><span class="o">*</span><span class="n">ie</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># Vertical DOF is second entry of each smaller vector</span>
-        <span class="n">Q_k</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># small vector</span>
-        <span class="k">for</span> <span class="n">idof</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-            <span class="n">Q_k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn</span><span class="p">,</span> <span class="n">xe</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xe</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">t</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># y = 0 does not matter</span>
-        <span class="n">Q2_k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Q_k</span><span class="p">)</span>
-    
-    <span class="c1"># ---------------------------------------------------------------------------------------------</span>
-    
-    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndofs</span><span class="p">)</span>              <span class="c1"># 1-D array for Q vector</span>
-
-    <span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ne</span><span class="p">):</span>
-        <span class="c1"># Get the nodes of the elements</span>
-        <span class="n">dofs</span> <span class="o">=</span> <span class="n">elem_dofs</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
-        <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">dof_node</span><span class="p">[</span><span class="n">dofs</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
-        <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">dof_node</span><span class="p">[</span><span class="n">dofs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-
-        <span class="c1"># Get the degrees of freedom that correspond to each node</span>
-        <span class="n">Dofs_Left</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeLeft</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-        <span class="n">Dofs_Right</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeRight</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-
-        <span class="c1"># Assemble the matrices at the correct place</span>
-        <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dofs_Left</span><span class="p">,</span> <span class="n">Dofs_Right</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
-            <span class="n">Q</span><span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">Q2_k</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
-    
-    <span class="k">return</span> <span class="n">Q</span> <span class="c1"># See lower for fx definition</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Q_vector</span>
+<span class="c1"># Transform the Q vector into functions dependent on time</span>
+<span class="n">Q_vector</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">):</span>
+    <span class="n">Q_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mf">10e3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">t</span><span class="p">))</span>
+    <span class="c1"># Q_vector.append(lambda t: Q[i] + 0.02*t)</span>
+    <span class="c1"># This does not seem to be correct??</span>
 </pre></div>
 </div>
 </div>
@@ -776,8 +758,13 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/w4_t2_22_0.png" src="../_images/w4_t2_22_0.png" />
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">spy</span><span class="p">(</span><span class="n">K</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 </div>
 <p>To apply the boundary conditions, we will remove the rows associated to the fixed DOFs and add the contribution to the right-hand-side. First, we identify the free and fixed DOFs.</p>
@@ -798,7 +785,7 @@ title="Print to PDF"
 </div>
 <p>We can re-order the matrices and vectors in blocks, such that it’s easy to operate with the blocks corresponding with the fixed DOFs. We’ll use the notation <span class="math notranslate nohighlight">\(_I\)</span> to designate an interior DOF and <span class="math notranslate nohighlight">\(_B\)</span> to designate a boundary node.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split} \begin{bmatrix} \bold{M}_{II} &amp; \bold{M}_{IB} \\ \bold{M}_{BI} &amp;\bold{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{K}_{II} &amp; \bold{K}_{IB} \\ \bold{K}_{BI} &amp;\bold{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \bold{Q}_{I}  \\ \bold{Q}_{B}  \end{bmatrix} \end{split}\]</div>
+\[\begin{split} \begin{bmatrix} \boldsymbol{M}_{II} &amp; \boldsymbol{M}_{IB} \\ \boldsymbol{M}_{BI} &amp;\boldsymbol{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{K}_{II} &amp; \boldsymbol{K}_{IB} \\ \boldsymbol{K}_{BI} &amp;\boldsymbol{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{Q}_{I}  \\ \boldsymbol{Q}_{B}  \end{bmatrix} \end{split}\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mass</span>
@@ -818,7 +805,7 @@ title="Print to PDF"
 </div>
 <p>Now operating with the different blocks, we can get a system of ODEs for the free DOFs, which is given by:</p>
 <div class="math notranslate nohighlight">
-\[ \bold{M}_{II}\bold{\ddot{u}}_I + \bold{K}_{II} \bold{u}_I = \bold{Q}_I - \bold{M}_{IB}\bold{\ddot{u}}_B - \bold{K}_{IB} \bold{u}_B \]</div>
+\[ \boldsymbol{M}_{II}\boldsymbol{\ddot{u}}_I + \boldsymbol{K}_{II} \boldsymbol{u}_I = \boldsymbol{Q}_I - \boldsymbol{M}_{IB}\boldsymbol{\ddot{u}}_B - \boldsymbol{K}_{IB} \boldsymbol{u}_B \]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u0</span><span class="p">,</span> <span class="n">du0</span><span class="p">])</span>
@@ -845,61 +832,27 @@ title="Print to PDF"
 <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">nfdofs</span><span class="p">))</span>
 
 <span class="c1"># Time span (output purposes)</span>
-<span class="n">tf</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">tspan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">)</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">tspan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">tf</span><span class="o">/</span><span class="mf">1e3</span><span class="p">)</span>
 
 <span class="c1"># Solve</span>
 <span class="k">def</span> <span class="nf">odefun</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">vdofs</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">Mii</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Qassembly</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">q</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
-                                                                 <span class="o">+</span> <span class="n">RHS</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Kii</span><span class="p">,</span> <span class="n">q0</span><span class="p">[</span><span class="n">udofs</span><span class="p">]))))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">vdofs</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">Mii</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">RHS</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Kii</span><span class="p">,</span> <span class="n">q0</span><span class="p">[</span><span class="n">udofs</span><span class="p">]))))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
 
 <span class="n">sol</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">odefun</span><span class="p">,</span> <span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">tspan</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tspan</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">)</span>  
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot results</span>
+
+<span class="c1"># Plot results</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">)])</span>
-<span class="c1">#plt.ylim((-10,1))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">nfdofs</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Deflection [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam end deflection&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="../_images/w4_t2_31_0.png" src="../_images/w4_t2_31_0.png" />
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">))</span>
-<span class="n">deflec_t</span> <span class="o">=</span> <span class="p">[</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">))]</span> <span class="c1"># solution at time t over beam</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">deflec_t</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x2330f948340&gt;]
-</pre></div>
-</div>
-<img alt="../_images/w4_t2_32_1.png" src="../_images/w4_t2_32_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">)):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span>
-    <span class="n">deflec_t</span> <span class="o">=</span> <span class="p">[</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">))]</span> <span class="c1"># solution at time t over beam</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">deflec_t</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.4</span><span class="p">,</span><span class="mf">1.6</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/w4_t2_33_0.png" src="../_images/w4_t2_33_0.png" />
-</div>
-</div>
+<hr class="docutils" />
+<p><a class="reference internal" href="w4_t2_sol.html"><span class="doc std std-doc">The solution can be found here.</span></a></p>
 </section>
 </section>
 
@@ -930,17 +883,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="w4_t1_sol.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="w4_t1.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Tutorial 4: FEM for a rod</p>
+            <p class="prev-next-title">Tutorial 4.1: FEM for a rod (Example only)</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="w4_t2_sol.html" title="next page">
+    <a class='right-next' id="next-link" href="w4_t3.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Tutorial 5: FEM for an Euler-Bernoulli beam</p>
+        <p class="prev-next-title">Tutorial 4.3: FEM for a jacket wind turbine (Example only)</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
