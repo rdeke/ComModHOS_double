@@ -1,0 +1,916 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial 4.2: FEM for an Euler-Bernoulli beam &#8212; ComModHOS</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Tutorial 4.3: FEM for a jacket wind turbine (Example only)" href="w4_t3.html" />
+    <link rel="prev" title="Tutorial 4.1 b: FD or FEM for a rod" href="w3w4_t1_compare.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/TU_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ComModHOS</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Computational Modelling of Hydraulic and Offshore Structures
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course content
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module1/module1_intro.html">
+   Week 1
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module1/module1-1_TaylorSeries.html">
+     1.1. Taylor series
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module1/module1-2_ApproxODEs.html">
+     1.2. Approximating ODEs with Taylor series
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module2/module2_intro.html">
+   Week 2
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module2/w2_t1.html">
+     Tutorial 2.1: Linearizing the Equations of Motion (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module2/w2_t2.html">
+     Tutorial 2.2: Deriving the EOM of a pendulum
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module2/w2_t3.html">
+     Solution 2.3: Wave simulation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module3/module3_intro.html">
+   Week 3
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module3/w3_t1.html">
+     Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module3/w3_t2.html">
+     Tutorial 3.2: Solving a cantilever beam with Finite Differences
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="module4_intro.html">
+   Week 4
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t1.html">
+     Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3w4_t1_compare.html">
+     Tutorial 4.1 b: FD or FEM for a rod
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Tutorial 4.2: FEM for an Euler-Bernoulli beam
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t3.html">
+     Tutorial 4.3: FEM for a jacket wind turbine (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w4_t4.html">
+     Tutorial 4.4: 2D Flow through porous media (Example only)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module5/module5_intro.html">
+   Week 5
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module5/w5_t1.html">
+     Solution 5.1: Modal superposition of a jacket wind turbine
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module6/module6_intro.html">
+   Week 6
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module6/w6_t1.html">
+     Tutorial 6.1: Static string
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module6/w6_t2.html">
+     Tutorial 6.2: Dynamic string (Example only)
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/Module4/w4_t2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/content/Module4/w4_t2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-define-the-shape-functions">
+   Step 2: define the shape functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-computation-of-the-elemental-matrices">
+   Step 3: computation of the elemental matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-global-assembly">
+   Step 4: global assembly
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-solving-the-ode">
+   Step 5: solving the ODE
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 4.2: FEM for an Euler-Bernoulli beam</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-1-discretize-the-domain">
+   Step 1: discretize the domain
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-2-define-the-shape-functions">
+   Step 2: define the shape functions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-3-computation-of-the-elemental-matrices">
+   Step 3: computation of the elemental matrices
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-4-global-assembly">
+   Step 4: global assembly
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#step-5-solving-the-ode">
+   Step 5: solving the ODE
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-4-2-fem-for-an-euler-bernoulli-beam">
+<h1>Tutorial 4.2: FEM for an Euler-Bernoulli beam<a class="headerlink" href="#tutorial-4-2-fem-for-an-euler-bernoulli-beam" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial we will use the FEM to solve a simple Euler-Bernoulli (EB) beam. We recall that the equation of motion of an EB beam is given by the following PDE:</p>
+<div class="math notranslate nohighlight">
+\[ \rho A \frac{\partial^2 u(x,t)}{\partial t^2} + E I \frac{\partial^4 u(x,t)}{\partial x^4} = q(x) \]</div>
+<p>We consider that the beam has the following properties:</p>
+<ul class="simple">
+<li><p>Length of <span class="math notranslate nohighlight">\( L = 3\)</span> m</p></li>
+<li><p>Clamped at <span class="math notranslate nohighlight">\( x = 0 \)</span>, that means <span class="math notranslate nohighlight">\( u(0,t) = 0 \)</span> and <span class="math notranslate nohighlight">\( u'(0,t) = 0 \quad \forall t \)</span></p></li>
+<li><p>The rod is at rest initially,  <span class="math notranslate nohighlight">\( u(x,0) = 0\)</span> and <span class="math notranslate nohighlight">\( \dot{u}(x,0) = 0 \)</span></p></li>
+<li><p>A dynamic distributed load <span class="math notranslate nohighlight">\( q(x,t) = 1e-3(L-x)+1e3\cdot\sin(2\pi t) \)</span> <span class="math notranslate nohighlight">\(N/m\)</span> is applied</p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho = 8e3\)</span> <span class="math notranslate nohighlight">\(kg/m^3\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(A = 0.01\)</span> <span class="math notranslate nohighlight">\(m^2\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(E = 2.1e9\)</span> <span class="math notranslate nohighlight">\(Pa\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\( I = 2e-5\)</span> <span class="math notranslate nohighlight">\(m^4\)</span></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">L</span> <span class="o">=</span> <span class="mi">3</span>           <span class="c1"># [m]</span>
+<span class="n">u0</span> <span class="o">=</span> <span class="mi">0</span>          <span class="c1"># [m]</span>
+<span class="n">u0_dt2</span> <span class="o">=</span> <span class="mi">0</span>      <span class="c1"># [m/s^2]</span>
+<span class="n">du0</span> <span class="o">=</span> <span class="mi">0</span>         <span class="c1"># [m]</span>
+<span class="n">du0_dt2</span> <span class="o">=</span> <span class="mi">0</span>     <span class="c1"># [m/s^2]</span>
+<span class="k">def</span> <span class="nf">q</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1e-3</span><span class="o">*</span><span class="p">(</span><span class="n">L</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+<span class="n">rho</span> <span class="o">=</span> <span class="mf">8e3</span>       <span class="c1"># [kg/m^3]</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mf">1e-2</span>        <span class="c1"># [m^2]</span>
+<span class="n">E</span> <span class="o">=</span> <span class="mf">2.1e9</span>       <span class="c1"># [Pa]</span>
+<span class="n">I</span> <span class="o">=</span> <span class="mf">2e-5</span>        <span class="c1"># [m^4]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="step-1-discretize-the-domain">
+<h2>Step 1: discretize the domain<a class="headerlink" href="#step-1-discretize-the-domain" title="Permalink to this headline">#</a></h2>
+<p>We consider a discretization made out of <span class="math notranslate nohighlight">\(n_c = 5\)</span> elements equally spaced.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ne</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">nn</span> <span class="o">=</span> <span class="n">ne</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">ndofs</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">nn</span>
+<span class="n">xn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">nn</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With the corresponding element-DOFs and DOF-node connectivity.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">elem_dofs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dof_node</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ne</span><span class="p">):</span>
+    <span class="n">elem_dofs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">ie</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">ie</span> <span class="o">+</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">idof</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">):</span>
+    <span class="n">dof_node</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">idof</span><span class="o">/</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-define-the-shape-functions">
+<h2>Step 2: define the shape functions<a class="headerlink" href="#step-2-define-the-shape-functions" title="Permalink to this headline">#</a></h2>
+<p>Here we assume that the displacement can be well captured by a piece-wise cubic function, so we make the modelling choice of selecting cubic shape functions.</p>
+<div class="math notranslate nohighlight">
+\[ N(x) = a + bx + cx^2 + dx^3 \]</div>
+<p>In that case, for each element, we need 4 DOFs to generate a cubic shape function. And we want to enforce that the shape functions associated to each DOF is 2 where the DOF is loacted and 0 otherwise.</p>
+<p>In theory, we have seen that we can obtain the coefficients by solving a linear system of the type:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{bmatrix} 1 &amp; x_l &amp; x_l^2 &amp; x_l^3 \\ 0 &amp; 1 &amp; 2x_l &amp; 3x_l^2 \\ 1 &amp; x_r &amp; x_r^2 &amp; x_r^3 \\ 0 &amp; 1 &amp; 2x_r &amp; 3x_r^2 \end{bmatrix} \begin{bmatrix} a \\ b \\ c \\ d \end{bmatrix} = \begin{bmatrix} 1 \\ 0 \\ 0 \\ 0 \end{bmatrix} \end{split}\]</div>
+<p>Here, assuming that all elements have the same size <span class="math notranslate nohighlight">\(h\)</span>, we will simplify the system taking <span class="math notranslate nohighlight">\(x_l=0\)</span> and <span class="math notranslate nohighlight">\(x_r=h\)</span>. Then, we can compute the shape functions associated to the 4 DOFs as follows</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">N_k</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dN_k</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ddN_k</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">L</span><span class="o">/</span><span class="n">ne</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span>  <span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">h</span><span class="o">**</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="mi">3</span><span class="o">*</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
+
+<span class="k">def</span> <span class="nf">base</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">]])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))],</span> <span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">]])</span>
+<span class="k">def</span> <span class="nf">dbase</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))],</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">]])</span>
+<span class="k">def</span> <span class="nf">ddbase</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">]])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))],</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))],</span> <span class="p">[</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">]])</span>
+<span class="k">def</span> <span class="nf">make_N</span><span class="p">(</span><span class="n">coeff</span><span class="p">):</span> 
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">base</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">coeff</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">make_dN</span><span class="p">(</span><span class="n">coeff</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">dbase</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">coeff</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">make_ddN</span><span class="p">(</span><span class="n">coeff</span><span class="p">):</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">ddbase</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">coeff</span><span class="p">)</span>
+
+<span class="n">dof_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">idof</span> <span class="ow">in</span> <span class="n">dof_vec</span><span class="p">:</span>
+    <span class="n">rhs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dof_vec</span><span class="p">))</span>
+    <span class="n">rhs</span><span class="p">[</span><span class="n">idof</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">coeff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)</span>
+    <span class="n">N_k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_N</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
+    <span class="n">dN_k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_dN</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
+    <span class="n">ddN_k</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">make_ddN</span><span class="p">(</span><span class="n">coeff</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see how these functions look like for an element and check that they satisfy the requirements:</p>
+<ul class="simple">
+<li><p>For DOF 1 we want: <span class="math notranslate nohighlight">\(N_1(0) = 1.0\)</span>, <span class="math notranslate nohighlight">\(N_1(h)=0.0\)</span> and <span class="math notranslate nohighlight">\(N_1'(0)=N_1'(h)=0.0\)</span>.</p></li>
+<li><p>For DOF 2 we want: <span class="math notranslate nohighlight">\(N_2(0)=N_2(h)=0.0\)</span>, <span class="math notranslate nohighlight">\(N_2'(0)=1.0\)</span> and <span class="math notranslate nohighlight">\(N_2'(h) = 0.0\)</span>.</p></li>
+<li><p>For DOF 3 we want: <span class="math notranslate nohighlight">\(N_3(0) = 0.0\)</span>, <span class="math notranslate nohighlight">\(N_3(h) = 1.0\)</span> and <span class="math notranslate nohighlight">\(N_3'(0) = N_3'(h) = 0.0\)</span>.</p></li>
+<li><p>For DOF 4 we want: <span class="math notranslate nohighlight">\(N_4(0) = N_4(h) = 0.0\)</span>, <span class="math notranslate nohighlight">\(N_4'(0) = 1.0\)</span> and <span class="math notranslate nohighlight">\(N_4'(h) = 0.0\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xplot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">h</span> <span class="o">+</span> <span class="n">h</span><span class="o">/</span><span class="mi">100</span><span class="p">,</span> <span class="n">h</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">N_k</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function N$_1$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">dN_k</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function derivative N$_1$&#39;&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">N_k</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function N$_2$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">dN_k</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function derivative N$_2$&#39;&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">N_k</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function N$_3$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">dN_k</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function derivative N$_3$&#39;&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">N_k</span><span class="p">[</span><span class="mi">3</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function N$_4$&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xplot</span><span class="p">,</span> <span class="n">dN_k</span><span class="p">[</span><span class="mi">3</span><span class="p">](</span><span class="n">xplot</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Shape function derivative N$_4$&#39;&quot;</span><span class="p">)</span>
+
+<span class="c1"># automatically fix subplot spacing</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-computation-of-the-elemental-matrices">
+<h2>Step 3: computation of the elemental matrices<a class="headerlink" href="#step-3-computation-of-the-elemental-matrices" title="Permalink to this headline">#</a></h2>
+<p>In the theory we have seen that the mass and stiffness matrices for the EB beam problem can be computed as:</p>
+<div class="math notranslate nohighlight">
+\[ M_{i,j}^k = \int_{x_a}^{x_b} \rho A N_i^k(x)N_j^k(x)dx, \]</div>
+<div class="math notranslate nohighlight">
+\[ K_{i,j}^k = \int_{x_a}^{x_b} E I N_i''^k(x)N_j''^k(x)dx. \]</div>
+<p>Here we call the auxiliar function <code class="docutils literal notranslate"><span class="pre">elemental_matrices(P)</span></code> with <code class="docutils literal notranslate"><span class="pre">P</span></code> being a variable containting all the parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.integrate</span> <span class="k">as</span> <span class="nn">scp</span>
+<span class="n">M_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">K_k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">idof</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">jdof</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">eqn_M</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">rho</span><span class="o">*</span><span class="n">A</span><span class="o">*</span><span class="n">N_k</span><span class="p">[</span><span class="n">idof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">N_k</span><span class="p">[</span><span class="n">jdof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">eqn_K</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> 
+            <span class="k">return</span> <span class="n">E</span><span class="o">*</span><span class="n">I</span><span class="o">*</span><span class="n">ddN_k</span><span class="p">[</span><span class="n">idof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">ddN_k</span><span class="p">[</span><span class="n">jdof</span><span class="p">](</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">M_k</span><span class="p">[</span><span class="n">idof</span><span class="p">,</span> <span class="n">jdof</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn_M</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">K_k</span><span class="p">[</span><span class="n">idof</span><span class="p">,</span> <span class="n">jdof</span><span class="p">]</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">eqn_K</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">h</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><strong>Problem</strong>: Implement directly the elemental matrices given in the theory and compare with the ones computed here.</p>
+<hr class="docutils" />
+<p>In this example we also have a distributed dynamic loading function. This will give us a contribution to the right-hand-side vector that reads:</p>
+<div class="math notranslate nohighlight">
+\[ Q_i^k = \int_{x_a}^{x_b} q(x)N_i(x)dx \]</div>
+<p>Since we want to integrate a multi-variable function <span class="math notranslate nohighlight">\(q(x,t)\)</span> over one variable only <span class="math notranslate nohighlight">\(x\)</span>, we will use a symbolic integral here. Note that in that case, <span class="math notranslate nohighlight">\(q(x)\)</span> is not the same for all elements, so we’ll have to store all the elemental contributions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Implement directly here ...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-global-assembly">
+<h2>Step 4: global assembly<a class="headerlink" href="#step-4-global-assembly" title="Permalink to this headline">#</a></h2>
+<p>To construct the global matrices we add all the elemental contributions to the corresponding nodes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndofs</span><span class="o">*</span><span class="n">ndofs</span><span class="p">))</span>       <span class="c1"># 1-D array for global stiffness matrix</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">ndofs</span><span class="o">*</span><span class="n">ndofs</span><span class="p">))</span>       <span class="c1"># 1-D array for global mass matrix</span>
+<span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ndofs</span><span class="p">)</span>               <span class="c1"># 1-D array for Q vector</span>
+
+<span class="k">for</span> <span class="n">ie</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ne</span><span class="p">):</span>
+    <span class="c1"># Get the nodes of the elements</span>
+    <span class="n">dofs</span> <span class="o">=</span> <span class="n">elem_dofs</span><span class="p">[</span><span class="n">ie</span><span class="p">]</span>
+    <span class="n">NodeLeft</span> <span class="o">=</span> <span class="n">dof_node</span><span class="p">[</span><span class="n">dofs</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">NodeRight</span> <span class="o">=</span> <span class="n">dof_node</span><span class="p">[</span><span class="n">dofs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    
+    <span class="c1"># Get the degrees of freedom that correspond to each node</span>
+    <span class="n">Dofs_Left</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeLeft</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">Dofs_Right</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">NodeRight</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Assemble the matrices at the correct place</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dofs_Left</span><span class="p">,</span> <span class="n">Dofs_Right</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">Q</span><span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">+</span> <span class="n">Q2_k</span><span class="p">[</span><span class="n">ie</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+            <span class="n">ij</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">ndofs</span>
+            <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">M_k</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">ij</span><span class="p">]</span> <span class="o">+</span> <span class="n">K_k</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            
+<span class="c1"># Reshape the global matrix from a 1-D array to a 2-D array</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ndofs</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">))</span>
+<span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">ndofs</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">))</span>
+
+<span class="c1"># Transform the Q vector into functions dependent on time</span>
+<span class="n">Q_vector</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">):</span>
+    <span class="n">Q_vector</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">Q</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="mf">10e3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">t</span><span class="p">))</span>
+    <span class="c1"># Q_vector.append(lambda t: Q[i] + 0.02*t)</span>
+    <span class="c1"># This does not seem to be correct??</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the <code class="docutils literal notranslate"><span class="pre">spy</span></code> command from the MatPlotLib.PyPlot package and inspect the structure of the matrices. Since the nodes are only attached to two elements at each side, we will only have contributions from the neighbour nodes. Therefore, you see that the matrices have a tri-block-diagonal structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">spy</span><span class="p">(</span><span class="n">M</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">spy</span><span class="p">(</span><span class="n">K</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To apply the boundary conditions, we will remove the rows associated to the fixed DOFs and add the contribution to the right-hand-side. First, we identify the free and fixed DOFs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fixed_dofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>                    <span class="c1"># fixed DOFs</span>
+<span class="n">free_dofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ndofs</span><span class="p">)</span>                 <span class="c1"># free DOFs</span>
+<span class="n">free_dofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">free_dofs</span><span class="p">,</span> <span class="n">fixed_dofs</span><span class="p">)</span>    <span class="c1"># remove the fixed DOFs from the free DOFs array</span>
+
+<span class="c1"># free &amp; fixed array indices</span>
+<span class="n">fx</span> <span class="o">=</span> <span class="n">free_dofs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">fy</span> <span class="o">=</span> <span class="n">free_dofs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+<span class="n">bx</span> <span class="o">=</span> <span class="n">fixed_dofs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">by</span> <span class="o">=</span> <span class="n">fixed_dofs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can re-order the matrices and vectors in blocks, such that it’s easy to operate with the blocks corresponding with the fixed DOFs. We’ll use the notation <span class="math notranslate nohighlight">\(_I\)</span> to designate an interior DOF and <span class="math notranslate nohighlight">\(_B\)</span> to designate a boundary node.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{bmatrix} \boldsymbol{M}_{II} &amp; \boldsymbol{M}_{IB} \\ \boldsymbol{M}_{BI} &amp;\boldsymbol{M}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{K}_{II} &amp; \boldsymbol{K}_{IB} \\ \boldsymbol{K}_{BI} &amp;\boldsymbol{K}_{BB} \end{bmatrix}, \quad \begin{bmatrix} \boldsymbol{Q}_{I}  \\ \boldsymbol{Q}_{B}  \end{bmatrix} \end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mass</span>
+<span class="n">Mii</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Mib</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+<span class="n">Mbi</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Mbb</span> <span class="o">=</span> <span class="n">M</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+
+<span class="c1"># Stiffness</span>
+<span class="n">Kii</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Kib</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+<span class="n">Kbi</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">fy</span><span class="p">]</span>
+<span class="n">Kbb</span> <span class="o">=</span> <span class="n">K</span><span class="p">[</span><span class="n">bx</span><span class="p">,</span> <span class="n">by</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now operating with the different blocks, we can get a system of ODEs for the free DOFs, which is given by:</p>
+<div class="math notranslate nohighlight">
+\[ \boldsymbol{M}_{II}\boldsymbol{\ddot{u}}_I + \boldsymbol{K}_{II} \boldsymbol{u}_I = \boldsymbol{Q}_I - \boldsymbol{M}_{IB}\boldsymbol{\ddot{u}}_B - \boldsymbol{K}_{IB} \boldsymbol{u}_B \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u0</span><span class="p">,</span> <span class="n">du0</span><span class="p">])</span>
+<span class="n">ub_dt2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">u0_dt2</span><span class="p">,</span> <span class="n">du0_dt2</span><span class="p">])</span>
+<span class="n">RHS</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Mib</span><span class="p">,</span> <span class="n">ub_dt2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Kib</span><span class="p">,</span> <span class="n">ub</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-solving-the-ode">
+<h2>Step 5: solving the ODE<a class="headerlink" href="#step-5-solving-the-ode" title="Permalink to this headline">#</a></h2>
+<p>At this point we have all the information to solve the ODE for each DOF. We can use what we learned in the previous modules.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Construct a matrix to reshape Q </span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">ndofs</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">R</span><span class="p">[</span><span class="n">fx</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">ndofs</span><span class="p">]</span>
+
+<span class="c1"># Set Dimensions and initial conditions of state vector</span>
+<span class="n">nfdofs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">free_dofs</span><span class="p">)</span>
+<span class="n">udofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">nfdofs</span><span class="p">)</span>
+<span class="n">vdofs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nfdofs</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">nfdofs</span><span class="p">)</span>
+<span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">nfdofs</span><span class="p">))</span>
+
+<span class="c1"># Time span (output purposes)</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">tspan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">tf</span><span class="o">/</span><span class="mf">1e3</span><span class="p">)</span>
+
+<span class="c1"># Solve</span>
+<span class="k">def</span> <span class="nf">odefun</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="n">vdofs</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">Mii</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">Q</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">RHS</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Kii</span><span class="p">,</span> <span class="n">q0</span><span class="p">[</span><span class="n">udofs</span><span class="p">]))))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">scp</span><span class="o">.</span><span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">odefun</span><span class="p">,</span> <span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">tspan</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tspan</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">)</span>  
+
+<span class="c1"># Plot results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">nfdofs</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Deflection [m]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam end deflection&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a class="reference internal" href="w4_t2_sol.html"><span class="doc std std-doc">The solution can be found here.</span></a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\Module4"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="w3w4_t1_compare.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Tutorial 4.1 b: FD or FEM for a rod</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="w4_t3.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 4.3: FEM for a jacket wind turbine (Example only)</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By TU Delft Offshore Engineering<br/>
+  
+      &copy; Copyright 2023.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

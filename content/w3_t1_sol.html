@@ -168,6 +168,11 @@ const thebe_selector_output = ".output, .cell_output"
      Tutorial 2.2: Deriving the EOM of a pendulum
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t3.html">
+     Solution 2.3: Wave simulation
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -205,6 +210,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="w4_t1.html">
      Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3w4_t1_compare.html">
+     Tutorial 4.1 b: FD or FEM for a rod
     </a>
    </li>
    <li class="toctree-l2">
@@ -560,9 +570,10 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="solution-3-1-solving-the-dynamic-motion-of-a-rod-using-finite-differences">
 <h1>Solution 3.1: Solving the dynamic motion of a rod using Finite Differences<a class="headerlink" href="#solution-3-1-solving-the-dynamic-motion-of-a-rod-using-finite-differences" title="Permalink to this headline">#</a></h1>
 <p>In this tutorial you will learn how to solve the dynamic motion of a rod using Finite Differences. Here we will follow the example presented in the lectures.</p>
-<p>Let’s consider the EOM of a rod of length <span class="math notranslate nohighlight">\(L\)</span>:
-$<span class="math notranslate nohighlight">\( \rho A\ddot{u}-EAu{''}=q(x,t)\qquad \forall x\in[0,L] \)</span><span class="math notranslate nohighlight">\(
-with \)</span>\rho<span class="math notranslate nohighlight">\( the density, \)</span>A<span class="math notranslate nohighlight">\( the cross section area, \)</span>E<span class="math notranslate nohighlight">\( the young modulus and \)</span>q$ an external (distributed) load.</p>
+<p>Let’s consider the EOM of a rod of length <span class="math notranslate nohighlight">\(L\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ \rho A\ddot{u}-EAu{''}=q(x,t)\qquad \forall x\in[0,L] \]</div>
+<p>with <span class="math notranslate nohighlight">\(\rho\)</span> the density, <span class="math notranslate nohighlight">\(A\)</span> the cross section area, <span class="math notranslate nohighlight">\(E\)</span> the young modulus and <span class="math notranslate nohighlight">\(q\)</span> an external (distributed) load.</p>
 <p>The system is subject to boundary conditions:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(u=0\)</span> at <span class="math notranslate nohighlight">\(x=0\)</span></p></li>
@@ -624,74 +635,86 @@ with \)</span>\rho<span class="math notranslate nohighlight">\( the density, \)<
 </section>
 <section id="step-3-apply-boundary-conditions">
 <h3>Step 3: Apply boundary conditions<a class="headerlink" href="#step-3-apply-boundary-conditions" title="Permalink to this headline">#</a></h3>
-<p>At <span class="math notranslate nohighlight">\(x=0\)</span> we have that <span class="math notranslate nohighlight">\(u(0)=0\)</span>, then
-$<span class="math notranslate nohighlight">\( u_0 = 0 \)</span>$</p>
-<p>Since we know the values of <span class="math notranslate nohighlight">\(u(0)\)</span> for all times, we will not include them on the system. Using all this relation, we get the discrete equation for <span class="math notranslate nohighlight">\(i=1\)</span> as:
-$<span class="math notranslate nohighlight">\( \rho A \ddot{u}_0 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 \)</span>$</p>
-<p>On the other side, we use the force relation
-$<span class="math notranslate nohighlight">\(EA\ u{'}(L) = F(t) \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(EA\frac{-u_{N-1}+u_{N+1}}{2\Delta x} = F(t)\)</span><span class="math notranslate nohighlight">\(
-Thus
-\)</span><span class="math notranslate nohighlight">\(u_{N+1} = \frac{2\Delta x}{EA}F(t)+u_{N-1}\)</span>$</p>
-<p>So, the discrete equations of motion for <span class="math notranslate nohighlight">\(i=N\)</span> is:
-$<span class="math notranslate nohighlight">\(  \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) \)</span>$</p>
+<p>At <span class="math notranslate nohighlight">\(x=0\)</span> we have that <span class="math notranslate nohighlight">\(u(0)=0\)</span>, then</p>
+<div class="math notranslate nohighlight">
+\[ u_0 = 0 \]</div>
+<p>Since we know the values of <span class="math notranslate nohighlight">\(u(0)\)</span> for all times, we will not include them on the system. Using all this relation, we get the discrete equation for <span class="math notranslate nohighlight">\(i=1\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[ \rho A \ddot{u}_0 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 \]</div>
+<p>On the other side, we use the force relation</p>
+<div class="math notranslate nohighlight">
+\[EA\ u{'}(L) = F(t) \]</div>
+<div class="math notranslate nohighlight">
+\[EA\frac{-u_{N-1}+u_{N+1}}{2\Delta x} = F(t)\]</div>
+<p>Thus</p>
+<div class="math notranslate nohighlight">
+\[u_{N+1} = \frac{2\Delta x}{EA}F(t)+u_{N-1}\]</div>
+<p>So, the discrete equations of motion for <span class="math notranslate nohighlight">\(i=N\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[  \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) \]</div>
 </section>
 <section id="step-4-matrix-form">
 <h3>Step 4: Matrix form<a class="headerlink" href="#step-4-matrix-form" title="Permalink to this headline">#</a></h3>
 <p>Summarizing we have the following discrete (in space) equations:</p>
 <ul class="simple">
-<li><p>For <span class="math notranslate nohighlight">\(i=1\)</span>:
-$<span class="math notranslate nohighlight">\( \rho A \ddot{u}_1 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 \)</span>$</p></li>
-<li><p>For <span class="math notranslate nohighlight">\(i=2,...,N-1\)</span>:
-$<span class="math notranslate nohighlight">\( \rho A \ddot{u}_i - \frac{EA}{\Delta x^2}\left(u_{i-1}-2u_i+u_{i+1}\right) = q_i \)</span>$</p></li>
-<li><p>For <span class="math notranslate nohighlight">\(i=N\)</span>:
-$<span class="math notranslate nohighlight">\( \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) \)</span>$</p></li>
+<li><p>For <span class="math notranslate nohighlight">\(i=1\)</span>:</p></li>
 </ul>
-<p>This is equivalent to the following system:
-$$\rho A \left[\begin{matrix}
-1&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;0\
-0&amp;1&amp;0&amp;\ldots&amp;0&amp;0&amp;0\
-0&amp;0&amp;1&amp;\ldots&amp;0&amp;0&amp;0\
-\vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots&amp;\vdots&amp;\vdots\
-0&amp;0&amp;0&amp;\ldots&amp;1&amp;0&amp;0\
-0&amp;0&amp;0&amp;\ldots&amp;0&amp;1&amp;0\
-0&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;1\
-\end{matrix}\right]\left[\begin{matrix}
-\ddot{u}_1\
-\ddot{u}<em>2\
-\ddot{u}<em>3\
-\vdots\
-\ddot{u}</em>{N-2}\
-\ddot{u}</em>{N-1}\
-\ddot{u}_N\
-\end{matrix}\right]</p>
+<div class="math notranslate nohighlight">
+\[ \rho A \ddot{u}_1 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 \]</div>
 <ul class="simple">
-<li><p>\frac{EA}{\Delta x^2} \left[\begin{matrix}
--2&amp;1&amp;0&amp;0&amp;0&amp;&amp;0&amp;0&amp;0\
-1&amp;-2&amp;1&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;0\
-0&amp;1&amp;-2&amp;1&amp;0&amp;&amp;0&amp;0&amp;0\
-&amp;&amp;\vdots&amp;&amp;&amp;\ddots&amp;&amp;\vdots&amp;\
-0&amp;0&amp;0&amp;&amp;0&amp;1&amp;-2&amp;1&amp;0\
-0&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;1&amp;-2&amp;1\
-0&amp;0&amp;0&amp; &amp;0&amp;0&amp;0&amp;2&amp;-2\
-\end{matrix}\right]\left[\begin{matrix}
-u_1\
-u_2\
-u_3\
-\vdots\
-u_{N-2}\
-u_{N-1}\
-u_N\
-\end{matrix}\right] = \left[\begin{matrix}
-q_1\
-q_2\
-q_3\
-\vdots\
-q_{N-2}\
-q_{N-1}\
-q_N + \frac{2}{\Delta x}F(t)\
-\end{matrix}\right]$$</p></li>
+<li><p>For <span class="math notranslate nohighlight">\(i=2,...,N-1\)</span>:</p></li>
 </ul>
+<div class="math notranslate nohighlight">
+\[ \rho A \ddot{u}_i - \frac{EA}{\Delta x^2}\left(u_{i-1}-2u_i+u_{i+1}\right) = q_i \]</div>
+<ul class="simple">
+<li><p>For <span class="math notranslate nohighlight">\(i=N\)</span>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[ \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) \]</div>
+<p>This is equivalent to the following system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\rho A \left[\begin{matrix}
+1&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;0\\
+0&amp;1&amp;0&amp;\ldots&amp;0&amp;0&amp;0\\
+0&amp;0&amp;1&amp;\ldots&amp;0&amp;0&amp;0\\
+\vdots&amp;\vdots&amp;\vdots&amp;\ddots&amp;\vdots&amp;\vdots&amp;\vdots\\
+0&amp;0&amp;0&amp;\ldots&amp;1&amp;0&amp;0\\
+0&amp;0&amp;0&amp;\ldots&amp;0&amp;1&amp;0\\
+0&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;1\\
+\end{matrix}\right]\left[\begin{matrix}
+\ddot{u}_1\\
+\ddot{u}_2\\
+\ddot{u}_3\\
+\vdots\\
+\ddot{u}_{N-2}\\
+\ddot{u}_{N-1}\\
+\ddot{u}_N\\
+\end{matrix}\right]
+- \frac{EA}{\Delta x^2} \left[\begin{matrix}
+-2&amp;1&amp;0&amp;0&amp;0&amp;&amp;0&amp;0&amp;0\\
+1&amp;-2&amp;1&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;0\\
+0&amp;1&amp;-2&amp;1&amp;0&amp;&amp;0&amp;0&amp;0\\
+&amp;&amp;\vdots&amp;&amp;&amp;\ddots&amp;&amp;\vdots&amp;\\
+0&amp;0&amp;0&amp;&amp;0&amp;1&amp;-2&amp;1&amp;0\\
+0&amp;0&amp;0&amp;\ldots&amp;0&amp;0&amp;1&amp;-2&amp;1\\
+0&amp;0&amp;0&amp; &amp;0&amp;0&amp;0&amp;2&amp;-2\\
+\end{matrix}\right]\left[\begin{matrix}
+u_1\\
+u_2\\
+u_3\\
+\vdots\\
+u_{N-2}\\
+u_{N-1}\\
+u_N\\
+\end{matrix}\right] = \left[\begin{matrix}
+q_1\\
+q_2\\
+q_3\\
+\vdots\\
+q_{N-2}\\
+q_{N-1}\\
+q_N + \frac{2}{\Delta x}F(t)\\
+\end{matrix}\right]\end{split}\]</div>
 <p>And in a compact form:
 $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}}-\boldsymbol{K}\boldsymbol{w}=\boldsymbol{F}\)</span>$</p>
 <p>Now we can define the matrices:</p>
@@ -741,6 +764,8 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
 <section class="tex2jax_ignore mathjax_ignore" id="step-5-solve-the-ode-system">
 <h1>Step 5: Solve the ODE system<a class="headerlink" href="#step-5-solve-the-ode-system" title="Permalink to this headline">#</a></h1>
 <p>Now, we just need to apply what we learned in the previous modules to solve the dynamic problem. The main novelty is that here we work with matrices.</p>
+<p>Keen studens may notice the here specified solver uses the <code class="docutils literal notranslate"><span class="pre">Radau</span></code> method. The Radau method is one of many options in the list of <a class="reference external" href="https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods">Runge-Kutta integration methods</a>, like for example Forward Euler.
+While internal variations of the Radau method exist, the key take-away points are the full implicit nature and high order of accuracy, but at a large computational cost. The implicit nature makes the method well suited for very stiff problems. These problems normally require small time steps to capture the, due to the stiffness, fast accelerations and high-frequency effects. The use of an implicit method generally allows for a greater time step, then reducing the computational cost.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the ODE function (given q, return dq)</span>
@@ -778,8 +803,10 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Beam position [m]&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Displacement [m]&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam displacement animation&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../images/w3_t1_gif/shot</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
 </pre></div>
 </div>
 </div>
@@ -787,10 +814,11 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
 <img alt="../_images/w3_t1_sol_9_0.png" src="../_images/w3_t1_sol_9_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<p>Now displaying the animated plots, gif conversion via <a class="reference external" href="https://ezgif.com/jpg-to-gif">https://ezgif.com/jpg-to-gif</a>.</p>
+<center><img src="https://github.com/rdeke/ComModHOS_double/blob/main/images/w3_t1_gifresult.gif?raw=true" width="600" /></center><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pick time value:</span>
-<span class="n">time_pick</span> <span class="o">=</span> <span class="mi">86</span>
+<span class="n">time_pick</span> <span class="o">=</span> <span class="mi">24</span>
 <span class="n">time_closest</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span> <span class="o">-</span> <span class="n">time_pick</span><span class="p">)</span><span class="o">.</span><span class="n">argmin</span><span class="p">()]</span>
 <span class="n">time_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span> <span class="o">==</span> <span class="n">time_closest</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">disp_pick</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">,</span><span class="n">time_idx</span><span class="p">],</span><span class="n">N</span><span class="p">)</span>
@@ -804,11 +832,11 @@ $<span class="math notranslate nohighlight">\(\boldsymbol{M}\ddot{\boldsymbol{w}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.         0.00072095 0.00144104 0.00215941 0.00287518 0.00358746
- 0.00429534 0.00499791 0.00569421 0.00638325 0.00706402]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.         0.00119706 0.00238766 0.00356537 0.00472378 0.00585652
+ 0.00695731 0.00801991 0.0090382  0.01000615 0.01091787]
 </pre></div>
 </div>
-<img alt="../_images/w3_t1_sol_10_1.png" src="../_images/w3_t1_sol_10_1.png" />
+<img alt="../_images/w3_t1_sol_12_1.png" src="../_images/w3_t1_sol_12_1.png" />
 </div>
 </div>
 <section id="exercise-add-friction-to-the-system">
@@ -856,23 +884,10 @@ with \)</span><span class="math notranslate nohighlight">\( k_f(x)= \begin{cases
 <span class="c1"># Solve (we use Radau method because the ODE is very stiff and it works best for this case)</span>
 <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">q_dot</span><span class="p">,</span><span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">t0</span><span class="p">,</span><span class="n">tf</span><span class="p">],</span><span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span><span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">,</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;Radau&#39;</span><span class="p">)</span>
 
-<span class="c1"># Plot (in local mode only)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">tspan</span><span class="p">)):</span>
-    <span class="c1">#fig,ax = plt.subplots()</span>
-    <span class="n">display</span><span class="o">.</span><span class="n">clear_output</span><span class="p">(</span><span class="n">wait</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="c1">#display.display(pl.gcf())</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="n">N</span><span class="p">),</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="p">,</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.015</span><span class="p">,</span><span class="mf">0.015</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Beam position [m]&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Displacement [m]&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Beam displacement animation with friction&quot;</span><span class="p">)</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.05</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># Plot would follow the same structure as before</span>
+<span class="c1"># Running in local mode generates the GIF in the notebook already</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/w3_t1_sol_12_0.png" src="../_images/w3_t1_sol_12_0.png" />
 </div>
 </div>
 </section>

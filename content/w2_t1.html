@@ -170,6 +170,11 @@ const thebe_selector_output = ".output, .cell_output"
      Tutorial 2.2: Deriving the EOM of a pendulum
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t3.html">
+     Solution 2.3: Wave simulation
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -482,6 +487,11 @@ title="Print to PDF"
    Part 3: Solve the equation
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-4-performance-comparison">
+   Part 4: Performance comparison
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -545,6 +555,11 @@ title="Print to PDF"
    Part 3: Solve the equation
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-4-performance-comparison">
+   Part 4: Performance comparison
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -558,6 +573,15 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="tutorial-2-1-linearizing-the-equations-of-motion-example-only">
 <h1>Tutorial 2.1: Linearizing the Equations of Motion (Example only)<a class="headerlink" href="#tutorial-2-1-linearizing-the-equations-of-motion-example-only" title="Permalink to this headline">#</a></h1>
 <p>In this tutorial you will learn to linearize the Equations of Motion of the pendulum as covered in the lecture.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for time comparison later</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="part-1-kinematic-equations">
 <h2>Part 1: Kinematic equations<a class="headerlink" href="#part-1-kinematic-equations" title="Permalink to this headline">#</a></h2>
 <p>We first start by defining the variables. Let’s start with the kinematic relations of a pendulum hanging from the point <span class="math notranslate nohighlight">\((x_0, z_0)\)</span>.</p>
@@ -766,6 +790,13 @@ title="Print to PDF"
 \[\displaystyle - \frac{g \psi{\left(t \right)}}{r}\]</div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 <section id="remarks">
 <h3>Remarks<a class="headerlink" href="#remarks" title="Permalink to this headline">#</a></h3>
 <ol class="simple">
@@ -830,12 +861,27 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/w2_t1_33_0.png" src="../_images/w2_t1_33_0.png" />
+<img alt="../_images/w2_t1_35_0.png" src="../_images/w2_t1_35_0.png" />
 </div>
 </div>
-<hr class="docutils" />
-<p><span class="xref myst">The solution can be found here.</span></p>
 </section>
+<section id="part-4-performance-comparison">
+<h2>Part 4: Performance comparison<a class="headerlink" href="#part-4-performance-comparison" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">end_time</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.0873470306396484
+</pre></div>
+</div>
+</div>
+</div>
+<p>Depending on the machine you are running on the execution of this notebook takes anywhere from 1 tin a few seconds. For the development of this tutorial a TU Delft issue HP Zbook G5 was used, carrying an i7-8750H CPU at 2.2 GHz with 16 GB of 64 bit RAM. The notebook took 1.64 seconds to execute.</p>
+<p>An alternative way of doing symbolic calculations is through the use of <a class="reference external" href="https://maplesoft.com/">Maplesoft</a>. Below you can see an example of a Maple math file that performs the same calculations as in this notebook from the <code class="docutils literal notranslate"><span class="pre">start_time</span></code> to the <code class="docutils literal notranslate"><span class="pre">end_time</span></code>. This gives, as shown below, an execution time of 2.256. While Maple can be more intuitive for symbolic manipulations, it becomes clear that the computional cost of the sympy package is rather good.</p>
+<center><img src="../images/maple/w2_t1_MapleExample.png" width="600" /></center></section>
 </section>
 
     <script type="text/x-thebe-config">
