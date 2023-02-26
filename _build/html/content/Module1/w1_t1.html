@@ -1,0 +1,770 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Tutorial 1: ODE solvers &#8212; ComModHOS</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/TU_logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">ComModHOS</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Computational Modelling of Hydraulic and Offshore Structures
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Course content
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="module1_intro.html">
+   Week 1
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="module1-1_TaylorSeries.html">
+     1.1. Taylor series
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="module1-2_ApproxODEs.html">
+     1.2. Approximating ODEs with Taylor series
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module2/module2_intro.html">
+   Week 2
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module2/w2_t1.html">
+     Tutorial 2.1: Linearizing the Equations of Motion (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module2/w2_t2.html">
+     Tutorial 2.2: Deriving the EOM of a pendulum
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module2/w2_t3.html">
+     Solution 2.3: Wave simulation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module3/module3_intro.html">
+   Week 3
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module3/w3_t1.html">
+     Tutorial 3.1: Solving the dynamic motion of a rod using Finite Differences
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module3/w3_t2.html">
+     Tutorial 3.2: Solving a cantilever beam with Finite Differences
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module4/module4_intro.html">
+   Week 4
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/>
+  <label for="toctree-checkbox-4">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module4/w4_t1.html">
+     Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module4/w3w4_t1_compare.html">
+     Tutorial 4.1 b: FD or FEM for a rod
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module4/w4_t2.html">
+     Tutorial 4.2: FEM for an Euler-Bernoulli beam
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module4/w4_t3.html">
+     Tutorial 4.3: FEM for a jacket wind turbine (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module4/w4_t4.html">
+     Tutorial 4.4: 2D Flow through porous media (Example only)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module5/module5_intro.html">
+   Week 5
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/>
+  <label for="toctree-checkbox-5">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module5/w5_t1.html">
+     Solution 5.1: Modal superposition of a jacket wind turbine
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../Module6/module6_intro.html">
+   Week 6
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/>
+  <label for="toctree-checkbox-6">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module6/w6_t1.html">
+     Tutorial 6.1: Static string
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../Module6/w6_t2.html">
+     Tutorial 6.2: Dynamic string (Example only)
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/TUDelft-CITG/ComModHOS.git/master?urlpath=tree/book/content/Module1/w1_t1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/content/Module1/w1_t1.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1-definition-of-inputs">
+   Part 1: definition of inputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-2-the-ode-solver">
+   Part 2: the ODE solver
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-ode-function">
+   Part 3: ODE function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-4-initial-state">
+   Part 4: initial state
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-5-solve">
+   Part 5: Solve
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#part5-1-rk5-scheme">
+     Part5.1: RK5 scheme
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#part5-2-rk5-scheme">
+     Part5.2: RK5 scheme
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-5-3-performance-comparison">
+   Part 5.3: Performance comparison
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Tutorial 1: ODE solvers</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-1-definition-of-inputs">
+   Part 1: definition of inputs
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-2-the-ode-solver">
+   Part 2: the ODE solver
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-3-ode-function">
+   Part 3: ODE function
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-4-initial-state">
+   Part 4: initial state
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-5-solve">
+   Part 5: Solve
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#part5-1-rk5-scheme">
+     Part5.1: RK5 scheme
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#part5-2-rk5-scheme">
+     Part5.2: RK5 scheme
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#part-5-3-performance-comparison">
+   Part 5.3: Performance comparison
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="tutorial-1-ode-solvers">
+<h1>Tutorial 1: ODE solvers<a class="headerlink" href="#tutorial-1-ode-solvers" title="Permalink to this headline">#</a></h1>
+<p>In this tutorial you will learn to solve an MCK (mass-damper-spring) using a Python ODE solver. The MCK has 1 DOF and consequently the state veector contains 2 entries; displacement and velocity.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \boldsymbol{q} = \begin{bmatrix} u \\ \dot{u} \end{bmatrix}\end{split}\]</div>
+<p>The Equation of Motion (EoM) is given by: $<span class="math notranslate nohighlight">\( m\ddot{u} = -ku -c\dot{u} \)</span>$</p>
+<section id="part-1-definition-of-inputs">
+<h2>Part 1: definition of inputs<a class="headerlink" href="#part-1-definition-of-inputs" title="Permalink to this headline">#</a></h2>
+<p>We start by defining the numerical values of all parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+
+<span class="c1"># Parameters</span>
+<span class="n">k</span> <span class="o">=</span>         <span class="mi">1</span>   <span class="c1"># [N/n] </span>
+<span class="n">c</span> <span class="o">=</span>         <span class="mf">0.1</span> <span class="c1"># [Ns/m]</span>
+<span class="n">m</span> <span class="o">=</span>         <span class="mi">1</span>   <span class="c1"># [kg]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We want to solve the problem in the interval <span class="math notranslate nohighlight">\( t \in [0,10] \)</span>, and get the solution with a resolution of <span class="math notranslate nohighlight">\( \Delta t = 0.01\)</span>. Then, the vector of evaluation points will be defined as:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Time interval</span>
+<span class="n">t_0</span> <span class="o">=</span>       <span class="mi">0</span>       <span class="c1"># initial time [s]</span>
+<span class="n">t_f</span> <span class="o">=</span>       <span class="mi">10</span>      <span class="c1"># final time [s]</span>
+<span class="n">dt</span> <span class="o">=</span>        <span class="mf">0.01</span>    <span class="c1"># time step size [s]</span>
+
+<span class="n">steps</span> <span class="o">=</span>     <span class="nb">int</span><span class="p">(</span><span class="n">t_f</span><span class="o">/</span><span class="n">dt</span><span class="p">)</span>  <span class="c1"># integer number of steps [-]</span>
+<span class="n">tspan</span> <span class="o">=</span>     <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t_0</span><span class="p">,</span><span class="n">t_f</span><span class="p">,</span><span class="n">steps</span><span class="p">)</span>   <span class="c1"># vector of evaluation points [s]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The initial conditions for this example will be: <span class="math notranslate nohighlight">\( u(0) = 1.0 \)</span> and <span class="math notranslate nohighlight">\( \dot{u}(0) = 0.0\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial conditions</span>
+<span class="n">init_disp</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">init_velo</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-2-the-ode-solver">
+<h2>Part 2: the ODE solver<a class="headerlink" href="#part-2-the-ode-solver" title="Permalink to this headline">#</a></h2>
+<p>We will use solve_ivp (available via the SciPy package) to solve our MCK system. solve_ivp implements the 5th order Runge-Kutta scheme mentioned in the lectures. Checking help for solve_ivp shows how to call it:</p>
+<p><code class="docutils literal notranslate"><span class="pre">scipy.integrate.solve_ivp(fun,</span> <span class="pre">t_span,</span> <span class="pre">y0,</span> <span class="pre">t_eval,</span> <span class="pre">**options)</span></code></p>
+<p>OUTPUT:</p>
+<ul class="simple">
+<li><p>T: Evaluation points</p></li>
+<li><p>q: containts the state <span class="math notranslate nohighlight">\(\boldsymbol{q}\)</span> at each time in the vector T</p></li>
+</ul>
+<p>INPUT:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fun</span></code>: our ode function as explained during the lecture. It will compute the time derivatives of <span class="math notranslate nohighlight">\(q: \dot{q}=\mathcal{F} (q)\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_span</span></code>: list of the first and last time step</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y0</span></code>: our initial state / conditions, <span class="math notranslate nohighlight">\(q(0)\)</span>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t_eval</span></code>: times at which the solution should be stored. In our case this is the variable <code class="docutils literal notranslate"><span class="pre">tspan</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">**options</span></code>: Options for the solvers. Here you can set things like error tolerances, maximum time step, event functions, etc. Check the SciPy docs for details. You will need to use this during the first assignment.</p></li>
+</ul>
+<p>Let’s ignore the options for now and use the <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> as our solver.</p>
+</section>
+<section id="part-3-ode-function">
+<h2>Part 3: ODE function<a class="headerlink" href="#part-3-ode-function" title="Permalink to this headline">#</a></h2>
+<p>Now we need to create our <code class="docutils literal notranslate"><span class="pre">fun</span></code>. In the help documentation of <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> we can check for a short description on what the function does. It is stated that the function f(t,q) determines the differential equations. The function is called as:</p>
+<p><span class="math notranslate nohighlight">\( \dot{\boldsymbol{q}} = \)</span><code class="docutils literal notranslate"><span class="pre">fun</span></code><span class="math notranslate nohighlight">\((t,\boldsymbol{q}) \)</span></p>
+<p>Here, the variable <span class="math notranslate nohighlight">\(\dot{\boldsymbol{q}}\)</span> is the time derivative of our current state, <span class="math notranslate nohighlight">\(t\)</span> is the current time and <span class="math notranslate nohighlight">\(\boldsymbol{q}\)</span> is our current state. As the solver requires this interface, we have to create our <code class="docutils literal notranslate"><span class="pre">fun</span></code> accordingly or we will get answers that have no physical meaning!</p>
+<hr class="docutils" />
+<p><strong>Problem</strong>: Create a <code class="docutils literal notranslate"><span class="pre">fun</span></code> function that can receive the time, the state variable and the parameters as arguments. Implement the ODE function, <span class="math notranslate nohighlight">\(\mathcal{F}\)</span>, for the 1DOF MCK system such that <span class="math notranslate nohighlight">\(\dot{q}=\mathcal{F} (q)\)</span>.</p>
+<p><em>Hint</em>: Use the EoM and the fact that <span class="math notranslate nohighlight">\(\boldsymbol{q}(1) = u\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{q}(2) = \dot{u}\)</span>.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem of part 3 here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-4-initial-state">
+<h2>Part 4: initial state<a class="headerlink" href="#part-4-initial-state" title="Permalink to this headline">#</a></h2>
+<p>Next we need to create <code class="docutils literal notranslate"><span class="pre">q_0</span></code>. Note that the solver does not know / care what each entry in <code class="docutils literal notranslate"><span class="pre">q</span></code> represents. All the solver does is integrate things! You assign meaning to the entries in the state <code class="docutils literal notranslate"><span class="pre">q</span></code> when you define the initial conditions in <code class="docutils literal notranslate"><span class="pre">q_0</span></code>. This means that if you want the first entry in your state to be the displacement, <code class="docutils literal notranslate"><span class="pre">q_0[0]</span></code> should be set to <code class="docutils literal notranslate"><span class="pre">init_disp</span></code>. If you want the velocities to be the first entry, <code class="docutils literal notranslate"><span class="pre">q_0[0]</span></code> should be equal to the <code class="docutils literal notranslate"><span class="pre">init_velo</span></code>. It is up to you to decide this.</p>
+<p>!! IMPORTANT !!
+The <code class="docutils literal notranslate"><span class="pre">q</span></code> you receive in your <code class="docutils literal notranslate"><span class="pre">fun</span></code> will have the same meaning as your <code class="docutils literal notranslate"><span class="pre">q_0</span></code>. This means if you assigned <code class="docutils literal notranslate"><span class="pre">q_0[0]</span></code> to be the <code class="docutils literal notranslate"><span class="pre">init_disp</span></code>, <code class="docutils literal notranslate"><span class="pre">q_n[0]</span></code> will be the current displacement. So make sure your usage of <code class="docutils literal notranslate"><span class="pre">q_n</span></code> inside the <code class="docutils literal notranslate"><span class="pre">fun</span></code> is consistent with your definition of <code class="docutils literal notranslate"><span class="pre">q_0</span></code> as otherwise you will get bogus results</p>
+<hr class="docutils" />
+<p><strong>Problem</strong>: Create your <code class="docutils literal notranslate"><span class="pre">q_0</span></code></p>
+<p><em>Hint</em>: Straight forward! Just make sure that the indices are consistent with what you wrote in <code class="docutils literal notranslate"><span class="pre">fun</span></code>.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem of part 4 here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-5-solve">
+<h2>Part 5: Solve<a class="headerlink" href="#part-5-solve" title="Permalink to this headline">#</a></h2>
+<section id="part5-1-rk5-scheme">
+<h3>Part5.1: RK5 scheme<a class="headerlink" href="#part5-1-rk5-scheme" title="Permalink to this headline">#</a></h3>
+<p>Once everything works the solver will return T and q. Each row in q corresponds to your state at that time-step. You can then plot your results with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">fun</span><span class="o">=</span><span class="n">q_dot</span><span class="p">,</span><span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">t_0</span><span class="p">,</span> <span class="n">t_f</span><span class="p">],</span> <span class="n">y0</span><span class="o">=</span><span class="n">q0</span><span class="p">,</span> <span class="n">t_eval</span><span class="o">=</span><span class="n">tspan</span><span class="p">)</span>
+<span class="c1"># Plotting the solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Displacement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">t</span><span class="p">,</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Velocity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Displacement [m] / Velocity [m/s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ODe results using solve_ivp&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part5-2-rk5-scheme">
+<h3>Part5.2: RK5 scheme<a class="headerlink" href="#part5-2-rk5-scheme" title="Permalink to this headline">#</a></h3>
+<p>In the cell above the RK5 scheme was used for the time integration. However, we can simply make our own time integration scheme as well.</p>
+<hr class="docutils" />
+<p><strong>Problem</strong>: Create your <code class="docutils literal notranslate"><span class="pre">FE_solver</span></code> function</p>
+<p><em>Hint</em>: Start by making all required arrays, and then loop over the different time entries. How are the displacement, velocity, and acceleration linked? Can we use a vector notation?</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem of part 5.2 here </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solve the problem</span>
+<span class="n">FE_sol</span> <span class="o">=</span> <span class="n">FE_solver</span><span class="p">(</span><span class="n">q_dot</span><span class="p">,</span> <span class="n">tspan</span><span class="p">,</span><span class="n">q0</span><span class="p">)</span>
+
+<span class="c1"># Plotting the solution</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Displacement&quot;</span><span class="p">)</span> 
+<span class="c1"># Note the slightly different notation than FE_sol.y[0]. This is because the .y result is intrinsicly bound to the solve_ivp function. However, adaptations to FE_solver could give the same result </span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Velocity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Displacement [m] / Velocity [m/s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ODe results using FE_solver (self made)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-5-3-performance-comparison">
+<h2>Part 5.3: Performance comparison<a class="headerlink" href="#part-5-3-performance-comparison" title="Permalink to this headline">#</a></h2>
+<p>The Forward Euler method is less accurate than the <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> solver and it accumulates as time evolves. Let’s plot the error.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting the error</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="nb">abs</span><span class="p">(</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Displacement&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tspan</span><span class="p">,</span><span class="nb">abs</span><span class="p">(</span><span class="n">FE_sol</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Velocity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time [s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Displacement error [m] / Velocity error [m/s]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;ODe absolute error from FE to RK4&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<p><a class="reference internal" href="w1_t1_sol.html"><span class="doc std std-doc">The solution can be found here.</span></a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./content\Module1"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By TU Delft Offshore Engineering<br/>
+  
+      &copy; Copyright 2023.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

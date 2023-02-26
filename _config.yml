@@ -46,7 +46,9 @@ repository:
 #   binderhub_url: "https://mybinder.org"
 #   text: "Launch binder"
 
-sphinx:
+sphinx:sphinx:
+  extra_extensions:
+    - sphinx_proof
   config:
     html_show_copyright: false
     mathjax3_config:

@@ -168,6 +168,11 @@ const thebe_selector_output = ".output, .cell_output"
      Tutorial 2.2: Deriving the EOM of a pendulum
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w2_t3.html">
+     Solution 2.3: Wave simulation
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -205,6 +210,11 @@ const thebe_selector_output = ".output, .cell_output"
    <li class="toctree-l2">
     <a class="reference internal" href="w4_t1.html">
      Tutorial 4.1: FEM for a rod (Example only)
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="w3w4_t1_compare.html">
+     Tutorial 4.1 b: FD or FEM for a rod
     </a>
    </li>
    <li class="toctree-l2">
@@ -560,13 +570,17 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="solution-3-2-solving-a-cantilever-beam-with-finite-differences">
 <h1>Solution 3.2: Solving a cantilever beam with Finite Differences<a class="headerlink" href="#solution-3-2-solving-a-cantilever-beam-with-finite-differences" title="Permalink to this headline">#</a></h1>
 <p>In this tutorial we will learn how to obtain the motion of a cantilever beam using Finite Differences</p>
-<p>The equation of motion of the beam is:
-$<span class="math notranslate nohighlight">\(\rho A \ddot{w} + EI w'''' = q(x,t)\)</span>$</p>
+<p>The equation of motion of the beam is:</p>
+<div class="math notranslate nohighlight">
+\[\rho A \ddot{w} + EI w'''' = q(x,t)\]</div>
 <p>where <span class="math notranslate nohighlight">\(w(t)\)</span> is the deflection of the beam, <span class="math notranslate nohighlight">\(\rho\)</span> its density, <span class="math notranslate nohighlight">\(A\)</span> its cross-sectional area, <span class="math notranslate nohighlight">\(E\)</span> its Young’s modulus, <span class="math notranslate nohighlight">\(I\)</span> its second moment of area and <span class="math notranslate nohighlight">\(q(x,t)\)</span> a distributed force applied to the beam.</p>
-<p>The boundary conditions for a cantilever beam are:
-$<span class="math notranslate nohighlight">\( w(0) = w'(0) = \dot{w}(0) = \ddot{w}(0) = 0 \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(EI\ w^{'''}(L) = F_{\mathrm{ext}}(t) \)</span><span class="math notranslate nohighlight">\(
-\)</span><span class="math notranslate nohighlight">\(EI\ w^{''}(L) = M_{\mathrm{ext}}(t) \)</span>$</p>
+<p>The boundary conditions for a cantilever beam are:</p>
+<div class="math notranslate nohighlight">
+\[ w(0) = w'(0) = \dot{w}(0) = \ddot{w}(0) = 0 \]</div>
+<div class="math notranslate nohighlight">
+\[EI\ w^{'''}(L) = F_{\mathrm{ext}}(t) \]</div>
+<div class="math notranslate nohighlight">
+\[EI\ w^{''}(L) = M_{\mathrm{ext}}(t) \]</div>
 <section id="the-roadmap-to-finde-the-beam-deflection-using-finite-differences">
 <h2>The roadmap to finde the beam deflection  using Finite Differences<a class="headerlink" href="#the-roadmap-to-finde-the-beam-deflection-using-finite-differences" title="Permalink to this headline">#</a></h2>
 <p>The steps needed to discretize the beam are listed next.</p>
