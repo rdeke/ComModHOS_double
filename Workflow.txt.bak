@@ -1,6 +1,6 @@
 General workflow for Jypyterbook development ComModHOS
 [23/mm/dd] finalized deadline
-https://rdeke.github.io/ComModHOS_double/content/intro.html
+https://tudelft-citg.github.io/ComModHOS/content/intro.html 
 
 Install jupyterbook
 [0105]		- Reinstall of python needed -- version issues with pyqt5
@@ -12,7 +12,7 @@ Build initial book
 
 Build course content --> Push deadlines
 [0122]		- Building and checking tutorials & structure
-[X]		- Books round 1 --> GOAL Wk 2.11 (3wks)
+[0211]		- Books round 1 --> GOAL Wk 2.11 (3wks)
 [X]		- Books round 2 --> GOAL Wk 3.3 (3wks)
 [X]		- Theory --> GOAL Wk 3.8 (5wks)
 [X]		- Extra --> Goal Wk 3.10 (2wks)
@@ -83,7 +83,7 @@ Tutorial 3_1
 Tutorial 3_2
 [0204]		- Clean up install commands
 [0205]		- Check plot titles and lay-out+
-[x]		- Write model answer
+[0211]		- Write model answer
 [0205]		- Correct title and book structure
 [0205]		- \bold issues solution
 [0205]		- nMode changes
@@ -99,7 +99,7 @@ Tutorial 4_1
 Tutorial 4_2
 [0205]		- Clean up install commands
 [0205]		- Check plot titles and lay-out+
-[X]		- Write model answer
+[0211]		- Write model answer
 [0205]		- Correct title and book structure
 [0205]		- \bold issues solution
 [0205]		- nMode changes
@@ -141,34 +141,34 @@ Tutorial 6_2
 Book content round 2 --> Add/change books with new content
 
 Tutorial 1
-[X]		- 
+[0211]		- 
 
 Tutorial 2_1
-[X]		- Add Maple example of symbolic calculations, add speed comparisons --> Metrikine course
+[0211]		- Add Maple example of symbolic calculations, add speed comparisons --> Metrikine course
 
 Tutorial 2_2
-[X]		- 2DOF situation sketch/physical drawing as illutstration
+[0211]		- 2DOF situation sketch/physical drawing as illutstration
 
 Tutorial 2_3
-[X]		- Explanation on irregular wave use + potential/pressure conversions
+[0211]		- Explanation on irregular wave use + potential/pressure conversions
 
 Tutorial 3_1
-[X]		- Add IPython explanation (package, options, docu link)
-[X]		- Add realistic damping factor
-[X]		- Radau/other option theory addition
+[0212]		- Add IPython explanation (package, options, docu link) --> IMPORTANT NEED TO LINK GIF TO GITHUB SOURCE
+[0212]		- Add realistic damping factor
+[0212]		- Radau/other option theory addition
 
 Tutorial 3_2
-[X]		- Clean up install commands
-[X]		- (see comments 3_1)
+[0212]		- Clean up install commands
+[0212]		- (see comments 3_1)
 
 Tutorial 4_1
-[X]		- Link FD contents (execution speed and analytical accuracy)
+[0212]		- Link FD contents (execution speed and analytical accuracy)
 
 Tutorial 4_2
-[X]		- Link FD contents (execution speed and analytical accuracy)
+[0212]		- Link FD contents (execution speed and analytical accuracy) --> Done via tutorial 4_1
 
 Tutorial 4_3
-[X]		- Add example image
+[0212]		- Add example image
 
 Tutorial 4_4 (new)
 [X]		- Soil mechanics example
@@ -180,6 +180,7 @@ Tutorial 6_1
 [X]		- Link anchor line to theoretical formulations
 [X]		- Look into SAG instabilty
 [X]		- Add calculation flow chart
+[X]		- Add gif like in w3_t1
 
 Tutorial 6_2
 [X]		- Add dynamic calculation flow chart
@@ -194,6 +195,7 @@ Theory conversion --> Make .md of the theory files from videos/existing slides
 
 File creation
 [X]		- Week 0		Introduction & course information (intro.md), MUDE recap file + exercise
+						! Add info on internal structure and module_impors
 [X]		- Week 1		ODE solvers
 [X]		- Week 2		Lagrangian mechanics, systems of ODE
 [X]		- Week 3		FD
@@ -213,5 +215,10 @@ Extra's and playing around --> Adding content for illustration and comparisons
 
 
 # -------------------------------------------------------------------------------------------------------------------
-Questions
-- Add solutions in TOC tree, or just as link in the original tutorial?
+OC comments 01/02/2023:
+
+[0218]		- Fix OC comment 1
+[0218]      - Fix OC comment 2
+[0218]      - Fix OC comment 3
+[0218]      - Check OC comments in "module1-1_TaylorSeries.md"
+[]      - Add links to weekly planning to the respective week in the content --> QUESTION: What is wanted structure, can only link once files are made

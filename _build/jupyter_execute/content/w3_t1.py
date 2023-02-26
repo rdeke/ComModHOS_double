@@ -6,7 +6,7 @@
 # 
 # Let's consider the EOM of a rod of length $L$:
 # 
-# $ \rho A\ddot{u}-EAu{''}=q(x,t)\qquad \forall x\in[0,L] $
+# $$ \rho A\ddot{u}-EAu{''}=q(x,t)\qquad \forall x\in[0,L] $$
 # 
 # with $\rho$ the density, $A$ the cross section area, $E$ the young modulus and $q$ an external (distributed) load.
 # 
@@ -52,39 +52,40 @@ print(x)
 # 
 # Using the coefficients for a centered FD scheme for 2nd order derivatives with 2nd order accuracy we have:
 # 
-# $ u_i^{''} = \frac{u_{i-1}-2u_i+u_{i+1}}{\Delta x^2}$
+# $$ u_i^{''} = \frac{u_{i-1}-2u_i+u_{i+1}}{\Delta x^2}$$
 # 
 # And for the 1st order derivative:
 # 
-# $ u_i^{'} = \frac{-0.5u_{i-1}+0.5u_{i+1}}{\Delta x}$
+# $$ u_i^{'} = \frac{-0.5u_{i-1}+0.5u_{i+1}}{\Delta x}$$
 # 
 # Replacing these expressions into the equation of motion we get the following discrete system:
 # 
-# $ \rho A \ddot{u}_i - \frac{EA}{\Delta x^2}\left(u_{i-1}-2u_i+u_{i+1}\right) = q_i $
+# $$ \rho A \ddot{u}_i - \frac{EA}{\Delta x^2}\left(u_{i-1}-2u_i+u_{i+1}\right) = q_i $$
 # 
 
 # ### Step 3: Apply boundary conditions
 # 
 # At $x=0$ we have that $u(0)=0$, then 
-# $ u_0 = 0 $
+# 
+# $$ u_0 = 0 $$
 # 
 # Since we know the values of $u(0)$ for all times, we will not include them on the system. Using all this relation, we get the discrete equation for $i=1$ as:
 # 
-# $ \rho A \ddot{u}_0 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 $
+# $$ \rho A \ddot{u}_0 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 $$
 # 
 # On the other side, we use the force relation
 # 
-# $EA\ u{'}(L) = F(t) $
+# $$EA\ u{'}(L) = F(t) $$
 # 
-# $EA\frac{-u_{N-1}+u_{N+1}}{2\Delta x} = F(t)$
+# $$EA\frac{-u_{N-1}+u_{N+1}}{2\Delta x} = F(t)$$
 # 
 # Thus
 # 
-# $u_{N+1} = \frac{2\Delta x}{EA}F(t)+u_{N-1}$
+# $$u_{N+1} = \frac{2\Delta x}{EA}F(t)+u_{N-1}$$
 # 
 # So, the discrete equations of motion for $i=N$ is:
 # 
-# $  \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) $
+# $$  \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) $$
 # 
 
 # ### Step 4: Matrix form
@@ -93,18 +94,19 @@ print(x)
 # 
 # - For $i=1$:
 # 
-# $ \rho A \ddot{u}_1 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 $
+# $$ \rho A \ddot{u}_1 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 $$
+# 
 # - For $i=2,...,N-1$:
 # 
-# $ \rho A \ddot{u}_i - \frac{EA}{\Delta x^2}\left(u_{i-1}-2u_i+u_{i+1}\right) = q_i $
+# $$ \rho A \ddot{u}_i - \frac{EA}{\Delta x^2}\left(u_{i-1}-2u_i+u_{i+1}\right) = q_i $$
+# 
 # - For $i=N$:
 # 
-# $ \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) $  
+# $$ \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) $$  
 # 
 # This is equivalent to the following system:
 # 
-# $$\begin{equation}
-# \rho A \left[\begin{matrix}
+# $$\rho A \left[\begin{matrix}
 # 1&0&0&\ldots&0&0&0\\
 # 0&1&0&\ldots&0&0&0\\
 # 0&0&1&\ldots&0&0&0\\
@@ -145,12 +147,10 @@ print(x)
 # q_{N-2}\\
 # q_{N-1}\\
 # q_N + \frac{2}{\Delta x}F(t)\\
-# \end{matrix}\right]
-# \end{equation}$$
+# \end{matrix}\right]$$
 # 
 # And in a compact form:
-# 
-# $\boldsymbol{M}\ddot{\boldsymbol{w}}-\boldsymbol{K}\boldsymbol{w}=\boldsymbol{F}$
+# $$\boldsymbol{M}\ddot{\boldsymbol{w}}-\boldsymbol{K}\boldsymbol{w}=\boldsymbol{F}$$
 # 
 # Now we can define the matrices:
 
@@ -196,6 +196,9 @@ def Fvec(t):
 # # Step 5: Solve the ODE system
 # 
 # Now, we just need to apply what we learned in the previous modules to solve the dynamic problem. The main novelty is that here we work with matrices.
+# 
+# Keen studens may notice the here specified solver uses the `Radau` method. The Radau method is one of many options in the list of [Runge-Kutta integration methods](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods), like for example Forward Euler. 
+# While internal variations of the Radau method exist, the key take-away points are the full implicit nature and high order of accuracy, but at a large computational cost. The implicit nature makes the method well suited for very stiff problems. These problems normally require small time steps to capture the, due to the stiffness, fast accelerations and high-frequency effects. The use of an implicit method generally allows for a greater time step, then reducing the computational cost.
 
 # In[4]:
 
@@ -235,15 +238,21 @@ for i in range(0,len(tspan)):
     plt.xlabel("Beam position [m]")
     plt.ylabel("Displacement [m]")
     plt.title("Beam displacement animation")
+    plt.savefig(f"../images/w3_t1_gif/shot{i+1}.png")
     time.sleep(0.05)
     plt.show()
+    
 
+
+# Now displaying the animated plots, gif conversion via https://ezgif.com/jpg-to-gif.
+
+# <center><img src="https://github.com/rdeke/ComModHOS_double/blob/main/images/w3_t1_gifresult.gif?raw=true" width="600" /></center>
 
 # In[5]:
 
 
 # Pick time value:
-time_pick = 86
+time_pick = 24
 time_closest = sol.t.flat[np.abs(sol.t - time_pick).argmin()]
 time_idx = np.where(sol.t == time_closest)[0]
 disp_pick = np.reshape(sol.y[0:N,time_idx],N)
@@ -258,10 +267,8 @@ plt.title(f"Beam displacament at {time_closest:.0f} s");
 # ## Exercise: Add friction to the system
 # 
 # Solve the same problem, but considering friction in the rod for $x<L/2$. In that case, the equation of motion reads:
-# 
-# $ \rho A\ddot{u}-EAu{''}+k_f(x) u=q(x,t)\qquad \forall x\in[0,L], $
-# 
-# with $ k_f(x)= \begin{cases}k_0\qquad {if x<L/2} \\ 0\qquad {otherwise} \end{cases}$
+# $$ \rho A\ddot{u}-EAu{''}+k_f(x) u=q(x,t)\qquad \forall x\in[0,L], $$
+# with $$ k_f(x)= \begin{cases}k_0\qquad {if x<L/2} \\ 0\qquad {otherwise} \end{cases}$$
 # 
 # Compare the solution using $k_0=1.0e8$ and $k_0=1.0e5$.
 

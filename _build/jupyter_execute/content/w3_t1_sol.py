@@ -5,7 +5,9 @@
 # In this tutorial you will learn how to solve the dynamic motion of a rod using Finite Differences. Here we will follow the example presented in the lectures.
 # 
 # Let's consider the EOM of a rod of length $L$:
+# 
 # $$ \rho A\ddot{u}-EAu{''}=q(x,t)\qquad \forall x\in[0,L] $$
+# 
 # with $\rho$ the density, $A$ the cross section area, $E$ the young modulus and $q$ an external (distributed) load.
 # 
 # The system is subject to boundary conditions:
@@ -64,18 +66,25 @@ print(x)
 # ### Step 3: Apply boundary conditions
 # 
 # At $x=0$ we have that $u(0)=0$, then 
+# 
 # $$ u_0 = 0 $$
 # 
 # Since we know the values of $u(0)$ for all times, we will not include them on the system. Using all this relation, we get the discrete equation for $i=1$ as:
+# 
 # $$ \rho A \ddot{u}_0 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 $$
 # 
 # On the other side, we use the force relation
+# 
 # $$EA\ u{'}(L) = F(t) $$
+# 
 # $$EA\frac{-u_{N-1}+u_{N+1}}{2\Delta x} = F(t)$$
+# 
 # Thus
+# 
 # $$u_{N+1} = \frac{2\Delta x}{EA}F(t)+u_{N-1}$$
 # 
 # So, the discrete equations of motion for $i=N$ is:
+# 
 # $$  \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) $$
 # 
 
@@ -84,13 +93,19 @@ print(x)
 # Summarizing we have the following discrete (in space) equations:
 # 
 # - For $i=1$:
+# 
 # $$ \rho A \ddot{u}_1 - \frac{EA}{\Delta x^2}\left(-2u_1+u_{2}\right) = q_1 $$
+# 
 # - For $i=2,...,N-1$:
+# 
 # $$ \rho A \ddot{u}_i - \frac{EA}{\Delta x^2}\left(u_{i-1}-2u_i+u_{i+1}\right) = q_i $$
+# 
 # - For $i=N$:
+# 
 # $$ \rho A \ddot{u}_N - \frac{EA}{\Delta x^2}\left(2u_{N-1}-2u_N\right) = q_N+\frac{2}{\Delta x}F(t) $$  
 # 
 # This is equivalent to the following system:
+# 
 # $$\rho A \left[\begin{matrix}
 # 1&0&0&\ldots&0&0&0\\
 # 0&1&0&\ldots&0&0&0\\
@@ -181,6 +196,9 @@ def Fvec(t):
 # # Step 5: Solve the ODE system
 # 
 # Now, we just need to apply what we learned in the previous modules to solve the dynamic problem. The main novelty is that here we work with matrices.
+# 
+# Keen studens may notice the here specified solver uses the `Radau` method. The Radau method is one of many options in the list of [Runge-Kutta integration methods](https://en.wikipedia.org/wiki/List_of_Runge%E2%80%93Kutta_methods), like for example Forward Euler. 
+# While internal variations of the Radau method exist, the key take-away points are the full implicit nature and high order of accuracy, but at a large computational cost. The implicit nature makes the method well suited for very stiff problems. These problems normally require small time steps to capture the, due to the stiffness, fast accelerations and high-frequency effects. The use of an implicit method generally allows for a greater time step, then reducing the computational cost.
 
 # In[4]:
 
@@ -220,15 +238,21 @@ for i in range(0,len(tspan)):
     plt.xlabel("Beam position [m]")
     plt.ylabel("Displacement [m]")
     plt.title("Beam displacement animation")
+    plt.savefig(f"../images/w3_t1_gif/shot{i+1}.png")
     time.sleep(0.05)
     plt.show()
+    
 
+
+# Now displaying the animated plots, gif conversion via https://ezgif.com/jpg-to-gif.
+
+# <center><img src="https://github.com/rdeke/ComModHOS_double/blob/main/images/w3_t1_gifresult.gif?raw=true" width="600" /></center>
 
 # In[5]:
 
 
 # Pick time value:
-time_pick = 86
+time_pick = 24
 time_closest = sol.t.flat[np.abs(sol.t - time_pick).argmin()]
 time_idx = np.where(sol.t == time_closest)[0]
 disp_pick = np.reshape(sol.y[0:N,time_idx],N)
@@ -288,16 +312,6 @@ def q_dot(t,q):
 # Solve (we use Radau method because the ODE is very stiff and it works best for this case)
 sol = solve_ivp(fun=q_dot,t_span=[t0,tf],y0=q0,t_eval=tspan,method='Radau')
 
-# Plot (in local mode only)
-for i in range(0,len(tspan)):
-    #fig,ax = plt.subplots()
-    display.clear_output(wait=True)
-    #display.display(pl.gcf())
-    plt.plot(np.linspace(0,L,N),sol.y[0:N,i])
-    plt.ylim((-0.015,0.015))
-    plt.xlabel("Beam position [m]")
-    plt.ylabel("Displacement [m]")
-    plt.title("Beam displacement animation with friction")
-    time.sleep(0.05)
-    plt.show()
+# Plot would follow the same structure as before
+# Running in local mode generates the GIF in the notebook already
 

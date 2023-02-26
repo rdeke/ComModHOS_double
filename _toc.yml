@@ -6,50 +6,53 @@ parts:
   - file: content/user_guide
 - caption: Course content
   chapters:
-  - file: content/w0_t0
-    title: Week 0
-  - file: content/w1_t0
+  - file: content/Module1/module1_intro
     title: Week 1
     sections:
+    - file: content/Module1/module1-1_TaylorSeries
+    - file: content/Module1/module1-2_ApproxODEs
     - file: content/w1_t1
     #- file: content/w1_t1_sol
-  - file: content/w2_t0
+  - file: content/Module2/module2_intro
     title: Week 2
     sections:
-    - file: content/w2_t1
+    - file: content/Module2/w2_t1
     # - file: content/w2_t1_sol
-    - file: content/w2_t2
+    - file: content/Module2/w2_t2
     # - file: content/w2_t2_sol  
-  - file: content/w3_t0
+    - file: content/Module2/w2_t3
+  - file: content/Module3/module3_intro
     title: Week 3
     sections:
-    - file: content/w3_t1
+    - file: content/Module3/w3_t1
     # - file: content/w3_t1_sol
-    - file: content/w3_t2
+    - file: content/Module3/w3_t2
     # - file: content/w3_t2_sol
-  - file: content/w4_t0
+  - file: content/Module4/module4_intro
     title: Week 4
     sections:
-    - file: content/w4_t1
+    - file: content/Module4/w4_t1
     # - file: content/w4_t1_sol
-    - file: content/w4_t2
+    - file: content/Module4/w3w4_t1_compare
+    - file: content/Module4/w4_t2
     # - file: content/w4_t2_sol
-    - file: content/w4_t3
+    - file: content/Module4/w4_t3
     # - file: content/w4_t3_sol
-  - file: content/w5_t0
+    - file: content/Module4/w4_t4
+  - file: content/Module5/module5_intro
     title: Week 5
     sections:
-    - file: content/w5_t1
+    - file: content/Module5/w5_t1
     # - file: content/w5_t1_sol
-  - file: content/w6_t0
+    - file: content/Module5/w4w5_t1_compare
+  - file: content/Module6/module6_intro
     title: Week 6
     sections:
-    - file: content/w6_t1
+    - file: content/Module6/w6_t1
     # - file: content/w6_t1_sol
-    - file: content/w6_t2
+    - file: content/Module6/w6_t1/expanded
+    - file: content/Module6/w6_t2
     # - file: content/w6_t2_sol
-  - file: content/w7_t0
-    title: Week 7
 - caption: References
   chapters:
   - file: content/zbibliography

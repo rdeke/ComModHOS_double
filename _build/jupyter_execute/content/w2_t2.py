@@ -3,6 +3,8 @@
 
 # # Tutorial 2.2: Deriving the EOM of a pendulum
 # In this tutorial you will learn to derive the Equations of Motion of the pendulum as covered in the lecture. That is, a pendulum attached to the floor with a spring. We also consider an external horizontal force acting on the mass.
+# 
+# <center><img src="../images/w2_t2_representation.png" width="200" /></center>
 
 # ## Part 1: Kinematic equations
 # Using the following rotation matrix R($\phi$): https://en.wikipedia.org/wiki/Rotation_matrix the zero angle points to the right for this matrix.
