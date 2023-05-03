@@ -13,9 +13,10 @@ Build initial book
 Build course content --> Push deadlines
 [0122]		- Building and checking tutorials & structure
 [0211]		- Books round 1 --> GOAL Wk 2.11 (3wks)
-[X]		- Books round 2 --> GOAL Wk 3.3 (3wks)
-[X]		- Theory --> GOAL Wk 3.8 (5wks)
-[X]		- Extra --> Goal Wk 3.10 (2wks)
+[0226]		- Books round 2 --> GOAL Wk 3.3 (3wks)
+[0306]		- Extra --> Goal Wk 3.5 (2wks)
+[Xxxx]		- Theory --> GOAL Wk 3.10 (5wks)
+
 
 # -------
 Important commands (xx is version number):
@@ -24,7 +25,8 @@ Making/Building
 	- jupyter-book build ComModHOS_vxx_local 
 		OR use build --all to overwrite cache
 Pushing
-	- git clone https://github.com/TUDelft-CITG/ComModHOS.git
+	- git clone https://github.com/TUDelft-CITG/ComModHOS.git OR 
+	  git clone https://github.com/rdeke/ComModHOS_double.git
 	- !!!! IN GIT BASH
 	  cp -r vxx_local/* ComModHOS/
 	- cd ComModHOS
@@ -32,7 +34,7 @@ Pushing
 	- git add ./*
 	- git commit -m "COMMENT"
 	- git push --set-upstream origin rdk_v03_setup
-	- ghp-import -n -p -f _build/html
+	DO NOT DO FOR FULL PUSH (SCRIPTED) - ghp-import -n -p -f _build/html
 # -------
 
 
@@ -171,7 +173,7 @@ Tutorial 4_3
 [0212]		- Add example image
 
 Tutorial 4_4 (new)
-[X]		- Soil mechanics example
+[xxxx]		- Soil mechanics example
 
 Tutorial 5_1
 [0226]		- Add time/accuracy improvements for modal aspect, link to 4_3
@@ -199,7 +201,7 @@ File creation
 [X]		- Week 1		ODE solvers
 [X]		- Week 2		Lagrangian mechanics, systems of ODE
 [X]		- Week 3		FD
-[X]		- Week 4		FEM
+[X]		- Week 4		FEM https://team-pancho.github.io/documents/anIntro2FEM_2015.pdf
 [X]		- Week 5		FEM modal analysis
 [X]		- Week 6		Non-linear FE
 [X]		- Week 7		CFD and meshing
@@ -207,11 +209,10 @@ File creation
 # -------------------------------------------------------------------------------------------------------------------
 Extra's and playing around --> Adding content for illustration and comparisons
 
-[X]		- Julia FEM comparison
-[X]		- Maple symbolic comparison
-[X]		- CFD/FSI example
-[X]		- Example project application
-[X]		- Write jupyterbook-specific documentation and usage guidelines
+[0306]		- Julia FEM comparison
+[0306]		- Maple symbolic comparison
+[0305]		- Example project application
+[0305]		- Write jupyterbook-specific documentation and usage guidelines
 
 
 # -------------------------------------------------------------------------------------------------------------------
@@ -221,4 +222,4 @@ OC comments 01/02/2023:
 [0218]      - Fix OC comment 2
 [0218]      - Fix OC comment 3
 [0218]      - Check OC comments in "module1-1_TaylorSeries.md"
-[]      - Add links to weekly planning to the respective week in the content --> QUESTION: What is wanted structure, can only link once files are made
+[0305]      - Add links to weekly planning to the respective week in the content --> QUESTION: What is wanted structure, can only link once files are made
