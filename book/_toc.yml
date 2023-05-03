@@ -1,0 +1,61 @@
+format: jb-book
+root: intro
+title: Introduction
+parts:
+- chapters:
+  - file: user_guide
+- caption: Course content
+  chapters:
+  - file: Module1/module1_intro
+    title: Week 1 Numerical methods for ODEs
+    sections:
+    - file: Module1/module1-1_Notation
+    - file: Module1/module1-2_TaylorSeries
+    - file: Module1/module1-3_ApproxODEs
+    - file: Module1/module1-4_Numerical_error
+    - file: Module1/module1-5_Error_control
+    - file: Module1/w1_t1
+  - file: Module2/module2_intro
+    title: Week 2 Dynamics of rigid bodies
+    sections:
+    - file: Module2/w2_t1
+    - file: Module2/w2_t2
+    - file: Module2/w2_t3
+    - file: Module2/w2_t4
+    - file: Module2/w2_t5
+  - file: Module3/module3_intro
+    title: Week 3 FD and FEM
+    sections:
+    - file: Module3/w3_t1
+    - file: Module3/w3_t2
+    - file: Module3/w3_t3
+    - file: Module3/w3_t4
+    - file: Module3/w3_t5
+    - file: Module3/w3_compare
+  - file: Module4/module4_intro
+    title: Week 4 Steady 2D FEM
+    sections:
+    - file: concent/Module4/module4-1_2DFEM
+    - file: Module4/w4_t1_poisson
+    - file: Module4/w4_t2_alestic
+    - file: Module4/w4_t3_darcy
+  - file: Module5/module5_intro
+    title: Week 5 Transient 2D FEM
+    sections:
+    - file: Module5/w5_t1_heat
+    - file: Module5/w5_t2_transelastic
+    - file: Module5/w5_t3_stelle
+  - file: Module6/module6_intro
+    title: Week 6 Modal superposition
+    sections:
+    - file: Module6/w6_t1
+    - file: Module6/w6_rod_modalcompare
+  - file: Module7/module7_intro
+    title: Week 7 Modal superposition
+    sections:
+    - file: Module7/w7_t1
+    - file: Module7/w7_t1_expanded
+    - file: Module7/w7_t2
+- caption: References
+  chapters:
+  - file: zbibliography

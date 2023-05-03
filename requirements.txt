@@ -1,1 +1,6 @@
 jupyter-book
+sphinx-proof 
+sympy
+numpy
+matplotlib
+scipy
